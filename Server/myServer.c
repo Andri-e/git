@@ -70,7 +70,7 @@ int main(int argc, char * argv[])
 
     //Add the variable serial number to the server 
     UA_VariableAttributes snAttr = UA_VariableAttributes_default;
-    UA_Int32 serialNumber = 123456;
+    UA_Int32 serialNumber = Ua_Int32(123456);
     UA_Variant_setScalar(&snAttr.value, &serialNumber, &UA_TYPES[UA_TYPES_INT32]);
     UA_Server_addVariableNode(server, UA_NODEID_STRING(2, "testSerial"), testObjectId,
                               UA_NODEID_NUMERIC(0, UA_NS0ID_HASCOMPONENT),
