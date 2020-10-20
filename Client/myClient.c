@@ -53,8 +53,6 @@ int main(void)
 		serialNumber = *(UA_Int32 *) value.data;
 		UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND, "The Serial number is %.*s", *(UA_Int32 *) value.data);
     }
-	
-	cout << "hello world"\n;
 
     //Read the variable 
     retval = UA_Client_readValueAttribute(client, UA_NODEID_STRING(2, "testVariable"), &value);
@@ -67,6 +65,8 @@ int main(void)
 		UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND, "The Variable is %.*s", *(UA_Double *) value.data);
     }
 
+	
+	printf("Hello \n");
 
     /* Clean up */
     UA_Variant_clear(&value);
