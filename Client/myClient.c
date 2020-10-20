@@ -66,7 +66,7 @@ int main(void)
     }
 
 	
-	printf("Hello \n");
+	printf("%d\n %d\n ", serialNumber, variable);
 
     /* Clean up */
     UA_Variant_clear(&value);
