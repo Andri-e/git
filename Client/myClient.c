@@ -40,24 +40,24 @@ int main(void)
     retval = UA_Client_readValueAttribute(client, UA_NODEID_STRING(2, "testVariableName"), &value);
     if(retval == UA_STATUSCODE_GOOD && UA_Variant_hasScalarType(&value, &UA_TYPES[UA_TYPES_STRING])) 
     {
-	variableName = *(UA_String *) value.data;
-	UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND, "The Variable name is %.*s", variableName.length, variableName.data);
+		variableName = *(UA_String *) value.data;
+		UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND, "The Variable name is %.*s", variableName.length, variableName.data);
     }
 
     //Read Serial Number 
     retval = UA_Client_readValueAttribute(client, UA_NODEID_STRING(2, "testSerial"), &value);
     if(retval == UA_STATUSCODE_GOOD && UA_Variant_hasScalarType(&value, &UA_TYPES[UA_TYPES_INT32])) 
     {
-	serialNumber = *(UA_Int32 *) value.data;
-	UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND, "The Serial number is %.*s", serialNumber);
+		serialNumber = *(UA_Int32 *) value.data;
+		UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND, "The Serial number is %.*s", serialNumber);
     }
 
     //Read the variable 
     retval = UA_Client_readValueAttribute(client, UA_NODEID_STRING(2, "testVariable"), &value);
     if(retval == UA_STATUSCODE_GOOD && UA_Variant_hasScalarType(&value, &UA_TYPES[UA_TYPES_DOUBLE])) 
     {
-	variable = *(UA_Double *) value.data;
-	UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND, "The Variable is %.*s", variable);
+		variable = *(UA_Double *) value.data;
+		UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND, "The Variable is %.*s", variable);
     }
 
 
