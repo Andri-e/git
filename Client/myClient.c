@@ -27,7 +27,7 @@ int main(void)
 	
 	
 	
-	
+	/*
 	UA_StatusCode UA_Client_findServers(UA_Client *client, const char *serverUrl,
                       size_t serverUrisSize, UA_String *serverUris,
                       size_t localeIdsSize, UA_String *localeIds,
@@ -36,7 +36,7 @@ int main(void)
 	
 	
 	
-	
+	*/
 	
 	
 	
