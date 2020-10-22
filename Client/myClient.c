@@ -7,6 +7,7 @@ int main(void)
     UA_Client *client = UA_Client_new();
     UA_ClientConfig_setDefault(UA_Client_getConfig(client));
     UA_StatusCode retval = UA_Client_connect(client, "opc.tcp://localhost:4840");
+	
     if(retval != UA_STATUSCODE_GOOD) 
     {
         UA_Client_delete(client);
@@ -22,6 +23,27 @@ int main(void)
     const UA_NodeId nodeId = UA_NODEID_NUMERIC(0, UA_NS0ID_SERVER_SERVERSTATUS_CURRENTTIME);
     retval = UA_Client_readValueAttribute(client, nodeId, &value);
 
+	
+	
+	
+	
+	
+	UA_StatusCode UA_Client_findServers(UA_Client *client, const char *serverUrl,
+                      size_t serverUrisSize, UA_String *serverUris,
+                      size_t localeIdsSize, UA_String *localeIds,
+                      size_t *registeredServersSize,
+                      UA_ApplicationDescription **registeredServers);
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
     if(retval == UA_STATUSCODE_GOOD && UA_Variant_hasScalarType(&value, &UA_TYPES[UA_TYPES_DATETIME]))
     {
         UA_DateTime raw_date = *(UA_DateTime *) value.data;
