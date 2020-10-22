@@ -24,10 +24,8 @@ int main(void)
     retval = UA_Client_readValueAttribute(client, nodeId, &value);
 
 	
-	
-	
-	
-	
+	/*
+	// Trying to work on fidnnig a server 
 	UA_StatusCode UA_Client_findServers(UA_Client *client, const char *serverUrl,
                       size_t serverUrisSize, UA_String *serverUris,
                       size_t localeIdsSize, UA_String *localeIds,
@@ -36,12 +34,7 @@ int main(void)
 	
 	
 	
-	
-	
-	
-	
-	
-	
+	*/
 	
 	
     if(retval == UA_STATUSCODE_GOOD && UA_Variant_hasScalarType(&value, &UA_TYPES[UA_TYPES_DATETIME]))
