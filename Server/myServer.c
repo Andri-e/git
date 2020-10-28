@@ -4,19 +4,18 @@
 #include <stdlib.h>
 
 static volatile UA_Boolean running = true;
+//Global variable to print out in test Variable
+UA_Double variable = 20.0;
+
+// Stop handler to watch for ctrl + c 
 static void stopHandler(int sig)
 {
     UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND, "received ctrl-c");
     running = false;
 }
 
-//Global variable to print out in test Variable
-UA_Double variable = 20.0;
-
-
 // Adding variable callback
-static void 
-beforeReadVariable(UA_Server *server,
+static void beforeReadVariable(UA_Server *server,
                const UA_NodeId *sessionId, void *sessionContext,
                const UA_NodeId *nodeid, void *nodeContext,
                const UA_NumericRange *range, const UA_DataValue *data) 
@@ -25,13 +24,17 @@ beforeReadVariable(UA_Server *server,
     float tempVariable = 1.0 * (rand()%100)/100 - 0.5;
 	variable += tempVariable;
 	
-	
 	// Way to update the variable 
 	UA_Variant value;
     UA_Variant_setScalar(&value, &variable, &UA_TYPES[UA_TYPES_DOUBLE]);
     UA_Server_writeValue(server, UA_NODEID_STRING(2, "testVariable"), value);
-	
 }
+
+static void checkArguments(UA_Server *server)
+{
+	printf("Some text AGGG \n AGGG \n ahhh!");
+}
+
 
 
 // myServer with Hostname and Portnumber

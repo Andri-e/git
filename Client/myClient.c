@@ -75,7 +75,8 @@ int main(void)
     }
 
 	
-	printf("%d\n %f\n ", serialNumber, variable);
+	// Checking the numbers bc something was not right above 
+	// printf("%d\n %f\n ", serialNumber, variable);
 
     /* Clean up */
     UA_Variant_clear(&value);
