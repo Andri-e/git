@@ -158,6 +158,7 @@ int main(int argc, char * argv[])
                               UA_NODEID_NUMERIC(0, UA_NS0ID_BASEDATAVARIABLETYPE), variableAttr, NULL, NULL);
 */
 
+	nodeSetup(server);
 							  
 	// Add callback to update the variable 
     UA_ValueCallback callback ;
