@@ -6,6 +6,7 @@
 static volatile UA_Boolean running = true;
 //Global variable to print out in test Variable
 UA_Double variable = 20.0;
+UA_DateTime timeStamp = UA_DateTime_now();
 
 // Stop handler to watch for ctrl + c 
 static void stopHandler(int sig)
@@ -93,7 +94,16 @@ static void nodeSetup(UA_Server *server)
                               UA_NODEID_NUMERIC(0, UA_NS0ID_HASCOMPONENT),
                               UA_QUALIFIEDNAME(2, "Serial Number"),
                               UA_NODEID_NUMERIC(0, UA_NS0ID_BASEDATAVARIABLETYPE), snAttr, NULL, NULL);
-
+	
+//Add the Variable to the server
+    UA_VariableAttributes variableAttr = UA_VariableAttributes_default;
+    UA_Variant_setScalar(&variableAttr.value, &variable, &UA_TYPES[UA_TYPES_DATETIME]);
+    UA_Server_addVariableNode(server, UA_NODEID_STRING(2, "testTimeStamp"), testObjectId,
+                              UA_NODEID_NUMERIC(0, UA_NS0ID_HASCOMPONENT),
+                              UA_QUALIFIEDNAME(2, "timeStamp"),
+                              UA_NODEID_NUMERIC(0, UA_NS0ID_BASEDATAVARIABLETYPE), variableAttr, NULL, NULL);
+							  
+							  
     //Add the Variable to the server
     UA_VariableAttributes variableAttr = UA_VariableAttributes_default;
     UA_Variant_setScalar(&variableAttr.value, &variable, &UA_TYPES[UA_TYPES_DOUBLE]);
@@ -114,50 +124,10 @@ int main(int argc, char * argv[])
 	// Creating a new server 
     UA_Server *server = UA_Server_new();
 
-	//Check for Arguments, host name and port number
+	// Check for Arguments, host name and port number
 	checkArguments(server, argc, argv);
 
-/*
-    //Add a new namespace to the server
-    UA_Int16 ns_1 = UA_Server_addNamespace(server, "Namespace_1");
-    UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND, "New Namespace added with Nr. %d", ns_1);
-
-    //Add a new object called testObject 
-    UA_NodeId testObjectId;
-    UA_ObjectAttributes oAttr = UA_ObjectAttributes_default;
-    UA_Server_addObjectNode(server, UA_NODEID_STRING(2, "testObject"),
-                            UA_NODEID_NUMERIC(0, UA_NS0ID_OBJECTSFOLDER),
-                            UA_NODEID_NUMERIC(0, UA_NS0ID_ORGANIZES),
-                            UA_QUALIFIEDNAME(2, "Test Object"), UA_NODEID_NUMERIC(0, UA_NS0ID_BASEOBJECTTYPE),
-                            oAttr, NULL, &testObjectId);
-
-    //Add the variable name to the server
-    UA_VariableAttributes vnAttr = UA_VariableAttributes_default;
-    UA_String variableName = UA_STRING("nameOfVariable");
-    UA_Variant_setScalar(&vnAttr.value, &variableName, &UA_TYPES[UA_TYPES_STRING]);
-    UA_Server_addVariableNode(server, UA_NODEID_STRING(2, "testVariableName"), testObjectId,
-                              UA_NODEID_NUMERIC(0, UA_NS0ID_HASCOMPONENT),
-                              UA_QUALIFIEDNAME(2, "Vendor Name"),
-                              UA_NODEID_NUMERIC(0, UA_NS0ID_BASEDATAVARIABLETYPE), vnAttr, NULL, NULL);
-
-    //Add the variable serial number to the server 
-    UA_VariableAttributes snAttr = UA_VariableAttributes_default;
-    UA_Int32 serialNumber = 123456;
-    UA_Variant_setScalar(&snAttr.value, &serialNumber, &UA_TYPES[UA_TYPES_INT32]);
-    UA_Server_addVariableNode(server, UA_NODEID_STRING(2, "testSerial"), testObjectId,
-                              UA_NODEID_NUMERIC(0, UA_NS0ID_HASCOMPONENT),
-                              UA_QUALIFIEDNAME(2, "Serial Number"),
-                              UA_NODEID_NUMERIC(0, UA_NS0ID_BASEDATAVARIABLETYPE), snAttr, NULL, NULL);
-
-    //Add the Variable to the server
-    UA_VariableAttributes variableAttr = UA_VariableAttributes_default;
-    UA_Variant_setScalar(&variableAttr.value, &variable, &UA_TYPES[UA_TYPES_DOUBLE]);
-    UA_Server_addVariableNode(server, UA_NODEID_STRING(2, "testVariable"), testObjectId,
-                              UA_NODEID_NUMERIC(0, UA_NS0ID_HASCOMPONENT),
-                              UA_QUALIFIEDNAME(2, "Variable"),
-                              UA_NODEID_NUMERIC(0, UA_NS0ID_BASEDATAVARIABLETYPE), variableAttr, NULL, NULL);
-*/
-
+	// Setup the nodes used 
 	nodeSetup(server);
 							  
 	// Add callback to update the variable 
