@@ -63,7 +63,7 @@ int main(void)
 
 // ---------------------------------
 
-
+/*
     {
         UA_ServerOnNetwork *serverOnNetwork = NULL;
         size_t serverOnNetworkSize = 0;
@@ -100,6 +100,7 @@ int main(void)
         UA_Array_delete(serverOnNetwork, serverOnNetworkSize,
                         &UA_TYPES[UA_TYPES_SERVERONNETWORK]);
     }
+	*/
 
     /* Example for calling FindServers */
     UA_ApplicationDescription *applicationDescriptionArray = NULL;
