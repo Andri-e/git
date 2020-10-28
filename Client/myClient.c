@@ -2,7 +2,7 @@
 
 #include <stdlib.h>
 
-static void readNode(UA_Client *client)
+static void readNode(UA_Client *client, UA_StatusCode *retval)
 {
     //Variables for read access 
     UA_String variableName;
@@ -134,7 +134,7 @@ int main(void)
 		UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND, "The Variable is %f", variable);
     }
 */
-readNode(client);
+readNode(client, retval);
 	
 	// Checking the numbers bc something was not right above 
 	// printf("%d\n %f\n ", serialNumber, variable);
