@@ -132,7 +132,7 @@ static void addValueCallbackToCurrentTimeVariable(UA_Server *server) {
     UA_ValueCallback callback ;
     callback.onRead = beforeReadTime;
     callback.onWrite = NULL;
-    UA_Server_setVariableNode_valueCallback(server, cUA_NODEID_STRING(2, "testTimeStamp"), callback);
+    UA_Server_setVariableNode_valueCallback(server, UA_NODEID_STRING(2, "testTimeStamp"), callback);
 }
 
 
