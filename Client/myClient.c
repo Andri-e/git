@@ -2,6 +2,16 @@
 
 #include <stdlib.h>
 
+// ---------------------------------------
+
+#define DISCOVERY_SERVER_ENDPOINT "opc.tcp://localhost:4840"
+
+
+// ---------------------------------------
+
+
+
+
 // read out the nodes 
 static void readNode(UA_Client *client, UA_StatusCode retval, UA_Variant value)
 {
