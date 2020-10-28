@@ -114,37 +114,7 @@ int main(int argc, char * argv[])
 	// Creating a new server 
     UA_Server *server = UA_Server_new();
 
-/*	
-	// Checking if the server has default Host name and Port number 
-		//Check for Arguments, host name and port number
-    if(argc > 2)
-    {
-		UA_Int16 port_number = atoi(argv[2]);
-		UA_ServerConfig_setMinimal(UA_Server_getConfig(server), port_number, 0);
-		
-		printf("Custom port number set \n");
-    } 
-    else
-    {	
-		UA_ServerConfig_setDefault(UA_Server_getConfig(server));
-    }
-
-    if(argc > 1)
-    {
-		//Copy the hostname from char * to an open62541 Variable, Host name has to be a ip number or something
-		UA_String hostname;
-		UA_String_init(&hostname);
-		hostname.length = strlen(argv[1]);
-		hostname.data = (UA_Byte *) argv[1];
-
-		//Change the configuration 
-		UA_ServerConfig_setCustomHostname(UA_Server_getConfig(server), hostname);
-		
-		
-		printf("Custom host name set \n");
-    }
-*/	
-	
+	//Check for Arguments, host name and port number
 	checkArguments(server, argc, argv);
 
 /*
