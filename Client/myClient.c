@@ -2,7 +2,7 @@
 
 #include <stdlib.h>
 
-static void readNode(UA_Client *client, UA_StatusCode *retval)
+static void readNode(UA_Client *client, UA_StatusCode retval)
 {
     //Variables for read access 
     UA_String variableName;
