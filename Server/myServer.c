@@ -6,7 +6,7 @@
 static volatile UA_Boolean running = true;
 //Global variable to print out in test Variable
 UA_Double variable = 20.0;
-UA_DateTime timeStamp = UA_DateTime_now();
+UA_DateTime timeStamp = 0;
 
 // Stop handler to watch for ctrl + c 
 static void stopHandler(int sig)
