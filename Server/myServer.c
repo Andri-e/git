@@ -67,6 +67,8 @@ int main(int argc, char * argv[])
 		//Change the configuration 
 		UA_ServerConfig_setCustomHostname(UA_Server_getConfig(server), hostname);
     }
+	
+	checkArguments(server);
 
     //Add a new namespace to the server
     UA_Int16 ns_1 = UA_Server_addNamespace(server, "Namespace_1");
