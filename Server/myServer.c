@@ -101,8 +101,7 @@ static void nodeSetup(UA_Server *server)
     UA_Server_addVariableNode(server, UA_NODEID_STRING(2, "testTimeStamp"), testObjectId,
                               UA_NODEID_NUMERIC(0, UA_NS0ID_HASCOMPONENT),
                               UA_QUALIFIEDNAME(2, "timeStamp"),
-                              UA_NODEID_NUMERIC(0, UA_NS0ID_BASEDATAVARIABLETYPE), tsAttr, NULL, NULL);
-							  
+                              UA_NODEID_NUMERIC(0, UA_NS0ID_BASEDATAVARIABLETYPE), tsAttr, NULL, NULL);					  
 							  
     //Add the Variable to the server
     UA_VariableAttributes variableAttr = UA_VariableAttributes_default;
@@ -112,6 +111,30 @@ static void nodeSetup(UA_Server *server)
                               UA_QUALIFIEDNAME(2, "Variable"),
                               UA_NODEID_NUMERIC(0, UA_NS0ID_BASEDATAVARIABLETYPE), variableAttr, NULL, NULL);
 }
+
+static void beforeReadTime(UA_Server *server,
+               const UA_NodeId *sessionId, void *sessionContext,
+               const UA_NodeId *nodeid, void *nodeContext,
+               const UA_NumericRange *range, const UA_DataValue *data) 
+{
+    updateCurrentTime(server);
+}
+
+static void updateCurrentTime(UA_Server *server) 
+{
+    UA_DateTime now = UA_DateTime_now();
+    UA_Variant value;
+    UA_Variant_setScalar(&value, &now, &UA_TYPES[UA_TYPES_DATETIME]);
+    UA_Server_writeValue(server, UA_NODEID_STRING(2, "testTimeStamp"), value);
+}
+
+static void addValueCallbackToCurrentTimeVariable(UA_Server *server) {
+    UA_ValueCallback callback ;
+    callback.onRead = beforeReadTime;
+    callback.onWrite = NULL;
+    UA_Server_setVariableNode_valueCallback(server, cUA_NODEID_STRING(2, "testTimeStamp"), callback);
+}
+
 
 
 // myServer with Hostname and Portnumber
@@ -129,6 +152,13 @@ int main(int argc, char * argv[])
 
 	// Setup the nodes used 
 	nodeSetup(server);
+	
+	
+	
+	// Add callback for updateing the TimeStamp
+	
+	addValueCallbackToCurrentTimeVariable(server);
+	
 							  
 	// Add callback to update the variable 
     UA_ValueCallback callback ;
