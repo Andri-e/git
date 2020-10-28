@@ -118,6 +118,8 @@ int main(int argc, char * argv[])
     {
 		UA_Int16 port_number = atoi(argv[2]);
 		UA_ServerConfig_setMinimal(UA_Server_getConfig(server), port_number, 0);
+		
+		printf("Custom port number set \n");
     } 
     else
     {	
@@ -134,6 +136,9 @@ int main(int argc, char * argv[])
 
 		//Change the configuration 
 		UA_ServerConfig_setCustomHostname(UA_Server_getConfig(server), hostname);
+		
+		
+		printf("Custom host name set \n");
     }
 	
 	
