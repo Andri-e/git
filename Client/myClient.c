@@ -74,7 +74,7 @@ int main(void)
 		timeStamp = *(UA_DateTime *) value.data;
 		UA_DateTimeStruct dts = UA_DateTime_toStruct(timeStamp);
 		
-		UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND, "The TimeStamp is : %u-%u-%u %u:%u:%u.%03u\n",
+		UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND, "The TimeStamp is : %u-%u-%u %u:%u:%u.%03u",
                     dts.day, dts.month, dts.year, dts.hour, dts.min, dts.sec, dts.milliSec);
 		
 		//UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND, "The Timestamp is is %f", variable);
