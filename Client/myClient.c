@@ -72,7 +72,12 @@ int main(void)
     if(retval == UA_STATUSCODE_GOOD && UA_Variant_hasScalarType(&value, &UA_TYPES[UA_TYPES_DATETIME])) 
     {
 		timeStamp = *(UA_DateTime *) value.data;
-		UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND, "The Timestamp is is %f", variable);
+		UA_DateTimeStruct dts = UA_DateTime_toStruct(raw_date);
+		
+		UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND, "The TimeStamp is : %u-%u-%u %u:%u:%u.%03u\n",
+                    dts.day, dts.month, dts.year, dts.hour, dts.min, dts.sec, dts.milliSec);
+		
+		//UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND, "The Timestamp is is %f", variable);
     }
 
     //Read the variable 
