@@ -58,41 +58,63 @@ static void checkArguments(UA_Server *server)
     }
 }
 
+static void nodeSetup(UA_Server *server)
+{
+ //Add a new namespace to the server
+    UA_Int16 ns_1 = UA_Server_addNamespace(server, "Namespace_1");
+    UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND, "New Namespace added with Nr. %d", ns_1);
+
+    //Add a new object called testObject 
+    UA_NodeId testObjectId;
+    UA_ObjectAttributes oAttr = UA_ObjectAttributes_default;
+    UA_Server_addObjectNode(server, UA_NODEID_STRING(2, "testObject"),
+                            UA_NODEID_NUMERIC(0, UA_NS0ID_OBJECTSFOLDER),
+                            UA_NODEID_NUMERIC(0, UA_NS0ID_ORGANIZES),
+                            UA_QUALIFIEDNAME(2, "Test Object"), UA_NODEID_NUMERIC(0, UA_NS0ID_BASEOBJECTTYPE),
+                            oAttr, NULL, &testObjectId);
+
+    //Add the variable name to the server
+    UA_VariableAttributes vnAttr = UA_VariableAttributes_default;
+    UA_String variableName = UA_STRING("nameOfVariable");
+    UA_Variant_setScalar(&vnAttr.value, &variableName, &UA_TYPES[UA_TYPES_STRING]);
+    UA_Server_addVariableNode(server, UA_NODEID_STRING(2, "testVariableName"), testObjectId,
+                              UA_NODEID_NUMERIC(0, UA_NS0ID_HASCOMPONENT),
+                              UA_QUALIFIEDNAME(2, "Vendor Name"),
+                              UA_NODEID_NUMERIC(0, UA_NS0ID_BASEDATAVARIABLETYPE), vnAttr, NULL, NULL);
+
+    //Add the variable serial number to the server 
+    UA_VariableAttributes snAttr = UA_VariableAttributes_default;
+    UA_Int32 serialNumber = 123456;
+    UA_Variant_setScalar(&snAttr.value, &serialNumber, &UA_TYPES[UA_TYPES_INT32]);
+    UA_Server_addVariableNode(server, UA_NODEID_STRING(2, "testSerial"), testObjectId,
+                              UA_NODEID_NUMERIC(0, UA_NS0ID_HASCOMPONENT),
+                              UA_QUALIFIEDNAME(2, "Serial Number"),
+                              UA_NODEID_NUMERIC(0, UA_NS0ID_BASEDATAVARIABLETYPE), snAttr, NULL, NULL);
+
+    //Add the Variable to the server
+    UA_VariableAttributes variableAttr = UA_VariableAttributes_default;
+    UA_Variant_setScalar(&variableAttr.value, &variable, &UA_TYPES[UA_TYPES_DOUBLE]);
+    UA_Server_addVariableNode(server, UA_NODEID_STRING(2, "testVariable"), testObjectId,
+                              UA_NODEID_NUMERIC(0, UA_NS0ID_HASCOMPONENT),
+                              UA_QUALIFIEDNAME(2, "Variable"),
+                              UA_NODEID_NUMERIC(0, UA_NS0ID_BASEDATAVARIABLETYPE), variableAttr, NULL, NULL);
+}
 
 
 // myServer with Hostname and Portnumber
 int main(int argc, char * argv[])
 {
+	// Setting up the signals for the stop signal (ctrl + c)
     signal(SIGINT, stopHandler);
     signal(SIGTERM, stopHandler);
-
+	
+	// Creating a new server 
     UA_Server *server = UA_Server_new();
-/*
-    //Check for Arguments, host name and port number
-    if(argc > 2)
-    {
-		UA_Int16 port_number = atoi(argv[2]);
-		UA_ServerConfig_setMinimal(UA_Server_getConfig(server), port_number, 0);
-    } 
-    else
-    {	
-		UA_ServerConfig_setDefault(UA_Server_getConfig(server));
-    }
-
-    if(argc > 1)
-    {
-		//Copy the hostname from char * to an open62541 Variable
-		UA_String hostname;
-		UA_String_init(&hostname);
-		hostname.length = strlen(argv[1]);
-		hostname.data = (UA_Byte *) argv[1];
-
-		//Change the configuration 
-		UA_ServerConfig_setCustomHostname(UA_Server_getConfig(server), hostname);
-    }
-*/	
+	
+	// Checking if the server has default Host name and Port number 
 	checkArguments(server);
 
+/*
     //Add a new namespace to the server
     UA_Int16 ns_1 = UA_Server_addNamespace(server, "Namespace_1");
     UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND, "New Namespace added with Nr. %d", ns_1);
@@ -131,7 +153,7 @@ int main(int argc, char * argv[])
                               UA_NODEID_NUMERIC(0, UA_NS0ID_HASCOMPONENT),
                               UA_QUALIFIEDNAME(2, "Variable"),
                               UA_NODEID_NUMERIC(0, UA_NS0ID_BASEDATAVARIABLETYPE), variableAttr, NULL, NULL);
-
+*/
 
 							  
 	// Add callback to update the variable 
