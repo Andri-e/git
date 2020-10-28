@@ -113,7 +113,7 @@ static void nodeSetup(UA_Server *server)
 }
 
 
-
+// Timestamp thing
 static void updateCurrentTime(UA_Server *server) 
 {
     timeStamp = UA_DateTime_now();
@@ -121,7 +121,6 @@ static void updateCurrentTime(UA_Server *server)
     UA_Variant_setScalar(&value, &timeStamp, &UA_TYPES[UA_TYPES_DATETIME]);
     UA_Server_writeValue(server, UA_NODEID_STRING(2, "testTimeStamp"), value);
 }
-
 
 static void beforeReadTime(UA_Server *server,
                const UA_NodeId *sessionId, void *sessionContext,
@@ -133,14 +132,14 @@ static void beforeReadTime(UA_Server *server,
 
 
 
-/*
+
 static void addValueCallbackToCurrentTimeVariable(UA_Server *server) {
     UA_ValueCallback callback ;
     callback.onRead = beforeReadTime;
     callback.onWrite = NULL;
     UA_Server_setVariableNode_valueCallback(server, UA_NODEID_STRING(2, "testTimeStamp"), callback);
 }
-*/
+
 
 
 // myServer with Hostname and Portnumber
@@ -163,7 +162,7 @@ int main(int argc, char * argv[])
 	
 	// Add callback for updateing the TimeStamp
 	
-	//addValueCallbackToCurrentTimeVariable(server);
+	addValueCallbackToCurrentTimeVariable(server);
 	
 							  
 	// Add callback to update the variable 
