@@ -35,7 +35,7 @@ static void checkArguments(UA_Server *server, char * argv[])
 	printf("Some text AGGG \n AGGG \n ahhh!");
 	
 	//Check for Arguments, host name and port number
-    if(argc > 2)
+    if(argv > 2)
     {
 		UA_Int16 port_number = atoi(argv[2]);
 		UA_ServerConfig_setMinimal(UA_Server_getConfig(server), port_number, 0);
@@ -45,7 +45,7 @@ static void checkArguments(UA_Server *server, char * argv[])
 		UA_ServerConfig_setDefault(UA_Server_getConfig(server));
     }
 
-    if(argc > 1)
+    if(argv > 1)
     {
 		//Copy the hostname from char * to an open62541 Variable
 		UA_String hostname;
