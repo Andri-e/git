@@ -112,7 +112,7 @@ int main(int argc, char * argv[])
     UA_Server *server = UA_Server_new();
 	
 	// Checking if the server has default Host name and Port number 
-	checkArguments(server, argv[]);
+	checkArguments(server, argv);
 
 /*
     //Add a new namespace to the server
