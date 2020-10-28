@@ -96,12 +96,12 @@ static void nodeSetup(UA_Server *server)
                               UA_NODEID_NUMERIC(0, UA_NS0ID_BASEDATAVARIABLETYPE), snAttr, NULL, NULL);
 	
 //Add the Variable to the server
-    UA_VariableAttributes variableAttr = UA_VariableAttributes_default;
-    UA_Variant_setScalar(&variableAttr.value, &variable, &UA_TYPES[UA_TYPES_DATETIME]);
+    UA_VariableAttributes tsAttr = UA_VariableAttributes_default;
+    UA_Variant_setScalar(&tsAttr.value, &variable, &UA_TYPES[UA_TYPES_DATETIME]);
     UA_Server_addVariableNode(server, UA_NODEID_STRING(2, "testTimeStamp"), testObjectId,
                               UA_NODEID_NUMERIC(0, UA_NS0ID_HASCOMPONENT),
                               UA_QUALIFIEDNAME(2, "timeStamp"),
-                              UA_NODEID_NUMERIC(0, UA_NS0ID_BASEDATAVARIABLETYPE), variableAttr, NULL, NULL);
+                              UA_NODEID_NUMERIC(0, UA_NS0ID_BASEDATAVARIABLETYPE), tsAttr, NULL, NULL);
 							  
 							  
     //Add the Variable to the server
