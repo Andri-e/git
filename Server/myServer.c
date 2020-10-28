@@ -145,7 +145,7 @@ int main(int argc, char * argv[])
     }
 */	
 	
-	checkArguments(server, argc, argv[]);
+	checkArguments(server, argc, argv);
 
 /*
     //Add a new namespace to the server
