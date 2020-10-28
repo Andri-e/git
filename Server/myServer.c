@@ -13,6 +13,27 @@ static void stopHandler(int sig)
 //Global variable to print out in test Variable
 UA_Double variable = 20.0;
 
+
+// Adding variable callback
+static void 
+beforeReadVariable(UA_Server *server,
+               const UA_NodeId *sessionId, void *sessionContext,
+               const UA_NodeId *nodeid, void *nodeContext,
+               const UA_NumericRange *range, const UA_DataValue *data) 
+{
+	// Need to get a dam dht11 or some sensor to run here
+    float tempVariable = 1.0 * (rand()%100)/100 - 0.5;
+	temperature += tempVariable;
+	
+	
+	// Way to update the variable 
+	UA_Variant value;
+    UA_Variant_setScalar(&value, &variable, &UA_TYPES[UA_TYPES_DOUBLE]);
+    UA_Server_writeValue(server, UA_NODEID_STRING(2, "testVariable"), value);
+	
+}
+
+
 // myServer with Hostname and Portnumber
 int main(int argc, char * argv[])
 {
@@ -84,7 +105,12 @@ int main(int argc, char * argv[])
                               UA_NODEID_NUMERIC(0, UA_NS0ID_BASEDATAVARIABLETYPE), variableAttr, NULL, NULL);
 
 
-
+							  
+	// Add callback to update the variable 
+    UA_ValueCallback callback ;
+    callback.onRead = beforeReadVariable; 	// function pointer to a function that will be executed before before answering a read request
+    callback.onWrite = NULL;		// function pointer to a function that will be executed before write is allowed to take place 
+    UA_Server_setVariableNode_valueCallback(server, currentNodeId, callback);
 
     UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND, "Starting server...");
     UA_StatusCode retval = UA_Server_run(server, &running);
