@@ -105,7 +105,7 @@ int main(void)
     /* Example for calling FindServers */
     UA_ApplicationDescription *applicationDescriptionArray = NULL;
     size_t applicationDescriptionArraySize = 0;
-
+/*
     UA_StatusCode retval;
     {
         UA_Client *client = UA_Client_new();
@@ -119,7 +119,7 @@ int main(void)
                 "Is the discovery server started? StatusCode %s", UA_StatusCode_name(retval));
         return EXIT_FAILURE;
     }
-
+*/
     // output all the returned/registered servers
     for(size_t i = 0; i < applicationDescriptionArraySize; i++) {
         UA_ApplicationDescription *description = &applicationDescriptionArray[i];
