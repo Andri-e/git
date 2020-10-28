@@ -72,7 +72,7 @@ int main(void)
     if(retval == UA_STATUSCODE_GOOD && UA_Variant_hasScalarType(&value, &UA_TYPES[UA_TYPES_DATETIME])) 
     {
 		timeStamp = *(UA_DateTime *) value.data;
-		UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND, "The Variable is %f", variable);
+		UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND, "The Timestamp is is %s", ctime(variable));
     }
 
     //Read the variable 
