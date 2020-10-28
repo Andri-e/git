@@ -30,12 +30,12 @@ static void beforeReadVariable(UA_Server *server,
     UA_Server_writeValue(server, UA_NODEID_STRING(2, "testVariable"), value);
 }
 
-static void checkArguments(UA_Server *server, char * argv[])
+static void checkArguments(UA_Server *server )
 {
 	printf("Some text AGGG \n AGGG \n ahhh!");
-	
+/*	
 	//Check for Arguments, host name and port number
-    if(argv > 2)
+    if(argc > 2)
     {
 		UA_Int16 port_number = atoi(argv[2]);
 		UA_ServerConfig_setMinimal(UA_Server_getConfig(server), port_number, 0);
@@ -45,7 +45,7 @@ static void checkArguments(UA_Server *server, char * argv[])
 		UA_ServerConfig_setDefault(UA_Server_getConfig(server));
     }
 
-    if(argv > 1)
+    if(argc > 1)
     {
 		//Copy the hostname from char * to an open62541 Variable
 		UA_String hostname;
@@ -56,6 +56,7 @@ static void checkArguments(UA_Server *server, char * argv[])
 		//Change the configuration 
 		UA_ServerConfig_setCustomHostname(UA_Server_getConfig(server), hostname);
     }
+*/	
 }
 
 static void nodeSetup(UA_Server *server)
@@ -112,7 +113,31 @@ int main(int argc, char * argv[])
     UA_Server *server = UA_Server_new();
 	
 	// Checking if the server has default Host name and Port number 
-	checkArguments(server, argv);
+		//Check for Arguments, host name and port number
+    if(argc > 2)
+    {
+		UA_Int16 port_number = atoi(argv[2]);
+		UA_ServerConfig_setMinimal(UA_Server_getConfig(server), port_number, 0);
+    } 
+    else
+    {	
+		UA_ServerConfig_setDefault(UA_Server_getConfig(server));
+    }
+
+    if(argc > 1)
+    {
+		//Copy the hostname from char * to an open62541 Variable
+		UA_String hostname;
+		UA_String_init(&hostname);
+		hostname.length = strlen(argv[1]);
+		hostname.data = (UA_Byte *) argv[1];
+
+		//Change the configuration 
+		UA_ServerConfig_setCustomHostname(UA_Server_getConfig(server), hostname);
+    }
+	
+	
+	//checkArguments(server);
 
 /*
     //Add a new namespace to the server
