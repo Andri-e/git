@@ -2,6 +2,7 @@
 
 #include <stdlib.h>
 
+// read out the nodes 
 static void readNode(UA_Client *client, UA_StatusCode retval, UA_Variant value)
 {
     //Variables for read access 
@@ -15,7 +16,7 @@ static void readNode(UA_Client *client, UA_StatusCode retval, UA_Variant value)
     if(retval == UA_STATUSCODE_GOOD && UA_Variant_hasScalarType(&value, &UA_TYPES[UA_TYPES_STRING])) 
     {
 		variableName = *(UA_String *) value.data;
-		UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND, "The Variable name is %.*s", variableName.length, variableName.data);
+		UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND, "Variable name : %.*s", variableName.length, variableName.data);
     }
 
     //Read Serial Number 
@@ -23,7 +24,7 @@ static void readNode(UA_Client *client, UA_StatusCode retval, UA_Variant value)
     if(retval == UA_STATUSCODE_GOOD && UA_Variant_hasScalarType(&value, &UA_TYPES[UA_TYPES_INT32])) 
     {
 		serialNumber = *(UA_Int32 *) value.data;
-		UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND, "The Serial number is %d", serialNumber);
+		UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND, "Serial Number : %d", serialNumber);
     }
 	
 	//Read the time stamp
@@ -32,7 +33,7 @@ static void readNode(UA_Client *client, UA_StatusCode retval, UA_Variant value)
     {
 		timeStamp = *(UA_DateTime *) value.data;
 		UA_DateTimeStruct dts = UA_DateTime_toStruct(timeStamp);	
-		UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND, "The TimeStamp is : %u-%u-%u %u:%u:%u.%03u",
+		UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND, "TimeStamp : %u-%u-%u %u:%u:%u.%03u",
                     dts.day, dts.month, dts.year, dts.hour, dts.min, dts.sec, dts.milliSec);
     }
 
@@ -41,14 +42,11 @@ static void readNode(UA_Client *client, UA_StatusCode retval, UA_Variant value)
     if(retval == UA_STATUSCODE_GOOD && UA_Variant_hasScalarType(&value, &UA_TYPES[UA_TYPES_DOUBLE])) 
     {
 		variable = *(UA_Double *) value.data;
-		UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND, "The Variable is %f", variable);
+		UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND, "Variable Value : %f", variable);
     }
-
 }
 
-
-
-
+// myClient main 
 int main(void)
 {
     UA_Client *client = UA_Client_new();
@@ -71,19 +69,6 @@ int main(void)
     retval = UA_Client_readValueAttribute(client, nodeId, &value);
 
 	
-	/*
-	// Trying to work on fidnnig a server 
-	UA_StatusCode UA_Client_findServers(UA_Client *client, const char *serverUrl,
-                      size_t serverUrisSize, UA_String *serverUris,
-                      size_t localeIdsSize, UA_String *localeIds,
-                      size_t *registeredServersSize,
-                      UA_ApplicationDescription **registeredServers);
-	
-	
-	
-	*/
-	
-	
     if(retval == UA_STATUSCODE_GOOD && UA_Variant_hasScalarType(&value, &UA_TYPES[UA_TYPES_DATETIME]))
     {
         UA_DateTime raw_date = *(UA_DateTime *) value.data;
@@ -92,52 +77,9 @@ int main(void)
                     dts.day, dts.month, dts.year, dts.hour, dts.min, dts.sec, dts.milliSec);
     }
 
-	
-/*	
-    //Variables for read access 
-    UA_String variableName;
-    UA_Int32 serialNumber;
-	UA_DateTime timeStamp;
-    UA_Double variable;
+	// Read out the values from the server, manualy no discovery things 
+	readNode(client, retval, value);
 
-    //Read Variable name
-    retval = UA_Client_readValueAttribute(client, UA_NODEID_STRING(2, "testVariableName"), &value);
-    if(retval == UA_STATUSCODE_GOOD && UA_Variant_hasScalarType(&value, &UA_TYPES[UA_TYPES_STRING])) 
-    {
-		variableName = *(UA_String *) value.data;
-		UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND, "The Variable name is %.*s", variableName.length, variableName.data);
-    }
-
-    //Read Serial Number 
-    retval = UA_Client_readValueAttribute(client, UA_NODEID_STRING(2, "testSerial"), &value);
-    if(retval == UA_STATUSCODE_GOOD && UA_Variant_hasScalarType(&value, &UA_TYPES[UA_TYPES_INT32])) 
-    {
-		serialNumber = *(UA_Int32 *) value.data;
-		UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND, "The Serial number is %d", serialNumber);
-    }
-	
-	//Read the time stamp
-    retval = UA_Client_readValueAttribute(client, UA_NODEID_STRING(2, "testTimeStamp"), &value);
-    if(retval == UA_STATUSCODE_GOOD && UA_Variant_hasScalarType(&value, &UA_TYPES[UA_TYPES_DATETIME])) 
-    {
-		timeStamp = *(UA_DateTime *) value.data;
-		UA_DateTimeStruct dts = UA_DateTime_toStruct(timeStamp);	
-		UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND, "The TimeStamp is : %u-%u-%u %u:%u:%u.%03u",
-                    dts.day, dts.month, dts.year, dts.hour, dts.min, dts.sec, dts.milliSec);
-    }
-
-    //Read the variable 
-    retval = UA_Client_readValueAttribute(client, UA_NODEID_STRING(2, "testVariable"), &value);
-    if(retval == UA_STATUSCODE_GOOD && UA_Variant_hasScalarType(&value, &UA_TYPES[UA_TYPES_DOUBLE])) 
-    {
-		variable = *(UA_Double *) value.data;
-		UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND, "The Variable is %f", variable);
-    }
-*/
-readNode(client, retval, value);
-	
-	// Checking the numbers bc something was not right above 
-	// printf("%d\n %f\n ", serialNumber, variable);
 
     /* Clean up */
     UA_Variant_clear(&value);
