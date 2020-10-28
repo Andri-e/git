@@ -3,10 +3,10 @@
 #include <signal.h>
 #include <stdlib.h>
 
-static volatile UA_Boolean running = true;
-//Global variable to print out in test Variable
-UA_Double variable = 20.0;
-UA_DateTime timeStamp = 0;
+static volatile UA_Boolean running = true;			// Server state
+
+UA_Double variable = 20.0;						
+UA_DateTime timeStamp = 0;	
 
 // Stop handler to watch for ctrl + c 
 static void stopHandler(int sig)
@@ -15,32 +15,14 @@ static void stopHandler(int sig)
     running = false;
 }
 
-// Adding variable callback
-static void beforeReadVariable(UA_Server *server,
-               const UA_NodeId *sessionId, void *sessionContext,
-               const UA_NodeId *nodeid, void *nodeContext,
-               const UA_NumericRange *range, const UA_DataValue *data) 
-{
-	// Need to get a dam dht11 or some sensor to run here
-    float tempVariable = 1.0 * (rand()%100)/100 - 0.5;
-	variable += tempVariable;
-	
-	// Way to update the variable 
-	UA_Variant value;
-    UA_Variant_setScalar(&value, &variable, &UA_TYPES[UA_TYPES_DOUBLE]);
-    UA_Server_writeValue(server, UA_NODEID_STRING(2, "testVariable"), value);
-}
-
+// Argument check, is Host name and Port number default? 
 static void checkArguments(UA_Server *server, int argc, char * argv[] )
 {
-	printf("Some text AGGG \n AGGG \n ahhh!");
-	
 	//Check for Arguments, host name and port number
     if(argc > 2)
     {
 		UA_Int16 port_number = atoi(argv[2]);
 		UA_ServerConfig_setMinimal(UA_Server_getConfig(server), port_number, 0);
-		printf("Custom port number set \n");
     } 
     else
     {	
@@ -57,11 +39,10 @@ static void checkArguments(UA_Server *server, int argc, char * argv[] )
 
 		//Change the configuration 
 		UA_ServerConfig_setCustomHostname(UA_Server_getConfig(server), hostname);
-		printf("Custom host name set \n");
     }
-	
 }
 
+// Setting up the object node and its variables 
 static void nodeSetup(UA_Server *server)
 {
  //Add a new namespace to the server
@@ -95,7 +76,7 @@ static void nodeSetup(UA_Server *server)
                               UA_QUALIFIEDNAME(2, "Serial Number"),
                               UA_NODEID_NUMERIC(0, UA_NS0ID_BASEDATAVARIABLETYPE), snAttr, NULL, NULL);
 	
-//Add the Variable to the server
+	//Add the Variable to the server
     UA_VariableAttributes tsAttr = UA_VariableAttributes_default;
     UA_Variant_setScalar(&tsAttr.value, &variable, &UA_TYPES[UA_TYPES_DATETIME]);
     UA_Server_addVariableNode(server, UA_NODEID_STRING(2, "testTimeStamp"), testObjectId,
@@ -114,24 +95,16 @@ static void nodeSetup(UA_Server *server)
 
 
 // Timestamp thing
-static void updateCurrentTime(UA_Server *server) 
+static void beforeReadTime(UA_Server *server,
+               const UA_NodeId *sessionId, void *sessionContext,
+               const UA_NodeId *nodeid, void *nodeContext,
+               const UA_NumericRange *range, const UA_DataValue *data) 
 {
     timeStamp = UA_DateTime_now();
     UA_Variant value;
     UA_Variant_setScalar(&value, &timeStamp, &UA_TYPES[UA_TYPES_DATETIME]);
     UA_Server_writeValue(server, UA_NODEID_STRING(2, "testTimeStamp"), value);
 }
-
-static void beforeReadTime(UA_Server *server,
-               const UA_NodeId *sessionId, void *sessionContext,
-               const UA_NodeId *nodeid, void *nodeContext,
-               const UA_NumericRange *range, const UA_DataValue *data) 
-{
-    updateCurrentTime(server);
-}
-
-
-
 
 static void addValueCallbackToCurrentTimeVariable(UA_Server *server) {
     UA_ValueCallback callback ;
@@ -140,9 +113,30 @@ static void addValueCallbackToCurrentTimeVariable(UA_Server *server) {
     UA_Server_setVariableNode_valueCallback(server, UA_NODEID_STRING(2, "testTimeStamp"), callback);
 }
 
+// Variable Callback 
+static void beforeReadVariable(UA_Server *server,
+               const UA_NodeId *sessionId, void *sessionContext,
+               const UA_NodeId *nodeid, void *nodeContext,
+               const UA_NumericRange *range, const UA_DataValue *data) 
+{
+	// Need to get a dam dht11 or some sensor to run here
+    float tempVariable = 1.0 * (rand()%100)/100 - 0.5;
+	variable += tempVariable;
+	
+	// Way to update the variable 
+	UA_Variant value;
+    UA_Variant_setScalar(&value, &variable, &UA_TYPES[UA_TYPES_DOUBLE]);
+    UA_Server_writeValue(server, UA_NODEID_STRING(2, "testVariable"), value);
+}
 
+static void addValueCallbackToCurrentVariable(UA_Server *server) {
+    UA_ValueCallback callback ;
+    callback.onRead = beforeReadVariable;
+    callback.onWrite = NULL;
+    UA_Server_setVariableNode_valueCallback(server, UA_NODEID_STRING(2, "testVariable"), callback);
+}
 
-// myServer with Hostname and Portnumber
+// myServer main 
 int main(int argc, char * argv[])
 {
 	// Setting up the signals for the stop signal (ctrl + c)
@@ -158,19 +152,17 @@ int main(int argc, char * argv[])
 	// Setup the nodes used 
 	nodeSetup(server);
 	
-	
-	
-	// Add callback for updateing the TimeStamp
-	
+	// Add callback for updating the TimeStamp
 	addValueCallbackToCurrentTimeVariable(server);
-	
-							  
+	addValueCallbackToCurrentVariable(server);
+
+/*	
 	// Add callback to update the variable 
     UA_ValueCallback callback ;
     callback.onRead = beforeReadVariable; 	// function pointer to a function that will be executed before before answering a read request
     callback.onWrite = NULL;		// function pointer to a function that will be executed before write is allowed to take place 
     UA_Server_setVariableNode_valueCallback(server, UA_NODEID_STRING(2, "testVariable"), callback);
-
+*/
 	
 	// Server start up 
     UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND, "Starting server...");

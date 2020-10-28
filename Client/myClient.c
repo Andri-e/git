@@ -67,17 +67,14 @@ int main(void)
 		UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND, "The Serial number is %d", serialNumber);
     }
 	
-//Read the time stamp
+	//Read the time stamp
     retval = UA_Client_readValueAttribute(client, UA_NODEID_STRING(2, "testTimeStamp"), &value);
     if(retval == UA_STATUSCODE_GOOD && UA_Variant_hasScalarType(&value, &UA_TYPES[UA_TYPES_DATETIME])) 
     {
 		timeStamp = *(UA_DateTime *) value.data;
-		UA_DateTimeStruct dts = UA_DateTime_toStruct(timeStamp);
-		
+		UA_DateTimeStruct dts = UA_DateTime_toStruct(timeStamp);	
 		UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND, "The TimeStamp is : %u-%u-%u %u:%u:%u.%03u",
                     dts.day, dts.month, dts.year, dts.hour, dts.min, dts.sec, dts.milliSec);
-		
-		//UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND, "The Timestamp is is %f", variable);
     }
 
     //Read the variable 
@@ -90,7 +87,7 @@ int main(void)
 
 	
 	// Checking the numbers bc something was not right above 
-	 printf("%d\n %f\n ", serialNumber, variable);
+	// printf("%d\n %f\n ", serialNumber, variable);
 
     /* Clean up */
     UA_Variant_clear(&value);
