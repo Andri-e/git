@@ -122,9 +122,9 @@ static void beforeReadTime(UA_Server *server,
 
 static void updateCurrentTime(UA_Server *server) 
 {
-    UA_DateTime now = UA_DateTime_now();
+    timeStamp = UA_DateTime_now();
     UA_Variant value;
-    UA_Variant_setScalar(&value, &now, &UA_TYPES[UA_TYPES_DATETIME]);
+    UA_Variant_setScalar(&value, &timeStamp, &UA_TYPES[UA_TYPES_DATETIME]);
     UA_Server_writeValue(server, UA_NODEID_STRING(2, "testTimeStamp"), value);
 }
 
