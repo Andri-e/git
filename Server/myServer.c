@@ -23,7 +23,7 @@ beforeReadVariable(UA_Server *server,
 {
 	// Need to get a dam dht11 or some sensor to run here
     float tempVariable = 1.0 * (rand()%100)/100 - 0.5;
-	temperature += tempVariable;
+	variable += tempVariable;
 	
 	
 	// Way to update the variable 
@@ -110,14 +110,16 @@ int main(int argc, char * argv[])
     UA_ValueCallback callback ;
     callback.onRead = beforeReadVariable; 	// function pointer to a function that will be executed before before answering a read request
     callback.onWrite = NULL;		// function pointer to a function that will be executed before write is allowed to take place 
-    UA_Server_setVariableNode_valueCallback(server, currentNodeId, callback);
+    UA_Server_setVariableNode_valueCallback(server, UA_NODEID_STRING(2, "testVariable"), callback);
 
+	
+	// Server start up 
     UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND, "Starting server...");
     UA_StatusCode retval = UA_Server_run(server, &running);
     UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND, "Shuting down server....");
 
 
-
+	// Clean up after shut down 
     UA_Server_delete(server);
     return retval == UA_STATUSCODE_GOOD ? EXIT_SUCCESS : EXIT_FAILURE;
 }
