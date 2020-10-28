@@ -161,7 +161,7 @@ int main(void)
     /*
      * Now that we have the list of available servers, call get endpoints on all of them
      */
-
+/*
     printf("-------- Server Endpoints --------\n");
 
     for(size_t i = 0; i < applicationDescriptionArraySize; i++) {
@@ -231,7 +231,9 @@ int main(void)
 
     UA_Array_delete(applicationDescriptionArray, applicationDescriptionArraySize,
                     &UA_TYPES[UA_TYPES_APPLICATIONDESCRIPTION]);
-
+					
+					
+*/
     return EXIT_SUCCESS;
 
 
