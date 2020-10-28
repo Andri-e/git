@@ -48,6 +48,7 @@ int main(void)
     //Variables for read access 
     UA_String variableName;
     UA_Int32 serialNumber;
+	UA_DateTime timeStamp;
     UA_Double variable;
 
     //Read Variable name -- OK 
@@ -64,6 +65,14 @@ int main(void)
     {
 		serialNumber = *(UA_Int32 *) value.data;
 		UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND, "The Serial number is %d", serialNumber);
+    }
+	
+//Read the time stamp
+    retval = UA_Client_readValueAttribute(client, UA_NODEID_STRING(2, "testTimeStamp"), &value);
+    if(retval == UA_STATUSCODE_GOOD && UA_Variant_hasScalarType(&value, &UA_TYPES[UA_TYPES_DATETIME])) 
+    {
+		timeStamp = *(UA_DateTime *) value.data;
+		UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND, "The Variable is %f", variable);
     }
 
     //Read the variable 
