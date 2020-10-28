@@ -16,26 +16,26 @@
 #ifndef UA_SERVER_H_
 #define UA_SERVER_H_
 
-#include <open62541/util.h>
-#include <open62541/types.h>
-#include <open62541/common.h>
-#include <open62541/nodeids.h>
-#include <open62541/types_generated.h>
-#include <open62541/types_generated_handling.h>
+#include "util.h"
+#include "types.h"
+#include "common.h"
+//#include "nodeids.h"
+//#include "types_generated.h"
+//#include "types_generated_handling.h"
 
-#include <open62541/plugin/securitypolicy.h>
-#include <open62541/plugin/accesscontrol.h>
-#include <open62541/plugin/nodestore.h>
-#include <open62541/plugin/network.h>
-#include <open62541/plugin/log.h>
-#include <open62541/plugin/pki.h>
+#include "securitypolicy.h"
+#include "accesscontrol.h"
+#include "nodestore.h"
+#include "network.h"
+#include "log.h"
+#include "pki.h"
 
 #ifdef UA_ENABLE_PUBSUB
-#include <open62541/plugin/pubsub.h>
+#include "pubsub.h"
 #endif
 
 #ifdef UA_ENABLE_HISTORIZING
-#include <open62541/plugin/historydatabase.h>
+#include "historydatabase.h"
 #endif
 
 _UA_BEGIN_DECLS
