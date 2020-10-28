@@ -112,13 +112,7 @@ static void nodeSetup(UA_Server *server)
                               UA_NODEID_NUMERIC(0, UA_NS0ID_BASEDATAVARIABLETYPE), variableAttr, NULL, NULL);
 }
 
-static void beforeReadTime(UA_Server *server,
-               const UA_NodeId *sessionId, void *sessionContext,
-               const UA_NodeId *nodeid, void *nodeContext,
-               const UA_NumericRange *range, const UA_DataValue *data) 
-{
-    updateCurrentTime(server);
-}
+
 
 static void updateCurrentTime(UA_Server *server) 
 {
@@ -127,6 +121,17 @@ static void updateCurrentTime(UA_Server *server)
     UA_Variant_setScalar(&value, &timeStamp, &UA_TYPES[UA_TYPES_DATETIME]);
     UA_Server_writeValue(server, UA_NODEID_STRING(2, "testTimeStamp"), value);
 }
+
+
+static void beforeReadTime(UA_Server *server,
+               const UA_NodeId *sessionId, void *sessionContext,
+               const UA_NodeId *nodeid, void *nodeContext,
+               const UA_NumericRange *range, const UA_DataValue *data) 
+{
+    updateCurrentTime(server);
+}
+
+
 
 /*
 static void addValueCallbackToCurrentTimeVariable(UA_Server *server) {
