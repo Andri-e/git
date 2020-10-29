@@ -143,7 +143,7 @@ int main(void)
             UA_LOG_ERROR(UA_Log_Stdout, UA_LOGCATEGORY_CLIENT, "Connection was closed. Reconnecting ...");
             continue;
         }
-        if(retval == UA_STATUSCODE_GOOD && UA_Variant_hasScalarType(&value, &UA_TYPES[UA_TYPES_DATETIME] && first_connect == true)) 
+        if(retval == UA_STATUSCODE_GOOD && UA_Variant_hasScalarType(&value, &UA_TYPES[UA_TYPES_DATETIME]) && first_connect == true) 
 		{
             UA_DateTime raw_date = *(UA_DateTime *) value.data;
             UA_DateTimeStruct dts = UA_DateTime_toStruct(raw_date);
