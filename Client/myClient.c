@@ -144,6 +144,9 @@ UA_Client *client = UA_Client_new();
                         dts.day, dts.month, dts.year, dts.hour, dts.min, dts.sec, dts.milliSec);
         }
         UA_Variant_clear(&value);
+		
+		readNode(client, retval, value);
+		
         UA_sleep_ms(1000);
     };
 
@@ -156,7 +159,7 @@ UA_Client *client = UA_Client_new();
 
 
 	// Read out the values from the server, manualy no discovery things 
-	readNode(client, retval, value);
+	//readNode(client, retval, value);
 
 
     // Clean up 
