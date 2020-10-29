@@ -33,7 +33,7 @@ static void readNode(UA_Client *client, UA_StatusCode retval, UA_Variant value)
     if(retval == UA_STATUSCODE_GOOD && UA_Variant_hasScalarType(&value, &UA_TYPES[UA_TYPES_STRING])) 
     {
 		variableName = *(UA_String *) value.data;
-		UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND, "Variable name : %.*s", variableName.length, variableName.data);
+		//UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND, "Variable name : %.*s", variableName.length, variableName.data);
     }
 
     //Read Serial Number 
@@ -41,7 +41,7 @@ static void readNode(UA_Client *client, UA_StatusCode retval, UA_Variant value)
     if(retval == UA_STATUSCODE_GOOD && UA_Variant_hasScalarType(&value, &UA_TYPES[UA_TYPES_INT32])) 
     {
 		serialNumber = *(UA_Int32 *) value.data;
-		UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND, "Serial Number : %d", serialNumber);
+		//UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND, "Serial Number : %d", serialNumber);
     }
 	
 	//Read the time stamp
@@ -50,8 +50,8 @@ static void readNode(UA_Client *client, UA_StatusCode retval, UA_Variant value)
     {
 		timeStamp = *(UA_DateTime *) value.data;
 		UA_DateTimeStruct dts = UA_DateTime_toStruct(timeStamp);	
-		UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND, "TimeStamp : %u-%u-%u %u:%u:%u.%03u",
-                    dts.day, dts.month, dts.year, dts.hour, dts.min, dts.sec, dts.milliSec);
+	//	UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND, "TimeStamp : %u-%u-%u %u:%u:%u.%03u",
+     //               dts.day, dts.month, dts.year, dts.hour, dts.min, dts.sec, dts.milliSec);
     }
 
     //Read the variable 
@@ -59,8 +59,10 @@ static void readNode(UA_Client *client, UA_StatusCode retval, UA_Variant value)
     if(retval == UA_STATUSCODE_GOOD && UA_Variant_hasScalarType(&value, &UA_TYPES[UA_TYPES_DOUBLE])) 
     {
 		variable = *(UA_Double *) value.data;
-		UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND, "Variable Value : %f", variable);
+		//UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND, "Variable Value : %f", variable);
     }
+	
+	UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND, "%.*s , %d , %u-%u-%u %u:%u:%u.%03u , %f . ", variableName.length, variableName.data, serialNumber, dts.day, dts.month, dts.year, dts.hour, dts.min, dts.sec, dts.milliSec, variable );
 }
 
 // myClient main 
