@@ -4,7 +4,7 @@
 
 // ---------------------------------------
 
-#define DISCOVERY_SERVER_ENDPOINT "opc.tcp://localhost:4840"
+// #define DISCOVERY_SERVER_ENDPOINT "opc.tcp://localhost:4840"
 
 
 // ---------------------------------------
@@ -100,12 +100,12 @@ int main(void)
         UA_Array_delete(serverOnNetwork, serverOnNetworkSize,
                         &UA_TYPES[UA_TYPES_SERVERONNETWORK]);
     }
-	*/
+	
 
-    /* Example for calling FindServers */
+    // Example for calling FindServers 
     UA_ApplicationDescription *applicationDescriptionArray = NULL;
     size_t applicationDescriptionArraySize = 0;
-/*
+
     UA_StatusCode retval;
     {
         UA_Client *client = UA_Client_new();
@@ -119,7 +119,7 @@ int main(void)
                 "Is the discovery server started? StatusCode %s", UA_StatusCode_name(retval));
         return EXIT_FAILURE;
     }
-*/
+
     // output all the returned/registered servers
     for(size_t i = 0; i < applicationDescriptionArraySize; i++) {
         UA_ApplicationDescription *description = &applicationDescriptionArray[i];
@@ -158,10 +158,10 @@ int main(void)
     }
 
 
-    /*
-     * Now that we have the list of available servers, call get endpoints on all of them
-     */
-/*
+    
+    // Now that we have the list of available servers, call get endpoints on all of them
+     
+
     printf("-------- Server Endpoints --------\n");
 
     for(size_t i = 0; i < applicationDescriptionArraySize; i++) {
@@ -234,7 +234,7 @@ int main(void)
 					
 					
 */
-    return EXIT_SUCCESS;
+
 
 
 
@@ -246,7 +246,7 @@ int main(void)
 
 
 // -------------------------------------------------------
-/*
+
 
     UA_Client *client = UA_Client_new();
     UA_ClientConfig_setDefault(UA_Client_getConfig(client));
@@ -284,5 +284,5 @@ int main(void)
     UA_Variant_clear(&value);
     UA_Client_delete(client); //Disconnects the client internally 
     return EXIT_SUCCESS;
-	*/
+	
 }
