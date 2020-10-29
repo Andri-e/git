@@ -27,6 +27,8 @@ static void readNode(UA_Client *client, UA_StatusCode retval, UA_Variant value)
     UA_Int32 serialNumber;
 	UA_DateTime timeStamp;
     UA_Double variable;
+	
+	UA_DateTimeStruct dts = UA_DateTime_toStruct(timeStamp);	
 
     //Read Variable name
     retval = UA_Client_readValueAttribute(client, UA_NODEID_STRING(2, "testVariableName"), &value);
