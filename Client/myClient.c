@@ -56,6 +56,16 @@ static void readNode(UA_Client *client, UA_StatusCode retval, UA_Variant value)
      //               dts.day, dts.month, dts.year, dts.hour, dts.min, dts.sec, dts.milliSec);
     }
 
+	//Read the cpu temp
+    retval = UA_Client_readValueAttribute(client, UA_NODEID_STRING(2, "testVariable"), &value);
+    if(retval == UA_STATUSCODE_GOOD && UA_Variant_hasScalarType(&value, &UA_TYPES[UA_TYPES_FLOAT])) 
+    {
+		variable = *(UA_Float *) value.data;
+		//UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND, "Variable Value : %f", variable);
+    }
+	
+	
+	/*
     //Read the variable 
     retval = UA_Client_readValueAttribute(client, UA_NODEID_STRING(2, "testVariable"), &value);
     if(retval == UA_STATUSCODE_GOOD && UA_Variant_hasScalarType(&value, &UA_TYPES[UA_TYPES_DOUBLE])) 
@@ -63,7 +73,7 @@ static void readNode(UA_Client *client, UA_StatusCode retval, UA_Variant value)
 		variable = *(UA_Double *) value.data;
 		//UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND, "Variable Value : %f", variable);
     }
-	
+	*/
 	UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND, "%.*s , %d , %u-%u-%u %u:%u:%u.%03u , %f . ", variableName.length, variableName.data, serialNumber, dts.day, dts.month, dts.year, dts.hour, dts.min, dts.sec, dts.milliSec, variable );
 }
 

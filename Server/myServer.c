@@ -124,7 +124,8 @@ static void beforeReadVariable(UA_Server *server,
 	
 
 	// Read cpu Temp 
-	float systemp, millideg;
+	float systemp; 
+	UA_Float millideg;
 	FILE *thermal;
 	int n;
 
@@ -138,7 +139,7 @@ static void beforeReadVariable(UA_Server *server,
 	
 	// Way to update the variable 
 	UA_Variant value;
-	UA_Variant_setScalar(&value, &systemp, &UA_TYPES[UA_TYPES_DOUBLE]);
+	UA_Variant_setScalar(&value, &systemp, &UA_TYPES[UA_TYPES_FLOAT]);
     //UA_Variant_setScalar(&value, &variable, &UA_TYPES[UA_TYPES_DOUBLE]);
     UA_Server_writeValue(server, UA_NODEID_STRING(2, "testVariable"), value);
 }
