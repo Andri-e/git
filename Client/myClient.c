@@ -4,7 +4,7 @@
 #include <stdlib.h>
 
 UA_Boolean running = true;
-UA_DateTime timeStamp;
+UA_DateTime timeStamp = 0;
 UA_DateTimeStruct dts = UA_DateTime_toStruct(timeStamp);	
 
 // ---------------------------------------
