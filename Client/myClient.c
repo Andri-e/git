@@ -77,21 +77,12 @@ static void readNode(UA_Client *client, UA_StatusCode retval, UA_Variant value)
 		sysIdle = *(UA_Double*) value.data;
     }
 	
-	long            ms; // Milliseconds
-    time_t          s;  // Seconds
-    struct timespec spec;
 
-    clock_gettime(CLOCK_REALTIME, &spec);
-
-    s  = spec.tv_sec;
-    ms = spec.tv_nsec / 1.0e6; // Convert nanoseconds to milliseconds
-    if (ms > 999) {
-        s++;
-        ms = 0;
-    }
-
-    printf("Current time: %"PRIdMAX".%03ld seconds since the Epoch\n",
-           (intmax_t)s, ms);
+	
+	UA_DateTime refTimeStamp;
+	refTimeStamp = UA_DateTime_now();
+	UA_DateTimeStruct dts_1 = UA_DateTime_toStruct(refTimeStamp);	
+	UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND, %d , %u-%u-%u %u:%u:%u.%03u " dts_1.day, dts_1.month, dts_1.year, dts_1.hour, dts_1.min, dts_1.sec, dts_1.milliSec);
 	
 
 		
