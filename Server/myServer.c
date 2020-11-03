@@ -246,12 +246,13 @@ static void beforeReadLoad(UA_Server *server,
 	
 	// Get latest stats for cpu load 
 	get_stats(&st0_0, -1);
-        
+    sleep(1);
+    get_stats(&st0_1, -1);   
 	printf("CPU: %lf%%\n", calculate_load(&st0_0, &st0_1));
 
 	sysload = calculate_load(&st0_0, &st0_1);
 	
-	printf("\n\n\n CPU: %lf%%\n\n\n\n\n", sysload);
+	//printf("\n\n\n CPU: %lf%%\n\n\n\n\n", sysload);
 
 	// Way to update the variable 
 	UA_Variant value;
@@ -266,7 +267,9 @@ static void addValueCallbackToCurrentLoad(UA_Server *server) {
     UA_Server_setVariableNode_valueCallback(server, UA_NODEID_STRING(2, "testSysLoad"), callback);
 }
 
+// -------------------- +CPu load value controlled 
 
+//-----------------------
 
 
 // myServer main 
@@ -276,7 +279,7 @@ int main(int argc, char * argv[])
     signal(SIGINT, stopHandler);
     signal(SIGTERM, stopHandler);
 	
-	
+
 	// Creating a new server 
     UA_Server *server = UA_Server_new();
 
