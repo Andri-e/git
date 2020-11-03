@@ -153,9 +153,7 @@ int main(int argc, char * argv[])
 {
 	// Setting up the signals for the stop signal (ctrl + c)
     signal(SIGINT, stopHandler);
-   // signal(SIGTERM, stopHandler);
 	
-
 	// Creating a new server 
     UA_Server *server = UA_Server_new();
 
@@ -168,6 +166,8 @@ int main(int argc, char * argv[])
 	// Add callback for updating the TimeStamp / Variable
 	addValueCallbackToCurrentTimeVariable(server);
 	addValueCallbackVariable(server);
+	
+	printf("------------------------------------------")
 
 	
 	// Server start up 
