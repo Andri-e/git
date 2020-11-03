@@ -185,7 +185,7 @@ static void beforeReadIdle(UA_Server *server,
 	char* token;
 	int i = 0,times,lag;
 	long int sum = 0, idle, lastSum = 0,lastIdle = 0;
-	long double idleFraction;
+	 double idleFraction;
 
 	FILE* fp = fopen("/proc/stat","r");
 	i = 0;
