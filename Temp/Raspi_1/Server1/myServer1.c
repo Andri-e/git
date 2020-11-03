@@ -62,7 +62,7 @@ static void nodeSetup(UA_Server *server)
                             UA_QUALIFIEDNAME(2, "Test Object"), UA_NODEID_NUMERIC(0, UA_NS0ID_BASEOBJECTTYPE),
                             oAttr, NULL, &testObjectId);
 
-    //Add the variable name to the server
+    //
     UA_VariableAttributes vnAttr = UA_VariableAttributes_default;
     UA_String variableName = UA_STRING("nameOfUser");
     UA_Variant_setScalar(&vnAttr.value, &variableName, &UA_TYPES[UA_TYPES_STRING]);
@@ -71,7 +71,7 @@ static void nodeSetup(UA_Server *server)
                               UA_QUALIFIEDNAME(2, "User Name"),
                               UA_NODEID_NUMERIC(0, UA_NS0ID_BASEDATAVARIABLETYPE), vnAttr, NULL, NULL);
 
-    //Add the variable serial number to the server 
+    //
     UA_VariableAttributes userIdAttr = UA_VariableAttributes_default;
     UA_Int32 userId = 654321;
     UA_Variant_setScalar(&userIdAttr.value, &userId, &UA_TYPES[UA_TYPES_INT32]);
@@ -80,9 +80,9 @@ static void nodeSetup(UA_Server *server)
                               UA_QUALIFIEDNAME(2, "User Identification"),
                               UA_NODEID_NUMERIC(0, UA_NS0ID_BASEDATAVARIABLETYPE), userIdAttr, NULL, NULL);
 	
-	//Add the Variable to the server
+	//
     UA_VariableAttributes tsAttr = UA_VariableAttributes_default;
-    UA_Variant_setScalar(&tsAttr.value, &variable, &UA_TYPES[UA_TYPES_DATETIME]);
+    UA_Variant_setScalar(&tsAttr.value, &timeStamp, &UA_TYPES[UA_TYPES_DATETIME]);
     UA_Server_addVariableNode(server, UA_NODEID_STRING(2, "testTimeStamp"), testObjectId,
                               UA_NODEID_NUMERIC(0, UA_NS0ID_HASCOMPONENT),
                               UA_QUALIFIEDNAME(2, "timeStamp"),
@@ -132,9 +132,11 @@ static void beforeReadVariable(UA_Server *server,
                const UA_NodeId *nodeid, void *nodeContext,
                const UA_NumericRange *range, const UA_DataValue *data) 
 {
-    timeStamp = UA_DateTime_now();
+
+	variable = variable + 1 ; 
+
     UA_Variant value;
-    UA_Variant_setScalar(&value, &timeStamp, &UA_TYPES[UA_TYPES_DATETIME]);
+    UA_Variant_setScalar(&value, &variable, &UA_TYPES[UA_TYPES_DATETIME]);
     UA_Server_writeValue(server, UA_NODEID_STRING(2, "testVariable"), value);
 }
 
