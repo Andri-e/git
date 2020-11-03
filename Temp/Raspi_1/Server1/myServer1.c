@@ -167,7 +167,7 @@ int main(int argc, char * argv[])
 	addValueCallbackToCurrentTimeVariable(server);
 	addValueCallbackVariable(server);
 	
-	printf("------------------------------------------")
+	printf("------------------------------------------");
 
 	
 	// Server start up 
