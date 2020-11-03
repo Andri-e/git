@@ -187,35 +187,30 @@ static void beforeReadIdle(UA_Server *server,
 	long int sum = 0, idle, lastSum = 0,lastIdle = 0;
 	long double idleFraction;
 
-		FILE* fp = fopen("/proc/stat","r");
-	    i = 0;
-		fgets(str,100,fp);
-		fclose(fp);
-		token = strtok(str,d);
-		sum = 0;
-		while(token!=NULL)
+	FILE* fp = fopen("/proc/stat","r");
+	i = 0;
+	fgets(str,100,fp);
+	fclose(fp);
+	token = strtok(str,d);
+	sum = 0;
+	while(token!=NULL)
+	{
+		token = strtok(NULL,d);
+		if(token!=NULL)
 		{
-			token = strtok(NULL,d);
-			if(token!=NULL)
+			sum += atoi(token);
+			if(i==3)
 			{
-				sum += atoi(token);
-
-				if(i==3)
-				{
-					idle = atoi(token);
-				}
-				i++;
+				idle = atoi(token);
 			}
+			i++;
 		}
-		idleFraction = 100 - (idle-lastIdle)*100.0/(sum-lastSum);
-		printf("\n\nBusy for : %lf %% of the time.", idleFraction);
-		sysidle = (double)idleFraction;
-		
-	//	printf("\nBusy for : %f %% of the time.\n\n", sysidle);
-		
-		
-		lastIdle = idle;
-		lastSum = sum;
+	}
+	idleFraction = 100 - (idle-lastIdle)*100.0/(sum-lastSum);
+	lastIdle = idle;
+	lastSum = sum;
+	
+	sysidle = (double)idleFraction;
 
 	// Way to update the variable 
 	UA_Variant value;
