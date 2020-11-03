@@ -96,12 +96,12 @@ static void nodeSetup(UA_Server *server)
                               UA_NODEID_NUMERIC(0, UA_NS0ID_BASEDATAVARIABLETYPE), tsAttr, NULL, NULL);					  
 	
 	//Add the cpu Temperature to the server
-    UA_VariableAttributes variableAttr = UA_VariableAttributes_default;
-    UA_Variant_setScalar(&variableAttr.value, &systemp, &UA_TYPES[UA_TYPES_FLOAT]);
+    UA_VariableAttributes sysTempAttr = UA_VariableAttributes_default;
+    UA_Variant_setScalar(&sysTempAttr.value, &systemp, &UA_TYPES[UA_TYPES_FLOAT]);
     UA_Server_addVariableNode(server, UA_NODEID_STRING(2, "testSysTemp"), testObjectId,
                               UA_NODEID_NUMERIC(0, UA_NS0ID_HASCOMPONENT),
-                              UA_QUALIFIEDNAME(2, "Variable"),
-                              UA_NODEID_NUMERIC(0, UA_NS0ID_BASEDATAVARIABLETYPE), variableAttr, NULL, NULL);
+                              UA_QUALIFIEDNAME(2, "systemTemperature"),
+                              UA_NODEID_NUMERIC(0, UA_NS0ID_BASEDATAVARIABLETYPE), sysTempAttr, NULL, NULL);
 	
 	//Add the Variable to the server
     UA_VariableAttributes variableAttr = UA_VariableAttributes_default;
