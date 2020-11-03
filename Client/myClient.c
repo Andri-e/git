@@ -26,10 +26,10 @@ static void readNode(UA_Client *client, UA_StatusCode retval, UA_Variant value)
     UA_String variableName;
     UA_Int32 serialNumber;
 	UA_DateTime timeStamp;
-    //UA_Double variable;
 	UA_Float sysTemp;
-	//UA_Double sysload;
 	UA_Double sysIdle;
+	
+	//UA_Double variable;
 	
 	UA_DateTimeStruct dts = UA_DateTime_toStruct(timeStamp);	
 
@@ -55,8 +55,7 @@ static void readNode(UA_Client *client, UA_StatusCode retval, UA_Variant value)
     {
 		timeStamp = *(UA_DateTime *) value.data;
 		UA_DateTimeStruct dts = UA_DateTime_toStruct(timeStamp);	
-	//	UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND, "TimeStamp : %u-%u-%u %u:%u:%u.%03u",
-     //               dts.day, dts.month, dts.year, dts.hour, dts.min, dts.sec, dts.milliSec);
+		//UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND, "TimeStamp : %u-%u-%u %u:%u:%u.%03u", dts.day, dts.month, dts.year, dts.hour, dts.min, dts.sec, dts.milliSec);
     }
 
 	//Read the cpu temp
@@ -93,11 +92,12 @@ static void readNode(UA_Client *client, UA_StatusCode retval, UA_Variant value)
 // myClient main 
 int main(void)
 {
-	signal(SIGINT, stopHandler); /* catches ctrl-c */
+	signal(SIGINT, stopHandler); // catches ctrl-c 
+	
 	UA_Client *client = UA_Client_new();
     UA_ClientConfig *cc = UA_Client_getConfig(client);
     UA_ClientConfig_setDefault(cc);
-	bool first_connect = false;
+	bool first_connect = true;
 
     /* default timeout is 5 seconds. Set it to 1 second here for demo */
     cc->timeout = 1000;

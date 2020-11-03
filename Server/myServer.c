@@ -3,8 +3,7 @@
 #include <signal.h>
 #include <stdlib.h>
 
-
-//#include<stdlib.h>
+// See if I need the headers below 
 #include<string.h>
 #include<unistd.h>
 #include<stdio.h>
@@ -15,7 +14,6 @@ static volatile UA_Boolean running = true;			// Server state
 
 UA_Double variable = 20.0;						
 UA_DateTime timeStamp = 0;	
-
 UA_Float systemp = 0; 
 UA_Double sysidle = 0;
 
@@ -209,8 +207,6 @@ static void beforeReadIdle(UA_Server *server,
 	sysIdleFraction = 100 - (idle-lastIdle)*100.0/(sum-lastSum);
 	lastIdle = idle;
 	lastSum = sum;
-	
-	//sysidle = (double)idleFraction;
 
 	// Way to update the variable 
 	UA_Variant value;
@@ -231,7 +227,7 @@ int main(int argc, char * argv[])
 {
 	// Setting up the signals for the stop signal (ctrl + c)
     signal(SIGINT, stopHandler);
-    signal(SIGTERM, stopHandler);
+   // signal(SIGTERM, stopHandler);
 	
 
 	// Creating a new server 
