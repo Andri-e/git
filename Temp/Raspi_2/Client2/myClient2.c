@@ -101,7 +101,7 @@ int main(void)
     UA_Variant_init(&value);
 	UA_StatusCode retval = UA_Client_connect(client, SERVER_ENDPOINT);
 	
-	printf("\t\t\t\t\t\t\tUser Name \tUser Id \tTime Stamp \tVariable\n");
+	printf("\t\t\t\t\t\t\tUser Name \tUser Id \tTime Stamp \t\tVariable\n");
 	
 	// While loop that keeps reading the value from the server until it is disconnected 
     while(running) 
