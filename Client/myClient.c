@@ -5,7 +5,7 @@
 #include <time.h>
 
 //#include <inttypes.h>
-#include <math.h>
+//#include <math.h>
 #include <stdio.h>
 
 
