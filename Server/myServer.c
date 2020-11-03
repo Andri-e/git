@@ -106,7 +106,7 @@ static void nodeSetup(UA_Server *server)
 	
 	//Add the Sys Idle to the server
     UA_VariableAttributes sysIdleAttr = UA_VariableAttributes_default;
-    UA_Variant_setScalar(&variableAttr.value, &variable, &UA_TYPES[UA_TYPES_DOUBLE]);
+    UA_Variant_setScalar(&sysIdleAttr.value, &sysidle, &UA_TYPES[UA_TYPES_DOUBLE]);
     UA_Server_addVariableNode(server, UA_NODEID_STRING(2, "testSysIdle"), testObjectId,
                               UA_NODEID_NUMERIC(0, UA_NS0ID_HASCOMPONENT),
                               UA_QUALIFIEDNAME(2, "sysIdlePercentage"),
