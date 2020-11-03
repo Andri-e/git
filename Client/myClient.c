@@ -105,13 +105,16 @@ int main(void)
      * wrapper for the raw read service available as UA_Client_Service_read. */
     UA_Variant value; /* Variants can hold scalar values and arrays of any type */
     UA_Variant_init(&value);
+	
+	UA_StatusCode retval = UA_Client_connect(client, "opc.tcp://localhost:4840");
+	
 
     /* Endless loop reading the server time */
     while(running) {
         /* if already connected, this will return GOOD and do nothing */
         /* if the connection is closed/errored, the connection will be reset and then reconnected */
         /* Alternatively you can also use UA_Client_getState to get the current state */
-        UA_StatusCode retval = UA_Client_connect(client, "opc.tcp://localhost:4840");
+        //UA_StatusCode retval = UA_Client_connect(client, "opc.tcp://localhost:4840");
         if(retval != UA_STATUSCODE_GOOD) 
 		{ 
 			UA_LOG_ERROR(UA_Log_Stdout, UA_LOGCATEGORY_CLIENT, "Not connected. Retrying to connect in 1 second");
@@ -125,11 +128,13 @@ int main(void)
                         dts.day, dts.month, dts.year, dts.hour, dts.min, dts.sec, dts.milliSec);
 						
             UA_sleep_ms(1000);
+			UA_StatusCode retval = UA_Client_connect(client, "opc.tcp://localhost:4840");
             continue;
         }
         if(retval == UA_STATUSCODE_BADCONNECTIONCLOSED) 
 		{
             UA_LOG_ERROR(UA_Log_Stdout, UA_LOGCATEGORY_CLIENT, "Connection was closed. Reconnecting ...");
+			UA_StatusCode retval = UA_Client_connect(client, "opc.tcp://localhost:4840");
             continue;
         }
 
