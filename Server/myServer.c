@@ -180,6 +180,17 @@ static void addValueCallbackToCurrentTemerature(UA_Server *server) {
 
 
 // CPU Load Callback 
+struct cpustat {
+    unsigned long t_user;
+    unsigned long t_nice;
+    unsigned long t_system;
+    unsigned long t_idle;
+    unsigned long t_iowait;
+    unsigned long t_irq;
+    unsigned long t_softirq;
+};
+
+
 static void beforeReadLoad(UA_Server *server,
                const UA_NodeId *sessionId, void *sessionContext,
                const UA_NodeId *nodeid, void *nodeContext,
@@ -211,19 +222,6 @@ static void addValueCallbackToCurrentLoad(UA_Server *server) {
     UA_Server_setVariableNode_valueCallback(server, UA_NODEID_STRING(2, "testVariable"), callback);
 }
 
-
-
-
-// Get load thing 
-struct cpustat {
-    unsigned long t_user;
-    unsigned long t_nice;
-    unsigned long t_system;
-    unsigned long t_idle;
-    unsigned long t_iowait;
-    unsigned long t_irq;
-    unsigned long t_softirq;
-};
 
 void skip_lines(FILE *fp, int numlines)
 {
