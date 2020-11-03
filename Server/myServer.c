@@ -8,6 +8,8 @@ static volatile UA_Boolean running = true;			// Server state
 UA_Double variable = 20.0;						
 UA_DateTime timeStamp = 0;	
 
+UA_Float systemp = 0; 
+
 // Stop handler to watch for ctrl + c 
 static void stopHandler(int sig)
 {
@@ -86,7 +88,7 @@ static void nodeSetup(UA_Server *server)
 	
 	//Add the cpu Temperature to the server
     UA_VariableAttributes variableAttr = UA_VariableAttributes_default;
-    UA_Variant_setScalar(&variableAttr.value, &variable, &UA_TYPES[UA_TYPES_FLOAT]);
+    UA_Variant_setScalar(&variableAttr.value, &systemp, &UA_TYPES[UA_TYPES_FLOAT]);
     UA_Server_addVariableNode(server, UA_NODEID_STRING(2, "testVariable"), testObjectId,
                               UA_NODEID_NUMERIC(0, UA_NS0ID_HASCOMPONENT),
                               UA_QUALIFIEDNAME(2, "Variable"),
@@ -135,7 +137,7 @@ static void beforeReadVariable(UA_Server *server,
 	
 
 	// Read cpu Temp 
-	UA_Float systemp; 
+	// UA_Float systemp; 
 	float millideg;
 	FILE *thermal;
 	int n;
