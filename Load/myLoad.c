@@ -17,7 +17,7 @@ int main(int argc, char * argv[])
 	for (int a = 0; a < 100; ++a)
 	{
 		i = a * i;
-		i = (a * i) 3.14;
+		i = (a * i) / 3.14;
 	}
 
 
