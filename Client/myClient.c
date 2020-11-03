@@ -129,7 +129,7 @@ int main(void)
         //UA_Variant_clear(&value);
 		readNode(client, retval, value);
 		
-        UA_sleep_ms(1000);
+        UA_sleep_ms(500);
     };
 
     // Clean up 
