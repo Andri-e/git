@@ -83,7 +83,17 @@ static void nodeSetup(UA_Server *server)
                               UA_NODEID_NUMERIC(0, UA_NS0ID_HASCOMPONENT),
                               UA_QUALIFIEDNAME(2, "timeStamp"),
                               UA_NODEID_NUMERIC(0, UA_NS0ID_BASEDATAVARIABLETYPE), tsAttr, NULL, NULL);					  
-							  
+	
+	//Add the cpu Temperature to the server
+    UA_VariableAttributes variableAttr = UA_VariableAttributes_default;
+    UA_Variant_setScalar(&variableAttr.value, &variable, &UA_TYPES[UA_TYPES_FLOAT]);
+    UA_Server_addVariableNode(server, UA_NODEID_STRING(2, "testVariable"), testObjectId,
+                              UA_NODEID_NUMERIC(0, UA_NS0ID_HASCOMPONENT),
+                              UA_QUALIFIEDNAME(2, "Variable"),
+                              UA_NODEID_NUMERIC(0, UA_NS0ID_BASEDATAVARIABLETYPE), variableAttr, NULL, NULL);
+
+
+/*
     //Add the Variable to the server
     UA_VariableAttributes variableAttr = UA_VariableAttributes_default;
     UA_Variant_setScalar(&variableAttr.value, &variable, &UA_TYPES[UA_TYPES_DOUBLE]);
@@ -91,6 +101,7 @@ static void nodeSetup(UA_Server *server)
                               UA_NODEID_NUMERIC(0, UA_NS0ID_HASCOMPONENT),
                               UA_QUALIFIEDNAME(2, "Variable"),
                               UA_NODEID_NUMERIC(0, UA_NS0ID_BASEDATAVARIABLETYPE), variableAttr, NULL, NULL);
+*/
 }
 
 // Time Stamp callback 
