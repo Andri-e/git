@@ -66,6 +66,7 @@ static void readNode(UA_Client *client, UA_StatusCode retval, UA_Variant value)
 		//UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND, "Variable Value : %f", variable);
     }
 
+	/*
 	//Read the cpu load  
     retval = UA_Client_readValueAttribute(client, UA_NODEID_STRING(2, "testSysLoad"), &value);
     if(retval == UA_STATUSCODE_GOOD && UA_Variant_hasScalarType(&value, &UA_TYPES[UA_TYPES_DOUBLE])) 
@@ -73,7 +74,7 @@ static void readNode(UA_Client *client, UA_StatusCode retval, UA_Variant value)
 		sysload = *(UA_Double *) value.data;
 		UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND, "Variable Value : %f", sysload);
     }
-	
+	*/
 	
 	/*
     //Read the variable 

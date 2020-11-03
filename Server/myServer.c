@@ -17,7 +17,8 @@ UA_Double variable = 20.0;
 UA_DateTime timeStamp = 0;	
 
 UA_Float systemp = 0; 
-UA_Double sysload = 0;
+//UA_Double sysload = 0;
+UA_Double sysidle = 0;
 
 // Stop handler to watch for ctrl + c 
 static void stopHandler(int sig)
@@ -103,7 +104,17 @@ static void nodeSetup(UA_Server *server)
                               UA_QUALIFIEDNAME(2, "systemTemperature"),
                               UA_NODEID_NUMERIC(0, UA_NS0ID_BASEDATAVARIABLETYPE), sysTempAttr, NULL, NULL);
 	
-	//Add the Variable to the server
+	//Add the Sys Idle to the server
+    UA_VariableAttributes sysIdleAttr = UA_VariableAttributes_default;
+    UA_Variant_setScalar(&variableAttr.value, &variable, &UA_TYPES[UA_TYPES_DOUBLE]);
+    UA_Server_addVariableNode(server, UA_NODEID_STRING(2, "testSysIdle"), testObjectId,
+                              UA_NODEID_NUMERIC(0, UA_NS0ID_HASCOMPONENT),
+                              UA_QUALIFIEDNAME(2, "sysIdlePercentage"),
+                              UA_NODEID_NUMERIC(0, UA_NS0ID_BASEDATAVARIABLETYPE), sysIdleAttr, NULL, NULL);
+	
+	
+/*	
+	//Add the Sys Load to the server
     UA_VariableAttributes variableAttr = UA_VariableAttributes_default;
     UA_Variant_setScalar(&variableAttr.value, &variable, &UA_TYPES[UA_TYPES_DOUBLE]);
     UA_Server_addVariableNode(server, UA_NODEID_STRING(2, "testSysLoad"), testObjectId,
@@ -111,7 +122,7 @@ static void nodeSetup(UA_Server *server)
                               UA_QUALIFIEDNAME(2, "Variable"),
                               UA_NODEID_NUMERIC(0, UA_NS0ID_BASEDATAVARIABLETYPE), variableAttr, NULL, NULL);
 	
-	
+*/
 
 /*
     //Add the Variable to the server
@@ -174,11 +185,75 @@ static void addValueCallbackToCurrentTemerature(UA_Server *server) {
 
 
 
+// CPU Not idle Callback 
+static void beforeReadIdle(UA_Server *server,
+               const UA_NodeId *sessionId, void *sessionContext,
+               const UA_NodeId *nodeid, void *nodeContext,
+               const UA_NumericRange *range, const UA_DataValue *data) 
+{
+	char str[100];
+	const char d[2] = " ";
+	char* token;
+	int i = 0,times,lag;
+	long int sum = 0, idle, lastSum = 0,lastIdle = 0;
+	long double idleFraction;
+	
+	times = 2;
+	lag = 1);
+ 
+	//while(times>0){
+		FILE* fp = fopen("/proc/stat","r");
+	    i = 0;
+		fgets(str,100,fp);
+		fclose(fp);
+		token = strtok(str,d);
+		sum = 0;
+		while(token!=NULL)
+		{
+			token = strtok(NULL,d);
+			if(token!=NULL)
+			{
+				sum += atoi(token);
+
+				if(i==3)
+				{
+					idle = atoi(token);
+				}
+				i++;
+			}
+		}
+		idleFraction = 100 - (idle-lastIdle)*100.0/(sum-lastSum);
+		printf("Busy for : %lf %% of the time.", idleFraction);
+
+		lastIdle = idle;
+		lastSum = sum;
+
+		times--;
+		sleep(lag);
+	}	
+	
+	
+	
+	
+
+	// Way to update the variable 
+	UA_Variant value;
+	UA_Variant_setScalar(&value, &sysidle, &UA_TYPES[UA_TYPES_FLOAT]);
+    UA_Server_writeValue(server, UA_NODEID_STRING(2, "testSysIdle"), value);
+}
+
+static void addValueCallbackToCurrentIdle(UA_Server *server) {
+    UA_ValueCallback callback ;
+    callback.onRead = beforeReadIdle;
+    callback.onWrite = NULL;
+    UA_Server_setVariableNode_valueCallback(server, UA_NODEID_STRING(2, "testSysIdle"), callback);
+}
 
 
 
 
 
+/*
 // CPU Load Callback - https://www.kgoettler.com/post/proc-stat/
 struct cpustat {
     unsigned long t_user;
@@ -248,11 +323,8 @@ static void beforeReadLoad(UA_Server *server,
 	get_stats(&st0_0, -1);
     sleep(1);									// This is needed to calcluate the load, delay is not good. 
     get_stats(&st0_1, -1);   
-	printf("CPU: %lf%%\n", calculate_load(&st0_0, &st0_1));
 
 	sysload = calculate_load(&st0_0, &st0_1);
-	
-	printf("\n\n\n CPU: %lf%%\n\n\n\n\n", sysload);
 
 	// Way to update the variable 
 	UA_Variant value;
@@ -266,7 +338,7 @@ static void addValueCallbackToCurrentLoad(UA_Server *server) {
     callback.onWrite = NULL;
     UA_Server_setVariableNode_valueCallback(server, UA_NODEID_STRING(2, "testSysLoad"), callback);
 }
-
+*/
 
 // myServer main 
 int main(int argc, char * argv[])
@@ -288,7 +360,8 @@ int main(int argc, char * argv[])
 	// Add callback for updating the TimeStamp / Variable
 	addValueCallbackToCurrentTimeVariable(server);
 	addValueCallbackToCurrentTemerature(server);
-	addValueCallbackToCurrentLoad(server);
+	//addValueCallbackToCurrentLoad(server);
+	addValueCallbackToCurrentIdle(server);
 	
 	// Server start up 
     UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND, "Starting server...");
