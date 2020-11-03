@@ -3,8 +3,7 @@
 #include <signal.h>
 #include <stdlib.h>
 
-
-//#include<stdlib.h>
+// See if I need the headers below 
 #include<string.h>
 #include<unistd.h>
 #include<stdio.h>
@@ -15,9 +14,7 @@ static volatile UA_Boolean running = true;			// Server state
 
 UA_Double variable = 20.0;						
 UA_DateTime timeStamp = 0;	
-
 UA_Float systemp = 0; 
-//UA_Double sysload = 0;
 UA_Double sysidle = 0;
 
 // Stop handler to watch for ctrl + c 
@@ -113,16 +110,6 @@ static void nodeSetup(UA_Server *server)
                               UA_NODEID_NUMERIC(0, UA_NS0ID_BASEDATAVARIABLETYPE), sysIdleAttr, NULL, NULL);
 	
 	
-/*	
-	//Add the Sys Load to the server
-    UA_VariableAttributes variableAttr = UA_VariableAttributes_default;
-    UA_Variant_setScalar(&variableAttr.value, &variable, &UA_TYPES[UA_TYPES_DOUBLE]);
-    UA_Server_addVariableNode(server, UA_NODEID_STRING(2, "testSysLoad"), testObjectId,
-                              UA_NODEID_NUMERIC(0, UA_NS0ID_HASCOMPONENT),
-                              UA_QUALIFIEDNAME(2, "Variable"),
-                              UA_NODEID_NUMERIC(0, UA_NS0ID_BASEDATAVARIABLETYPE), variableAttr, NULL, NULL);
-	
-*/
 
 /*
     //Add the Variable to the server
@@ -185,7 +172,7 @@ static void addValueCallbackToCurrentTemerature(UA_Server *server) {
 
 
 
-// CPU Not idle Callback 
+// CPU Not idle Callback  - https://rosettacode.org/wiki/Linux_CPU_utilization - https://www.kgoettler.com/post/proc-stat/ for math n stuff 
 static void beforeReadIdle(UA_Server *server,
                const UA_NodeId *sessionId, void *sessionContext,
                const UA_NodeId *nodeid, void *nodeContext,
@@ -196,53 +183,34 @@ static void beforeReadIdle(UA_Server *server,
 	char* token;
 	int i = 0,times,lag;
 	long int sum = 0, idle, lastSum = 0,lastIdle = 0;
-	long double idleFraction;
-	
-	//times = 2;
-	//lag = 1;
- 
-	//while(times>0){
-		FILE* fp = fopen("/proc/stat","r");
-	    i = 0;
-		fgets(str,100,fp);
-		fclose(fp);
-		token = strtok(str,d);
-		sum = 0;
-		while(token!=NULL)
+	double sysIdleFraction;
+
+	FILE* fp = fopen("/proc/stat","r");
+	i = 0;
+	fgets(str,100,fp);
+	fclose(fp);
+	token = strtok(str,d);
+	sum = 0;
+	while(token!=NULL)
+	{
+		token = strtok(NULL,d);
+		if(token!=NULL)
 		{
-			token = strtok(NULL,d);
-			if(token!=NULL)
+			sum += atoi(token);
+			if(i==3)
 			{
-				sum += atoi(token);
-
-				if(i==3)
-				{
-					idle = atoi(token);
-				}
-				i++;
+				idle = atoi(token);
 			}
+			i++;
 		}
-		idleFraction = 100 - (idle-lastIdle)*100.0/(sum-lastSum);
-	//	printf("\n\nBusy for : %lf %% of the time.", idleFraction);
-		sysidle = (double)idleFraction;
-		
-	//	printf("\nBusy for : %f %% of the time.\n\n", sysidle);
-		
-		
-		lastIdle = idle;
-		lastSum = sum;
-
-		//times--;
-		//sleep(lag);
-	//}	
-	
-	
-	
-	
+	}
+	sysIdleFraction = 100 - (idle-lastIdle)*100.0/(sum-lastSum);
+	lastIdle = idle;
+	lastSum = sum;
 
 	// Way to update the variable 
 	UA_Variant value;
-	UA_Variant_setScalar(&value, &sysidle, &UA_TYPES[UA_TYPES_DOUBLE]);
+	UA_Variant_setScalar(&value, &sysIdleFraction, &UA_TYPES[UA_TYPES_DOUBLE]);
     UA_Server_writeValue(server, UA_NODEID_STRING(2, "testSysIdle"), value);
 }
 
@@ -254,102 +222,12 @@ static void addValueCallbackToCurrentIdle(UA_Server *server) {
 }
 
 
-
-
-
-/*
-// CPU Load Callback - https://www.kgoettler.com/post/proc-stat/
-struct cpustat {
-    unsigned long t_user;
-    unsigned long t_nice;
-    unsigned long t_system;
-    unsigned long t_idle;
-    unsigned long t_iowait;
-    unsigned long t_irq;
-    unsigned long t_softirq;
-};
-
-double calculate_load(struct cpustat *prev, struct cpustat *cur)
-{
-    int idle_prev = (prev->t_idle) + (prev->t_iowait);
-    int idle_cur = (cur->t_idle) + (cur->t_iowait);
-
-    int nidle_prev = (prev->t_user) + (prev->t_nice) + (prev->t_system) + (prev->t_irq) + (prev->t_softirq);
-    int nidle_cur = (cur->t_user) + (cur->t_nice) + (cur->t_system) + (cur->t_irq) + (cur->t_softirq);
-
-    int total_prev = idle_prev + nidle_prev;
-    int total_cur = idle_cur + nidle_cur;
-
-    double totald = (double) total_cur - (double) total_prev;
-    double idled = (double) idle_cur - (double) idle_prev;
-
-    double cpu_perc = (1000 * (totald - idled) / totald + 1) / 10;
-
-    return cpu_perc;
-}
-
-void skip_lines(FILE *fp, int numlines)
-{
-    int cnt = 0;
-    char ch;
-    while((cnt < numlines) && ((ch = getc(fp)) != EOF))
-    {
-        if (ch == '\n')
-            cnt++;
-    }
-    return;
-}
-
-void get_stats(struct cpustat *st, int cpunum)
-{
-    FILE *fp = fopen("/proc/stat", "r");
-    int lskip = cpunum+1;
-    skip_lines(fp, lskip);
-    char cpun[255];
-    fscanf(fp, "%s %d %d %d %d %d %d %d", cpun, &(st->t_user), &(st->t_nice), 
-        &(st->t_system), &(st->t_idle), &(st->t_iowait), &(st->t_irq),
-        &(st->t_softirq));
-    fclose(fp);
-	return;
-}
-
-
-static void beforeReadLoad(UA_Server *server,
-               const UA_NodeId *sessionId, void *sessionContext,
-               const UA_NodeId *nodeid, void *nodeContext,
-               const UA_NumericRange *range, const UA_DataValue *data) 
-{
-	// Structure for calculating the cpu load 
-	struct cpustat st0_0, st0_1;
-	//UA_Float cpuload;
-	
-	// Get latest stats for cpu load 
-	get_stats(&st0_0, -1);
-    sleep(1);									// This is needed to calcluate the load, delay is not good. 
-    get_stats(&st0_1, -1);   
-
-	sysload = calculate_load(&st0_0, &st0_1);
-
-	// Way to update the variable 
-	UA_Variant value;
-	UA_Variant_setScalar(&value, &sysload, &UA_TYPES[UA_TYPES_DOUBLE]);
-    UA_Server_writeValue(server, UA_NODEID_STRING(2, "testSysLoad"), value);
-}
-
-static void addValueCallbackToCurrentLoad(UA_Server *server) {
-    UA_ValueCallback callback ;
-    callback.onRead = beforeReadLoad;
-    callback.onWrite = NULL;
-    UA_Server_setVariableNode_valueCallback(server, UA_NODEID_STRING(2, "testSysLoad"), callback);
-}
-*/
-
 // myServer main 
 int main(int argc, char * argv[])
 {
 	// Setting up the signals for the stop signal (ctrl + c)
     signal(SIGINT, stopHandler);
-    signal(SIGTERM, stopHandler);
+   // signal(SIGTERM, stopHandler);
 	
 
 	// Creating a new server 
@@ -364,7 +242,6 @@ int main(int argc, char * argv[])
 	// Add callback for updating the TimeStamp / Variable
 	addValueCallbackToCurrentTimeVariable(server);
 	addValueCallbackToCurrentTemerature(server);
-	//addValueCallbackToCurrentLoad(server);
 	addValueCallbackToCurrentIdle(server);
 	
 	// Server start up 

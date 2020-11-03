@@ -26,11 +26,12 @@ static void readNode(UA_Client *client, UA_StatusCode retval, UA_Variant value)
     UA_String variableName;
     UA_Int32 serialNumber;
 	UA_DateTime timeStamp;
-    //UA_Double variable;
 	UA_Float sysTemp;
-	//UA_Double sysload;
 	UA_Double sysIdle;
 	
+	//UA_Double variable;
+	
+	UA_Variant_clear(&value);
 	UA_DateTimeStruct dts = UA_DateTime_toStruct(timeStamp);	
 
     //Read Variable name
@@ -38,7 +39,6 @@ static void readNode(UA_Client *client, UA_StatusCode retval, UA_Variant value)
     if(retval == UA_STATUSCODE_GOOD && UA_Variant_hasScalarType(&value, &UA_TYPES[UA_TYPES_STRING])) 
     {
 		variableName = *(UA_String *) value.data;
-		//UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND, "Variable name : %.*s", variableName.length, variableName.data);
     }
 
     //Read Serial Number 
@@ -46,7 +46,6 @@ static void readNode(UA_Client *client, UA_StatusCode retval, UA_Variant value)
     if(retval == UA_STATUSCODE_GOOD && UA_Variant_hasScalarType(&value, &UA_TYPES[UA_TYPES_INT32])) 
     {
 		serialNumber = *(UA_Int32 *) value.data;
-		//UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND, "Serial Number : %d", serialNumber);
     }
 	
 	//Read the time stamp
@@ -55,8 +54,6 @@ static void readNode(UA_Client *client, UA_StatusCode retval, UA_Variant value)
     {
 		timeStamp = *(UA_DateTime *) value.data;
 		UA_DateTimeStruct dts = UA_DateTime_toStruct(timeStamp);	
-	//	UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND, "TimeStamp : %u-%u-%u %u:%u:%u.%03u",
-     //               dts.day, dts.month, dts.year, dts.hour, dts.min, dts.sec, dts.milliSec);
     }
 
 	//Read the cpu temp
@@ -64,7 +61,6 @@ static void readNode(UA_Client *client, UA_StatusCode retval, UA_Variant value)
     if(retval == UA_STATUSCODE_GOOD && UA_Variant_hasScalarType(&value, &UA_TYPES[UA_TYPES_FLOAT])) 
     {
 		sysTemp = *(UA_Float *) value.data;
-		//UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND, "Variable Value : %f", variable);
     }
 	
 	
@@ -73,21 +69,17 @@ static void readNode(UA_Client *client, UA_StatusCode retval, UA_Variant value)
     if(retval == UA_STATUSCODE_GOOD && UA_Variant_hasScalarType(&value, &UA_TYPES[UA_TYPES_DOUBLE])) 
     {
 		sysIdle = *(UA_Double*) value.data;
-		//UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND, "Variable Value : %f", sysIdle);
-		//printf("\n\n\nBusy for : %f %% of the time.\n\n\n", sysIdle);
     }
 	
 
-	/*
-	//Read the cpu load  
-    retval = UA_Client_readValueAttribute(client, UA_NODEID_STRING(2, "testSysLoad"), &value);
-    if(retval == UA_STATUSCODE_GOOD && UA_Variant_hasScalarType(&value, &UA_TYPES[UA_TYPES_DOUBLE])) 
-    {
-		sysload = *(UA_Double *) value.data;
-		UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND, "Variable Value : %f", sysload);
-    }
-	*/
+	// Maybe add a latency check since I got a time stamp I can calculate the latency 
+	UA_DateTime refTimeStamp;
+	refTimeStamp = UA_DateTime_now();
+	UA_DateTimeStruct dts_1 = UA_DateTime_toStruct(refTimeStamp);	
+	UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND, "%u-%u-%u %u:%u:%u.%03u", dts_1.day, dts_1.month, dts_1.year, dts_1.hour, dts_1.min, dts_1.sec, dts_1.milliSec);
 	
+
+		
 	/*
     //Read the variable 
     retval = UA_Client_readValueAttribute(client, UA_NODEID_STRING(2, "testVariable"), &value);
@@ -97,66 +89,47 @@ static void readNode(UA_Client *client, UA_StatusCode retval, UA_Variant value)
 		//UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND, "Variable Value : %f", variable);
     }
 	*/
-	//UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND, "%.*s , %d , %u-%u-%u %u:%u:%u.%03u , %f . ", variableName.length, variableName.data, serialNumber, dts.day, dts.month, dts.year, dts.hour, dts.min, dts.sec, dts.milliSec, variable );
-	UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND, "%.*s , %d , %u-%u-%u %u:%u:%u.%03u , %f , %f ", variableName.length, variableName.data, serialNumber, dts.day, dts.month, dts.year, dts.hour, dts.min, dts.sec, dts.milliSec, sysTemp, sysIdle );
+	
+	UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND, "%.*s , %d , %u-%u-%u %u:%u:%u.%03u , %f °C, %f %%", variableName.length, variableName.data, serialNumber, dts.day, dts.month, dts.year, dts.hour, dts.min, dts.sec, dts.milliSec, sysTemp, sysIdle );
 }
 
 // myClient main 
 int main(void)
 {
-	signal(SIGINT, stopHandler); /* catches ctrl-c */
+	signal(SIGINT, stopHandler); // catches ctrl-c 
+	
 	UA_Client *client = UA_Client_new();
     UA_ClientConfig *cc = UA_Client_getConfig(client);
     UA_ClientConfig_setDefault(cc);
-	bool first_connect = false;
 
-    /* default timeout is 5 seconds. Set it to 1 second here for demo */
+    // default timeout is 5 seconds. Set it to 1 second here for demo 
     cc->timeout = 1000;
 
     /* Read the value attribute of the node. UA_Client_readValueAttribute is a
      * wrapper for the raw read service available as UA_Client_Service_read. */
     UA_Variant value; /* Variants can hold scalar values and arrays of any type */
     UA_Variant_init(&value);
-
-    /* Endless loop reading the server time */
-    while(running) {
-        /* if already connected, this will return GOOD and do nothing */
-        /* if the connection is closed/errored, the connection will be reset and then reconnected */
-        /* Alternatively you can also use UA_Client_getState to get the current state */
-        UA_StatusCode retval = UA_Client_connect(client, "opc.tcp://localhost:4840");
-        if(retval != UA_STATUSCODE_GOOD) 
+	UA_StatusCode retval = UA_Client_connect(client, "opc.tcp://localhost:4840");
+	
+	// While loop that keeps reading the value from the server until it is disconnected 
+    while(running) 
+	{
+        if(retval != UA_STATUSCODE_GOOD) 						// If status code not good then log time and try to reconect 
 		{ 
-			UA_LOG_ERROR(UA_Log_Stdout, UA_LOGCATEGORY_CLIENT, "Not connected. Retrying to connect in 1 second");
-            /* The connect may timeout after 1 second (see above) or it may fail immediately on network errors */
-            /* E.g. name resolution errors or unreachable network. Thus there should be a small sleep here */
-			
+			UA_LOG_ERROR(UA_Log_Stdout, UA_LOGCATEGORY_CLIENT, "Not connected. Retrying to connect in 1 second");		
 			UA_DateTime raw_date = *(UA_DateTime *) value.data;
             UA_DateTimeStruct dts = UA_DateTime_toStruct(raw_date);
             UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND,
                         "Re-Connected at : %02u-%02u-%04u %02u:%02u:%02u.%03u",
                         dts.day, dts.month, dts.year, dts.hour, dts.min, dts.sec, dts.milliSec);
 						
-            UA_sleep_ms(2000);
+            UA_sleep_ms(1000);
+			UA_StatusCode retval = UA_Client_connect(client, "opc.tcp://localhost:4840");
             continue;
         }
-        if(retval == UA_STATUSCODE_BADCONNECTIONCLOSED) 
-		{
-            UA_LOG_ERROR(UA_Log_Stdout, UA_LOGCATEGORY_CLIENT, "Connection was closed. Reconnecting ...");
-            continue;
-        }
-        if(retval == UA_STATUSCODE_GOOD && UA_Variant_hasScalarType(&value, &UA_TYPES[UA_TYPES_DATETIME]) && first_connect == true) 
-		{
-            UA_DateTime raw_date = *(UA_DateTime *) value.data;
-            UA_DateTimeStruct dts = UA_DateTime_toStruct(raw_date);
-            UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND,
-                        "date is: %02u-%02u-%04u %02u:%02u:%02u.%03u",
-                        dts.day, dts.month, dts.year, dts.hour, dts.min, dts.sec, dts.milliSec);
-        }
-        UA_Variant_clear(&value);
-		
 		readNode(client, retval, value);
 		
-        UA_sleep_ms(1000);
+        UA_sleep_ms(500);				// Just a delay to reduce the spam
     };
 
     // Clean up 
