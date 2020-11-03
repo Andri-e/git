@@ -136,7 +136,7 @@ static void beforeReadVariable(UA_Server *server,
 	variable = variable + 1 ; 
 
     UA_Variant value;
-    UA_Variant_setScalar(&value, &variable, &UA_TYPES[UA_TYPES_DATETIME]);
+    UA_Variant_setScalar(&value, &variable, &UA_TYPES[UA_TYPES_DOUBLE]);
     UA_Server_writeValue(server, UA_NODEID_STRING(2, "testVariable"), value);
 }
 
