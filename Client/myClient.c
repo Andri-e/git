@@ -97,7 +97,6 @@ int main(void)
 	UA_Client *client = UA_Client_new();
     UA_ClientConfig *cc = UA_Client_getConfig(client);
     UA_ClientConfig_setDefault(cc);
-	bool first_connect = false;
 
     /* default timeout is 5 seconds. Set it to 1 second here for demo */
     cc->timeout = 1000;
@@ -133,14 +132,7 @@ int main(void)
             UA_LOG_ERROR(UA_Log_Stdout, UA_LOGCATEGORY_CLIENT, "Connection was closed. Reconnecting ...");
             continue;
         }
-        if(retval == UA_STATUSCODE_GOOD && UA_Variant_hasScalarType(&value, &UA_TYPES[UA_TYPES_DATETIME]) && first_connect == true) 
-		{
-            UA_DateTime raw_date = *(UA_DateTime *) value.data;
-            UA_DateTimeStruct dts = UA_DateTime_toStruct(raw_date);
-            UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND,
-                        "date is: %02u-%02u-%04u %02u:%02u:%02u.%03u",
-                        dts.day, dts.month, dts.year, dts.hour, dts.min, dts.sec, dts.milliSec);
-        }
+
         UA_Variant_clear(&value);
 		
 		readNode(client, retval, value);
