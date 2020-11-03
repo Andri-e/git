@@ -249,9 +249,9 @@ static void beforeReadLoad(UA_Server *server,
         
 	printf("CPU: %lf%%\n", calculate_load(&st0_0, &st0_1));
 
-	//sysload = calculate_load(&st0_0, &st0_1);
+	sysload = calculate_load(&st0_0, &st0_1);
 	
-	printf("CPU: %lf%%\n", sysload);
+	printf("\n\n\n CPU: %lf%%\n\n\n\n\n", sysload);
 
 	// Way to update the variable 
 	UA_Variant value;
