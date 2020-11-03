@@ -123,7 +123,7 @@ int main(void)
                         "Re-Connected at : %02u-%02u-%04u %02u:%02u:%02u.%03u",
                         dts.day, dts.month, dts.year, dts.hour, dts.min, dts.sec, dts.milliSec);
 						
-            UA_sleep_ms(1000);
+            UA_sleep_ms(2000);
             continue;
         }
         if(retval == UA_STATUSCODE_BADCONNECTIONCLOSED) 
@@ -143,7 +143,7 @@ int main(void)
 		
 		readNode(client, retval, value);
 		
-        UA_sleep_ms(2000);
+        UA_sleep_ms(5000);
     };
 
     // Clean up 
