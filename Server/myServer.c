@@ -146,7 +146,8 @@ int main(int argc, char * argv[])
 	
 	
 	
-	float systemp, millideg;
+	float systemp; 
+	float millideg;
 	FILE *thermal;
 	int n;
 
