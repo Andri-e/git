@@ -247,6 +247,7 @@ static void beforeReadLoad(UA_Server *server,
 	// Get latest stats for cpu load 
 	get_stats(&st0_0, -1);
     //sleep(1);
+	usleep(100);
     get_stats(&st0_1, -1);   
 	printf("CPU: %lf%%\n", calculate_load(&st0_0, &st0_1));
 
