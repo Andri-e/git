@@ -142,6 +142,29 @@ int main(int argc, char * argv[])
     signal(SIGINT, stopHandler);
     signal(SIGTERM, stopHandler);
 	
+	
+	
+	
+	
+	float systemp, millideg;
+	FILE *thermal;
+	int n;
+
+	thermal = fopen("/sys/class/thermal/thermal_zone0/temp","r");
+	n = fscanf(thermal,"%f",&milldeg);
+	fclose(thermal);
+	systemp = millideg / 1000;
+
+	printf("CPU temperature is %f degrees C\n",systemp);
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	// Creating a new server 
     UA_Server *server = UA_Server_new();
 

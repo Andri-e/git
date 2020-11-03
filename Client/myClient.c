@@ -75,24 +75,6 @@ int main(void)
     UA_ClientConfig *cc = UA_Client_getConfig(client);
     UA_ClientConfig_setDefault(cc);
 	bool first_connect = false;
-	
-	
-	
-	float systemp, millideg;
-	FILE *thermal;
-	int n;
-
-	thermal = fopen("/sys/class/thermal/thermal_zone0/temp","r");
-	n = fscanf(thermal,"%f",&milldeg);
-	fclose(thermal);
-	systemp = millideg / 1000;
-
-	printf("CPU temperature is %f degrees C\n",systemp);
-	
-	
-	
-	
-	
 
     /* default timeout is 5 seconds. Set it to 1 second here for demo */
     cc->timeout = 1000;
