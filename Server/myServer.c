@@ -201,7 +201,7 @@ static void beforeReadIdle(UA_Server *server,
 	times = 2;
 	lag = 1;
  
-	//while(times>0){
+	while(times>0){
 		FILE* fp = fopen("/proc/stat","r");
 	    i = 0;
 		fgets(str,100,fp);
