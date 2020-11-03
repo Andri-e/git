@@ -3,6 +3,14 @@
 #include <signal.h>
 #include <stdlib.h>
 
+
+//#include<stdlib.h>
+#include<string.h>
+#include<unistd.h>
+#include<stdio.h>
+
+
+
 static volatile UA_Boolean running = true;			// Server state
 
 UA_Double variable = 20.0;						
@@ -131,13 +139,7 @@ static void beforeReadVariable(UA_Server *server,
                const UA_NodeId *nodeid, void *nodeContext,
                const UA_NumericRange *range, const UA_DataValue *data) 
 {
-	// Need to get a dam dht11 or some sensor to run here
-    // float tempVariable = 1.0 * (rand()%100)/100 - 0.5;
-	// variable += tempVariable;
-	
-
 	// Read cpu Temp 
-	// UA_Float systemp; 
 	float millideg;
 	FILE *thermal;
 	int n;
@@ -147,9 +149,6 @@ static void beforeReadVariable(UA_Server *server,
 	fclose(thermal);
 	systemp = millideg / 1000;
 
-	printf("CPU temperature is %f degrees C\n",systemp);
-	
-	
 	// Way to update the variable 
 	UA_Variant value;
 	UA_Variant_setScalar(&value, &systemp, &UA_TYPES[UA_TYPES_FLOAT]);
@@ -174,23 +173,55 @@ int main(int argc, char * argv[])
 	
 	
 	
+	char str[100];
+	const char d[2] = " ";
+	char* token;
+	int i = 0,times,lag;
+	long int sum = 0, idle, lastSum = 0,lastIdle = 0;
+	long double idleFraction;
+ 
+	if(argC!=3)
+		printf("Usage : %s <number of times /proc/stat should be polled followed by delay in seconds.>",argV[0]);
+ 
+	else{
+		times = atoi(argV[1]);
+		lag = atoi(argV[2]);
+ 
+		while(times>0){
+			FILE* fp = fopen("/proc/stat","r");
+	                i = 0;
+			fgets(str,100,fp);
+			fclose(fp);
+			token = strtok(str,d);
+	                sum = 0;
+			while(token!=NULL){
+				token = strtok(NULL,d);
+				if(token!=NULL){
+					sum += atoi(token);
+ 
+				if(i==3)
+					idle = atoi(token);
+ 
+				i++;
+			        }
+		        }
+	                idleFraction = 100 - (idle-lastIdle)*100.0/(sum-lastSum);
+		        printf("Busy for : %lf %% of the time.", idleFraction);
+ 
+		        lastIdle = idle;
+		        lastSum = sum;
+ 
+ 
+		        times--;
+		        sleep(lag);
+		}	
+	}
 	
-	// Read cpu Temp 
-	float systemp, millideg;
-	FILE *thermal;
-	int n;
+	
+	
+	
+	
 
-	thermal = fopen("/sys/class/thermal/thermal_zone0/temp","r");
-	n = fscanf(thermal,"%f",&millideg);
-	fclose(thermal);
-	systemp = millideg / 1000;
-
-	//printf("CPU temperature is %f degrees C\n",systemp);
-	
-	
-	
-	
-	
 	
 	
 	

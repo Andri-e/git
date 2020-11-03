@@ -64,10 +64,7 @@ static void readNode(UA_Client *client, UA_StatusCode retval, UA_Variant value)
 		systemp = *(UA_Float *) value.data;
 		//UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND, "Variable Value : %f", variable);
     }
-	
-	printf("CPU temperature is %f degrees C\n",systemp);
-	
-	
+
 	/*
     //Read the variable 
     retval = UA_Client_readValueAttribute(client, UA_NODEID_STRING(2, "testVariable"), &value);
