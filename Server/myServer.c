@@ -211,7 +211,7 @@ static void beforeReadLoad(UA_Server *server,
 
 	// Way to update the variable 
 	UA_Variant value;
-	UA_Variant_setScalar(&value, &cpuload, &UA_TYPES[UA_TYPES_FLOAT]);
+	UA_Variant_setScalar(&value, &sysload, &UA_TYPES[UA_TYPES_FLOAT]);
     //UA_Server_writeValue(server, UA_NODEID_STRING(2, "testVariable"), value);
 }
 
