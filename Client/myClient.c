@@ -74,7 +74,7 @@ static void readNode(UA_Client *client, UA_StatusCode retval, UA_Variant value)
     {
 		sysIdle = *(UA_Double*) value.data;
 		//UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND, "Variable Value : %f", sysIdle);
-		printf("\n\n\nBusy for : %f %% of the time.\n\n\n", sysIdle);
+		//printf("\n\n\nBusy for : %f %% of the time.\n\n\n", sysIdle);
     }
 	
 
@@ -98,7 +98,7 @@ static void readNode(UA_Client *client, UA_StatusCode retval, UA_Variant value)
     }
 	*/
 	//UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND, "%.*s , %d , %u-%u-%u %u:%u:%u.%03u , %f . ", variableName.length, variableName.data, serialNumber, dts.day, dts.month, dts.year, dts.hour, dts.min, dts.sec, dts.milliSec, variable );
-	UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND, "%.*s , %d , %u-%u-%u %u:%u:%u.%03u , %f . ", variableName.length, variableName.data, serialNumber, dts.day, dts.month, dts.year, dts.hour, dts.min, dts.sec, dts.milliSec, sysTemp );
+	UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND, "%.*s , %d , %u-%u-%u %u:%u:%u.%03u , %f , %f ", variableName.length, variableName.data, serialNumber, dts.day, dts.month, dts.year, dts.hour, dts.min, dts.sec, dts.milliSec, sysTemp, sysIdle );
 }
 
 // myClient main 

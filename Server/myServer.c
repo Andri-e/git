@@ -223,10 +223,10 @@ static void beforeReadIdle(UA_Server *server,
 			}
 		}
 		idleFraction = 100 - (idle-lastIdle)*100.0/(sum-lastSum);
-		printf("\n\nBusy for : %lf %% of the time.", idleFraction);
+	//	printf("\n\nBusy for : %lf %% of the time.", idleFraction);
 		sysidle = (double)idleFraction;
 		
-		printf("\nBusy for : %f %% of the time.\n\n", sysidle);
+	//	printf("\nBusy for : %f %% of the time.\n\n", sysidle);
 		
 		
 		lastIdle = idle;
