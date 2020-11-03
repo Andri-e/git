@@ -80,7 +80,7 @@ static void readNode(UA_Client *client, UA_StatusCode retval, UA_Variant value)
     }
 	*/
 	
-	UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND, "%.*s \t%d \t%u-%u-%u %u:%u:%u.%03u \t%f ", userName.length, userName.data, userId, dts.day, dts.month, dts.year, dts.hour, dts.min, dts.sec, dts.milliSec, variable );
+	UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND, "%.*s \t%d \t\t%u-%u-%u %u:%u:%u.%03u \t%f ", userName.length, userName.data, userId, dts.day, dts.month, dts.year, dts.hour, dts.min, dts.sec, dts.milliSec, variable );
 }
 
 // myClient main 
@@ -101,7 +101,7 @@ int main(void)
     UA_Variant_init(&value);
 	UA_StatusCode retval = UA_Client_connect(client, SERVER_ENDPOINT);
 	
-	printf("\t\t\t\t\t\t\tUser Name \tUser Id  \tTime Stamp \tVariable\n");
+	printf("\t\t\t\t\t\t\tUser Name \tUser Id  \t\tTime Stamp \tVariable\n");
 	
 	// While loop that keeps reading the value from the server until it is disconnected 
     while(running) 
