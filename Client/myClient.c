@@ -143,7 +143,7 @@ int main(void)
 		
 		readNode(client, retval, value);
 		
-        UA_sleep_ms(1500);
+        UA_sleep_ms(2000);
     };
 
     // Clean up 
