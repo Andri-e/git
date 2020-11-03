@@ -84,7 +84,7 @@ gettimeofday(&tv, NULL);
 
 double time_in_mill = (tv.tv_sec) * 1000 + (tv.tv_usec) / 1000 ;
 
-printf("\n %f \n", time_in_mill)
+printf("\n %f \n", time_in_mill);
 
 		
 	/*
