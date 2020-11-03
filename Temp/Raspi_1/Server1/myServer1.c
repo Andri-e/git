@@ -167,9 +167,6 @@ int main(int argc, char * argv[])
 	addValueCallbackToCurrentTimeVariable(server);
 	addValueCallbackVariable(server);
 	
-	printf("------------------------------------------");
-
-	
 	// Server start up 
     UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND, "Starting server...");
     UA_StatusCode retval = UA_Server_run(server, &running);
