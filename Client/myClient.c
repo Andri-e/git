@@ -97,7 +97,7 @@ int main(void)
 	UA_Client *client = UA_Client_new();
     UA_ClientConfig *cc = UA_Client_getConfig(client);
     UA_ClientConfig_setDefault(cc);
-	bool first_connect = true;
+	bool first_connect = false;
 
     /* default timeout is 5 seconds. Set it to 1 second here for demo */
     cc->timeout = 1000;
