@@ -138,7 +138,7 @@ int main(void)
         //UA_Variant_clear(&value);
 		readNode(client, retval, value);
 		
-      //  UA_sleep_ms(500);
+        UA_sleep_ms(500);				// Just a delay to reduce the spam
     };
 
     // Clean up 
