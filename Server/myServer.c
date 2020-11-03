@@ -180,10 +180,6 @@ int main(int argc, char * argv[])
 	long int sum = 0, idle, lastSum = 0,lastIdle = 0;
 	long double idleFraction;
  
-	if(argC!=3)
-		printf("Usage : %s <number of times /proc/stat should be polled followed by delay in seconds.>",argV[0]);
- 
-	else{
 		times = atoi(argV[1]);
 		lag = atoi(argV[2]);
  
@@ -215,7 +211,7 @@ int main(int argc, char * argv[])
 		        times--;
 		        sleep(lag);
 		}	
-	}
+	
 	
 	
 	
