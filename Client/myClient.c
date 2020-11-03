@@ -108,7 +108,7 @@ int main(void)
 	UA_StatusCode retval = UA_Client_connect(client, "opc.tcp://localhost:4840");
 	
 	// While loop that keeps reading the value from the server until it is disconnected 
-	sleep(1);
+	sleep(3);
     while(running) {
         if(retval != UA_STATUSCODE_GOOD) 						// If status code not good then log time and try to reconect 
 		{ 
