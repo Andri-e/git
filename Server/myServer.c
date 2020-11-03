@@ -122,6 +122,10 @@ static void beforeReadVariable(UA_Server *server,
     float tempVariable = 1.0 * (rand()%100)/100 - 0.5;
 	variable += tempVariable;
 	
+
+	
+	
+	
 	// Way to update the variable 
 	UA_Variant value;
     UA_Variant_setScalar(&value, &variable, &UA_TYPES[UA_TYPES_DOUBLE]);
@@ -146,7 +150,9 @@ int main(int argc, char * argv[])
 	
 	
 	
-	float systemp, millideg;
+	// Read cpu Temp 
+	float systemp; 
+	double millideg;
 	FILE *thermal;
 	int n;
 
