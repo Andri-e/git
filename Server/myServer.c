@@ -198,10 +198,10 @@ static void beforeReadIdle(UA_Server *server,
 	long int sum = 0, idle, lastSum = 0,lastIdle = 0;
 	long double idleFraction;
 	
-	times = 2;
-	lag = 1;
+	//times = 2;
+	//lag = 1;
  
-	while(times>0){
+	//while(times>0){
 		FILE* fp = fopen("/proc/stat","r");
 	    i = 0;
 		fgets(str,100,fp);
@@ -226,15 +226,15 @@ static void beforeReadIdle(UA_Server *server,
 		printf("\n\nBusy for : %lf %% of the time.", idleFraction);
 		sysidle = (double)idleFraction;
 		
-		printf("\nBusy for : %f %% of the time.\n\n", idleFraction);
+		printf("\nBusy for : %f %% of the time.\n\n", sysidle);
 		
 		
 		lastIdle = idle;
 		lastSum = sum;
 
-		times--;
-		sleep(lag);
-	}	
+		//times--;
+		//sleep(lag);
+	//}	
 	
 	
 	
