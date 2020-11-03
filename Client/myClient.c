@@ -74,14 +74,21 @@ static void readNode(UA_Client *client, UA_StatusCode retval, UA_Variant value)
 	
 	
 	
-	    time_t T= time(NULL);
-    struct  tm tm = *localtime(&T);
-     
-    printf("System Date is: %02d/%02d/%04d\n",tm.tm_mday, tm.tm_mon+1, tm.tm_year+1900);
-    printf("System Time is: %02d:%02d:%02d\n",tm.tm_hour, tm.tm_min, tm.tm_sec);
- 
-	
-	
+   long            ms; // Milliseconds
+    time_t          s;  // Seconds
+    struct timespec spec;
+
+    clock_gettime(CLOCK_REALTIME, &spec);
+
+    s  = spec.tv_sec;
+    ms = round(spec.tv_nsec / 1.0e6); // Convert nanoseconds to milliseconds
+    if (ms > 999) {
+        s++;
+        ms = 0;
+    }
+
+    printf("Current time: %"PRIdMAX".%03ld seconds since the Epoch\n",
+           (intmax_t)s, ms);
 		
 	/*
     //Read the variable 
