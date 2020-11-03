@@ -69,7 +69,7 @@ static void nodeSetup(UA_Server *server)
 
     //Add the variable name to the server
     UA_VariableAttributes vnAttr = UA_VariableAttributes_default;
-    UA_String variableName = UA_STRING("nameOfVariable");
+    UA_String variableName = UA_STRING("nameOfDevice");
     UA_Variant_setScalar(&vnAttr.value, &variableName, &UA_TYPES[UA_TYPES_STRING]);
     UA_Server_addVariableNode(server, UA_NODEID_STRING(2, "testVariableName"), testObjectId,
                               UA_NODEID_NUMERIC(0, UA_NS0ID_HASCOMPONENT),
