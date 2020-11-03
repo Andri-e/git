@@ -238,7 +238,7 @@ static void beforeReadIdle(UA_Server *server,
 
 	// Way to update the variable 
 	UA_Variant value;
-	UA_Variant_setScalar(&value, &sysidle, &UA_TYPES[UA_TYPES_FLOAT]);
+	UA_Variant_setScalar(&value, &sysidle, &UA_TYPES[UA_TYPES_DOUBLE]);
     UA_Server_writeValue(server, UA_NODEID_STRING(2, "testSysIdle"), value);
 }
 
