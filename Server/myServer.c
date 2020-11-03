@@ -248,7 +248,7 @@ void get_stats(struct cpustat *st, int cpunum)
 	return;
 }
 
-double calculate_load(struct cpustat *prev, struct cpustat *cur)
+float calculate_load(struct cpustat *prev, struct cpustat *cur)
 {
     int idle_prev = (prev->t_idle) + (prev->t_iowait);
     int idle_cur = (cur->t_idle) + (cur->t_iowait);
