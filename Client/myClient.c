@@ -32,14 +32,13 @@ static void readNode(UA_Client *client, UA_StatusCode retval, UA_Variant value)
 	//UA_Double variable;
 	
 	UA_Variant_clear(&value);
-	//UA_DateTimeStruct dts = UA_DateTime_toStruct(timeStamp);	
+	UA_DateTimeStruct dts = UA_DateTime_toStruct(timeStamp);	
 
     //Read Variable name
     retval = UA_Client_readValueAttribute(client, UA_NODEID_STRING(2, "testVariableName"), &value);
     if(retval == UA_STATUSCODE_GOOD && UA_Variant_hasScalarType(&value, &UA_TYPES[UA_TYPES_STRING])) 
     {
 		variableName = *(UA_String *) value.data;
-		//UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND, "Variable name : %.*s", variableName.length, variableName.data);
     }
 
     //Read Serial Number 
@@ -47,7 +46,6 @@ static void readNode(UA_Client *client, UA_StatusCode retval, UA_Variant value)
     if(retval == UA_STATUSCODE_GOOD && UA_Variant_hasScalarType(&value, &UA_TYPES[UA_TYPES_INT32])) 
     {
 		serialNumber = *(UA_Int32 *) value.data;
-		//UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND, "Serial Number : %d", serialNumber);
     }
 	
 	//Read the time stamp
@@ -56,7 +54,6 @@ static void readNode(UA_Client *client, UA_StatusCode retval, UA_Variant value)
     {
 		timeStamp = *(UA_DateTime *) value.data;
 		UA_DateTimeStruct dts = UA_DateTime_toStruct(timeStamp);	
-		//UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND, "TimeStamp : %u-%u-%u %u:%u:%u.%03u", dts.day, dts.month, dts.year, dts.hour, dts.min, dts.sec, dts.milliSec);
     }
 
 	//Read the cpu temp
@@ -64,7 +61,6 @@ static void readNode(UA_Client *client, UA_StatusCode retval, UA_Variant value)
     if(retval == UA_STATUSCODE_GOOD && UA_Variant_hasScalarType(&value, &UA_TYPES[UA_TYPES_FLOAT])) 
     {
 		sysTemp = *(UA_Float *) value.data;
-		//UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND, "Variable Value : %f", variable);
     }
 	
 	
@@ -73,8 +69,6 @@ static void readNode(UA_Client *client, UA_StatusCode retval, UA_Variant value)
     if(retval == UA_STATUSCODE_GOOD && UA_Variant_hasScalarType(&value, &UA_TYPES[UA_TYPES_DOUBLE])) 
     {
 		sysIdle = *(UA_Double*) value.data;
-		//UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND, "Variable Value : %f", sysIdle);
-		//printf("\n\n\nBusy for : %f %% of the time.\n\n\n", sysIdle);
     }
 		
 	/*
