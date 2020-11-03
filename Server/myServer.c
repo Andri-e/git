@@ -199,7 +199,7 @@ static void beforeReadIdle(UA_Server *server,
 	long double idleFraction;
 	
 	times = 2;
-	lag = 1);
+	lag = 1;
  
 	//while(times>0){
 		FILE* fp = fopen("/proc/stat","r");
