@@ -185,7 +185,7 @@ static void beforeReadIdle(UA_Server *server,
 	char* token;
 	int i = 0,times,lag;
 	long int sum = 0, idle, lastSum = 0,lastIdle = 0;
-	 double idleFraction;
+	double sysIdleFraction;
 
 	FILE* fp = fopen("/proc/stat","r");
 	i = 0;
@@ -210,11 +210,11 @@ static void beforeReadIdle(UA_Server *server,
 	lastIdle = idle;
 	lastSum = sum;
 	
-	sysidle = (double)idleFraction;
+	//sysidle = (double)idleFraction;
 
 	// Way to update the variable 
 	UA_Variant value;
-	UA_Variant_setScalar(&value, &sysidle, &UA_TYPES[UA_TYPES_DOUBLE]);
+	UA_Variant_setScalar(&value, &sysIdleFraction, &UA_TYPES[UA_TYPES_DOUBLE]);
     UA_Server_writeValue(server, UA_NODEID_STRING(2, "testSysIdle"), value);
 }
 
