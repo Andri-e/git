@@ -180,8 +180,8 @@ int main(int argc, char * argv[])
 	long int sum = 0, idle, lastSum = 0,lastIdle = 0;
 	long double idleFraction;
  
-		times = atoi(argV[1]);
-		lag = atoi(argV[2]);
+		times = 3;
+		lag = 1;
  
 		while(times>0){
 			FILE* fp = fopen("/proc/stat","r");
