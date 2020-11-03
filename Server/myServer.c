@@ -246,8 +246,7 @@ static void beforeReadLoad(UA_Server *server,
 	
 	// Get latest stats for cpu load 
 	get_stats(&st0_0, -1);
-    sleep(1);
-	//usleep(1000);
+    sleep(1);									// This is needed to calcluate the load, delay is not good. 
     get_stats(&st0_1, -1);   
 	printf("CPU: %lf%%\n", calculate_load(&st0_0, &st0_1));
 
@@ -267,10 +266,6 @@ static void addValueCallbackToCurrentLoad(UA_Server *server) {
     callback.onWrite = NULL;
     UA_Server_setVariableNode_valueCallback(server, UA_NODEID_STRING(2, "testSysLoad"), callback);
 }
-
-// -------------------- +CPu load value controlled 
-
-//-----------------------
 
 
 // myServer main 
