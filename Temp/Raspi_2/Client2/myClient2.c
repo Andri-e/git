@@ -24,7 +24,7 @@ static void readNode(UA_Client *client, UA_StatusCode retval, UA_Variant value)
 {
     //Variables for read access 
     UA_String userName;
-    UA_Int32 serialNumber;
+    UA_Int32 userId;
 	UA_DateTime timeStamp;
 	UA_Double variable;
 	
@@ -42,7 +42,7 @@ static void readNode(UA_Client *client, UA_StatusCode retval, UA_Variant value)
     retval = UA_Client_readValueAttribute(client, UA_NODEID_STRING(2, "testUserId"), &value);
     if(retval == UA_STATUSCODE_GOOD && UA_Variant_hasScalarType(&value, &UA_TYPES[UA_TYPES_INT32])) 
     {
-		serialNumber = *(UA_Int32 *) value.data;
+		userId = *(UA_Int32 *) value.data;
     }
 	
 	//Read the time stamp
@@ -80,7 +80,7 @@ static void readNode(UA_Client *client, UA_StatusCode retval, UA_Variant value)
     }
 	*/
 	
-	UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND, "%.*s , %d , %u-%u-%u %u:%u:%u.%03u , %f °C, %f %%", userName.length, userName.data, serialNumber, dts.day, dts.month, dts.year, dts.hour, dts.min, dts.sec, dts.milliSec,  );
+	UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND, "%.*s , %d , %u-%u-%u %u:%u:%u.%03u , %f °C, %f %%", userName.length, userName.data, userId, dts.day, dts.month, dts.year, dts.hour, dts.min, dts.sec, dts.milliSec  );
 }
 
 // myClient main 
