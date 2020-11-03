@@ -203,9 +203,9 @@ static void beforeReadLoad(UA_Server *server,
 	// Get latest stats for cpu load 
 	get_stats(&st0_0, -1);
         
-	//printf("CPU: %lf%%\n", calculate_load(&st0_0, &st0_1));
+	printf("CPU: %lf%%\n", calculate_load(&st0_0, &st0_1));
 
-	sysload = calculate_load(&st0_0, &st0_1);
+	//sysload = calculate_load(&st0_0, &st0_1);
 	
 	printf("CPU: %lf%%\n", sysload);
 
@@ -248,7 +248,7 @@ void get_stats(struct cpustat *st, int cpunum)
 	return;
 }
 
-float calculate_load(struct cpustat *prev, struct cpustat *cur)
+double calculate_load(struct cpustat *prev, struct cpustat *cur)
 {
     int idle_prev = (prev->t_idle) + (prev->t_iowait);
     int idle_cur = (cur->t_idle) + (cur->t_iowait);
