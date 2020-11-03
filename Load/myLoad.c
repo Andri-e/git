@@ -12,14 +12,15 @@
 // myServer main 
 int main(int argc, char * argv[])
 {
-	long int i = 1; 
-	
-	for (int a = 0; a < 100; ++a)
+	while (1)
 	{
-		i = a * i;
-		i = (a * i) / 3.14;
+		long int i = 1; 
+		for (int a = 0; a < 10000; ++a)
+		{
+			i = a * i;
+			i = (a * i) / 3.14;
+		}
 	}
-
 
 
     return 0;
