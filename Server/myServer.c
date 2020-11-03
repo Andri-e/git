@@ -135,8 +135,8 @@ static void beforeReadVariable(UA_Server *server,
 	
 
 	// Read cpu Temp 
-	float systemp; 
-	UA_Float millideg;
+	UA_Float systemp; 
+	float millideg;
 	FILE *thermal;
 	int n;
 
