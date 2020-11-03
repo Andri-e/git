@@ -4,7 +4,7 @@
 #include <stdlib.h>
 #include <time.h>
 
-#include <inttypes.h>
+//#include <inttypes.h>
 #include <math.h>
 #include <stdio.h>
 
@@ -78,7 +78,7 @@ static void readNode(UA_Client *client, UA_StatusCode retval, UA_Variant value)
     }
 	
 
-	
+	// Maybe add a latency check since I got a time stamp I can calculate the latency 
 	UA_DateTime refTimeStamp;
 	refTimeStamp = UA_DateTime_now();
 	UA_DateTimeStruct dts_1 = UA_DateTime_toStruct(refTimeStamp);	
@@ -95,7 +95,7 @@ static void readNode(UA_Client *client, UA_StatusCode retval, UA_Variant value)
 		//UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND, "Variable Value : %f", variable);
     }
 	*/
-	//UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND, "%.*s , %d , %u-%u-%u %u:%u:%u.%03u , %f . ", variableName.length, variableName.data, serialNumber, dts.day, dts.month, dts.year, dts.hour, dts.min, dts.sec, dts.milliSec, variable );
+	
 	UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND, "%.*s , %d , %u-%u-%u %u:%u:%u.%03u , %f °C, %f %%", variableName.length, variableName.data, serialNumber, dts.day, dts.month, dts.year, dts.hour, dts.min, dts.sec, dts.milliSec, sysTemp, sysIdle );
 }
 
@@ -108,7 +108,7 @@ int main(void)
     UA_ClientConfig *cc = UA_Client_getConfig(client);
     UA_ClientConfig_setDefault(cc);
 
-    /* default timeout is 5 seconds. Set it to 1 second here for demo */
+    // default timeout is 5 seconds. Set it to 1 second here for demo 
     cc->timeout = 1000;
 
     /* Read the value attribute of the node. UA_Client_readValueAttribute is a
@@ -120,7 +120,6 @@ int main(void)
 	// While loop that keeps reading the value from the server until it is disconnected 
     while(running) 
 	{
-		//UA_Variant_clear(&value);
         if(retval != UA_STATUSCODE_GOOD) 						// If status code not good then log time and try to reconect 
 		{ 
 			UA_LOG_ERROR(UA_Log_Stdout, UA_LOGCATEGORY_CLIENT, "Not connected. Retrying to connect in 1 second");		
@@ -134,11 +133,8 @@ int main(void)
 			UA_StatusCode retval = UA_Client_connect(client, "opc.tcp://localhost:4840");
             continue;
         }
-
-        //UA_Variant_clear(&value);
-		//{
 		readNode(client, retval, value);
-		//}
+		
         UA_sleep_ms(500);				// Just a delay to reduce the spam
     };
 
