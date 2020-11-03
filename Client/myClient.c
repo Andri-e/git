@@ -86,7 +86,7 @@ static void readNode(UA_Client *client, UA_StatusCode retval, UA_Variant value)
     clock_gettime(CLOCK_REALTIME, &spec);
 
     s  = spec.tv_sec;
-    ms = round(spec.tv_nsec / 1.0e6); // Convert nanoseconds to milliseconds
+    ms = (spec.tv_nsec / 1.0e6); // Convert nanoseconds to milliseconds
     if (ms > 999) {
         s++;
         ms = 0;
