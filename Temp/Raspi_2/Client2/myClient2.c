@@ -26,10 +26,7 @@ static void readNode(UA_Client *client, UA_StatusCode retval, UA_Variant value)
     UA_String userName;
     UA_Int32 serialNumber;
 	UA_DateTime timeStamp;
-	UA_Float sysTemp;
-	UA_Double sysIdle;
-	
-	//UA_Double variable;
+	UA_Double variable;
 	
 	UA_Variant_clear(&value);
 	UA_DateTimeStruct dts = UA_DateTime_toStruct(timeStamp);	
@@ -83,7 +80,7 @@ static void readNode(UA_Client *client, UA_StatusCode retval, UA_Variant value)
     }
 	*/
 	
-	UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND, "%.*s , %d , %u-%u-%u %u:%u:%u.%03u , %f °C, %f %%", variableName.length, variableName.data, serialNumber, dts.day, dts.month, dts.year, dts.hour, dts.min, dts.sec, dts.milliSec, sysTemp, sysIdle );
+	UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND, "%.*s , %d , %u-%u-%u %u:%u:%u.%03u , %f °C, %f %%", userName.length, userName.data, serialNumber, dts.day, dts.month, dts.year, dts.hour, dts.min, dts.sec, dts.milliSec,  );
 }
 
 // myClient main 
