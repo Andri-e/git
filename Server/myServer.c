@@ -3,13 +3,6 @@
 #include <signal.h>
 #include <stdlib.h>
 
-// See if I need the headers below 
-//#include<string.h>
-//#include<unistd.h>
-//#include<stdio.h>
-
-
-
 static volatile UA_Boolean running = true;			// Server state
 
 UA_Double variable = 20.0;						
