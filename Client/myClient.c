@@ -58,7 +58,7 @@ static void readNode(UA_Client *client, UA_StatusCode retval, UA_Variant value)
     }
 
 	//Read the cpu temp
-    retval = UA_Client_readValueAttribute(client, UA_NODEID_STRING(2, "testVariable"), &value);
+    retval = UA_Client_readValueAttribute(client, UA_NODEID_STRING(2, "testSysTemp"), &value);
     if(retval == UA_STATUSCODE_GOOD && UA_Variant_hasScalarType(&value, &UA_TYPES[UA_TYPES_FLOAT])) 
     {
 		systemp = *(UA_Float *) value.data;

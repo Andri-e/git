@@ -17,6 +17,7 @@ UA_Double variable = 20.0;
 UA_DateTime timeStamp = 0;	
 
 UA_Float systemp = 0; 
+UA_Float sysload = 0;
 
 // Stop handler to watch for ctrl + c 
 static void stopHandler(int sig)
@@ -97,11 +98,20 @@ static void nodeSetup(UA_Server *server)
 	//Add the cpu Temperature to the server
     UA_VariableAttributes variableAttr = UA_VariableAttributes_default;
     UA_Variant_setScalar(&variableAttr.value, &systemp, &UA_TYPES[UA_TYPES_FLOAT]);
+    UA_Server_addVariableNode(server, UA_NODEID_STRING(2, "testSysTemp"), testObjectId,
+                              UA_NODEID_NUMERIC(0, UA_NS0ID_HASCOMPONENT),
+                              UA_QUALIFIEDNAME(2, "Variable"),
+                              UA_NODEID_NUMERIC(0, UA_NS0ID_BASEDATAVARIABLETYPE), variableAttr, NULL, NULL);
+	
+	//Add the Variable to the server
+    UA_VariableAttributes variableAttr = UA_VariableAttributes_default;
+    UA_Variant_setScalar(&variableAttr.value, &variable, &UA_TYPES[UA_TYPES_DOUBLE]);
     UA_Server_addVariableNode(server, UA_NODEID_STRING(2, "testVariable"), testObjectId,
                               UA_NODEID_NUMERIC(0, UA_NS0ID_HASCOMPONENT),
                               UA_QUALIFIEDNAME(2, "Variable"),
                               UA_NODEID_NUMERIC(0, UA_NS0ID_BASEDATAVARIABLETYPE), variableAttr, NULL, NULL);
-
+	
+	
 
 /*
     //Add the Variable to the server
@@ -133,8 +143,8 @@ static void addValueCallbackToCurrentTimeVariable(UA_Server *server) {
     UA_Server_setVariableNode_valueCallback(server, UA_NODEID_STRING(2, "testTimeStamp"), callback);
 }
 
-// Variable Callback 
-static void beforeReadVariable(UA_Server *server,
+// CPU Temperature Callback 
+static void beforeReadTemperature(UA_Server *server,
                const UA_NodeId *sessionId, void *sessionContext,
                const UA_NodeId *nodeid, void *nodeContext,
                const UA_NumericRange *range, const UA_DataValue *data) 
@@ -152,13 +162,51 @@ static void beforeReadVariable(UA_Server *server,
 	// Way to update the variable 
 	UA_Variant value;
 	UA_Variant_setScalar(&value, &systemp, &UA_TYPES[UA_TYPES_FLOAT]);
-    //UA_Variant_setScalar(&value, &variable, &UA_TYPES[UA_TYPES_DOUBLE]);
-    UA_Server_writeValue(server, UA_NODEID_STRING(2, "testVariable"), value);
+    UA_Server_writeValue(server, UA_NODEID_STRING(2, "testSysTemp"), value);
 }
 
-static void addValueCallbackToCurrentVariable(UA_Server *server) {
+static void addValueCallbackToCurrentTemerature(UA_Server *server) {
     UA_ValueCallback callback ;
-    callback.onRead = beforeReadVariable;
+    callback.onRead = beforeReadTemperature;
+    callback.onWrite = NULL;
+    UA_Server_setVariableNode_valueCallback(server, UA_NODEID_STRING(2, "testSysTemp"), callback);
+}
+
+
+
+
+
+
+
+
+// CPU Load Callback 
+static void beforeReadLoad(UA_Server *server,
+               const UA_NodeId *sessionId, void *sessionContext,
+               const UA_NodeId *nodeid, void *nodeContext,
+               const UA_NumericRange *range, const UA_DataValue *data) 
+{
+	// Structure for calculating the cpu load 
+	struct cpustat st0_0, st0_1;
+	//UA_Float cpuload;
+	
+	// Get latest stats for cpu load 
+	get_stats(&st0_0, -1);
+        
+	//printf("CPU: %lf%%\n", calculate_load(&st0_0, &st0_1));
+
+	sysload = calculate_load(&st0_0, &st0_1);
+	
+	printf("CPU: %lf%%\n", sysload);
+
+	// Way to update the variable 
+	UA_Variant value;
+	UA_Variant_setScalar(&value, &cpuload, &UA_TYPES[UA_TYPES_FLOAT]);
+    //UA_Server_writeValue(server, UA_NODEID_STRING(2, "testVariable"), value);
+}
+
+static void addValueCallbackToCurrentLoad(UA_Server *server) {
+    UA_ValueCallback callback ;
+    callback.onRead = beforeReadLoad;
     callback.onWrite = NULL;
     UA_Server_setVariableNode_valueCallback(server, UA_NODEID_STRING(2, "testVariable"), callback);
 }
@@ -176,9 +224,6 @@ struct cpustat {
     unsigned long t_irq;
     unsigned long t_softirq;
 };
-
-
-
 
 void skip_lines(FILE *fp, int numlines)
 {
@@ -236,66 +281,6 @@ int main(int argc, char * argv[])
     signal(SIGTERM, stopHandler);
 	
 	
-	
-	// Thing below finds the % of the time the cpu is busy.. is that relevant info? 
-	char str[100];
-	const char d[2] = " ";
-	char* token;
-	int i = 0,times,lag;
-	long int sum = 0, idle, lastSum = 0,lastIdle = 0;
-	long double idleFraction;
- 
-		times = 3;
-		lag = 1;
- 
-		while(times>0){
-			FILE* fp = fopen("/proc/stat","r");
-	                i = 0;
-			fgets(str,100,fp);
-			fclose(fp);
-			token = strtok(str,d);
-	                sum = 0;
-			while(token!=NULL){
-				token = strtok(NULL,d);
-				if(token!=NULL){
-					sum += atoi(token);
- 
-				if(i==3)
-					idle = atoi(token);
- 
-				i++;
-			        }
-		        }
-	            idleFraction = 100 - (idle-lastIdle)*100.0/(sum-lastSum);
-		        printf("Busy for : %lf %% of the time.", idleFraction);
- 
-		        lastIdle = idle;
-		        lastSum = sum;
- 
- 
-		        times--;
-		        sleep(lag);
-				// Is this the info that I want?? 
-		}	
-	
-	struct cpustat st0_0, st0_1;
-    while (1)
-    {
-        get_stats(&st0_0, -1);
-        sleep(1);
-        get_stats(&st0_1, -1);
-        printf("CPU: %lf%%\n", calculate_load(&st0_0, &st0_1));
-    }
-	
-	
-	
-	
-	
-
-	
-	
-	
-	
 	// Creating a new server 
     UA_Server *server = UA_Server_new();
 
@@ -307,8 +292,9 @@ int main(int argc, char * argv[])
 	
 	// Add callback for updating the TimeStamp / Variable
 	addValueCallbackToCurrentTimeVariable(server);
-	addValueCallbackToCurrentVariable(server);
-
+	addValueCallbackToCurrentTemerature(server);
+	addValueCallbackToCurrentLoad(server);
+	
 	// Server start up 
     UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND, "Starting server...");
     UA_StatusCode retval = UA_Server_run(server, &running);
