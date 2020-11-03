@@ -206,7 +206,7 @@ static void beforeReadIdle(UA_Server *server,
 			i++;
 		}
 	}
-	idleFraction = 100 - (idle-lastIdle)*100.0/(sum-lastSum);
+	sysIdleFraction = 100 - (idle-lastIdle)*100.0/(sum-lastSum);
 	lastIdle = idle;
 	lastSum = sum;
 	
