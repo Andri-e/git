@@ -2,11 +2,8 @@
 
 #include <signal.h>
 #include <stdlib.h>
-#include <time.h>
+//#include <time.h>
 
-//#include <inttypes.h>
-//#include <math.h>
-#include <stdio.h>
 
 
 UA_Boolean running = true;
