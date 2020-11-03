@@ -119,16 +119,27 @@ static void beforeReadVariable(UA_Server *server,
                const UA_NumericRange *range, const UA_DataValue *data) 
 {
 	// Need to get a dam dht11 or some sensor to run here
-    float tempVariable = 1.0 * (rand()%100)/100 - 0.5;
-	variable += tempVariable;
+    // float tempVariable = 1.0 * (rand()%100)/100 - 0.5;
+	// variable += tempVariable;
 	
 
-	
+	// Read cpu Temp 
+	float systemp, millideg;
+	FILE *thermal;
+	int n;
+
+	thermal = fopen("/sys/class/thermal/thermal_zone0/temp","r");
+	n = fscanf(thermal,"%f",&millideg);
+	fclose(thermal);
+	systemp = millideg / 1000;
+
+	printf("CPU temperature is %f degrees C\n",systemp);
 	
 	
 	// Way to update the variable 
 	UA_Variant value;
-    UA_Variant_setScalar(&value, &variable, &UA_TYPES[UA_TYPES_DOUBLE]);
+	UA_Variant_setScalar(&value, &systemp, &UA_TYPES[UA_TYPES_DOUBLE]);
+    //UA_Variant_setScalar(&value, &variable, &UA_TYPES[UA_TYPES_DOUBLE]);
     UA_Server_writeValue(server, UA_NODEID_STRING(2, "testVariable"), value);
 }
 
