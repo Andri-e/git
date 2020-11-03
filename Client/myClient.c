@@ -27,8 +27,9 @@ static void readNode(UA_Client *client, UA_StatusCode retval, UA_Variant value)
     UA_Int32 serialNumber;
 	UA_DateTime timeStamp;
     //UA_Double variable;
-	UA_Float systemp;
-	UA_Double sysload;
+	UA_Float sysTemp;
+	//UA_Double sysload;
+	UA_Double sysIdle;
 	
 	UA_DateTimeStruct dts = UA_DateTime_toStruct(timeStamp);	
 
@@ -62,9 +63,19 @@ static void readNode(UA_Client *client, UA_StatusCode retval, UA_Variant value)
     retval = UA_Client_readValueAttribute(client, UA_NODEID_STRING(2, "testSysTemp"), &value);
     if(retval == UA_STATUSCODE_GOOD && UA_Variant_hasScalarType(&value, &UA_TYPES[UA_TYPES_FLOAT])) 
     {
-		systemp = *(UA_Float *) value.data;
+		sysTemp = *(UA_Float *) value.data;
 		//UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND, "Variable Value : %f", variable);
     }
+	
+	
+	//Read the cpu idle time
+    retval = UA_Client_readValueAttribute(client, UA_NODEID_STRING(2, "testSysIdle"), &value);
+    if(retval == UA_STATUSCODE_GOOD && UA_Variant_hasScalarType(&value, &UA_TYPES[UA_TYPES_DOUBLE])) 
+    {
+		sysIdle = *(UA_Double*) value.data;
+		UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND, "Variable Value : %f", sysIdle);
+    }
+	
 
 	/*
 	//Read the cpu load  
@@ -86,7 +97,7 @@ static void readNode(UA_Client *client, UA_StatusCode retval, UA_Variant value)
     }
 	*/
 	//UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND, "%.*s , %d , %u-%u-%u %u:%u:%u.%03u , %f . ", variableName.length, variableName.data, serialNumber, dts.day, dts.month, dts.year, dts.hour, dts.min, dts.sec, dts.milliSec, variable );
-	UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND, "%.*s , %d , %u-%u-%u %u:%u:%u.%03u , %f . ", variableName.length, variableName.data, serialNumber, dts.day, dts.month, dts.year, dts.hour, dts.min, dts.sec, dts.milliSec, systemp );
+	UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND, "%.*s , %d , %u-%u-%u %u:%u:%u.%03u , %f . ", variableName.length, variableName.data, serialNumber, dts.day, dts.month, dts.year, dts.hour, dts.min, dts.sec, dts.milliSec, sysTemp );
 }
 
 // myClient main 
