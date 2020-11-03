@@ -82,11 +82,10 @@ static void readNode(UA_Client *client, UA_StatusCode retval, UA_Variant value)
 struct timeval  tv;
 gettimeofday(&tv, NULL);
 
-double time_in_mill = 
-         (tv.tv_sec) * 1000 + (tv.tv_usec) / 1000 ;
+double time_in_mill = (tv.tv_sec) * 1000 + (tv.tv_usec) / 1000 ;
 
-    printf("Current time: %"PRIdMAX".%03ld seconds since the Epoch\n",
-           (intmax_t)s, ms);
+printf("\n %f \n", time_in_mill)
+
 		
 	/*
     //Read the variable 
