@@ -108,8 +108,9 @@ int main(void)
 	UA_StatusCode retval = UA_Client_connect(client, "opc.tcp://localhost:4840");
 	
 	// While loop that keeps reading the value from the server until it is disconnected 
-	sleep(3);
-    while(running) {
+    while(running) 
+	{
+		UA_Variant_clear(&value);
         if(retval != UA_STATUSCODE_GOOD) 						// If status code not good then log time and try to reconect 
 		{ 
 			UA_LOG_ERROR(UA_Log_Stdout, UA_LOGCATEGORY_CLIENT, "Not connected. Retrying to connect in 1 second");		
@@ -124,7 +125,7 @@ int main(void)
             continue;
         }
 
-        UA_Variant_clear(&value);
+        //UA_Variant_clear(&value);
 		readNode(client, retval, value);
 		
         UA_sleep_ms(1000);
