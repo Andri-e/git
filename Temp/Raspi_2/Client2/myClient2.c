@@ -23,7 +23,7 @@ static void stopHandler(int sign)
 static void readNode(UA_Client *client, UA_StatusCode retval, UA_Variant value)
 {
     //Variables for read access 
-    UA_String variableName;
+    UA_String userName;
     UA_Int32 serialNumber;
 	UA_DateTime timeStamp;
 	UA_Float sysTemp;
@@ -35,14 +35,14 @@ static void readNode(UA_Client *client, UA_StatusCode retval, UA_Variant value)
 	UA_DateTimeStruct dts = UA_DateTime_toStruct(timeStamp);	
 
     //Read Variable name
-    retval = UA_Client_readValueAttribute(client, UA_NODEID_STRING(2, "testVariableName"), &value);
+    retval = UA_Client_readValueAttribute(client, UA_NODEID_STRING(2, "testUserName"), &value);
     if(retval == UA_STATUSCODE_GOOD && UA_Variant_hasScalarType(&value, &UA_TYPES[UA_TYPES_STRING])) 
     {
-		variableName = *(UA_String *) value.data;
+		userName = *(UA_String *) value.data;
     }
 
     //Read Serial Number 
-    retval = UA_Client_readValueAttribute(client, UA_NODEID_STRING(2, "testSerial"), &value);
+    retval = UA_Client_readValueAttribute(client, UA_NODEID_STRING(2, "testUserId"), &value);
     if(retval == UA_STATUSCODE_GOOD && UA_Variant_hasScalarType(&value, &UA_TYPES[UA_TYPES_INT32])) 
     {
 		serialNumber = *(UA_Int32 *) value.data;
@@ -56,22 +56,15 @@ static void readNode(UA_Client *client, UA_StatusCode retval, UA_Variant value)
 		UA_DateTimeStruct dts = UA_DateTime_toStruct(timeStamp);	
     }
 
-	//Read the cpu temp
-    retval = UA_Client_readValueAttribute(client, UA_NODEID_STRING(2, "testSysTemp"), &value);
-    if(retval == UA_STATUSCODE_GOOD && UA_Variant_hasScalarType(&value, &UA_TYPES[UA_TYPES_FLOAT])) 
-    {
-		sysTemp = *(UA_Float *) value.data;
-    }
-	
-	
-	//Read the cpu idle time
-    retval = UA_Client_readValueAttribute(client, UA_NODEID_STRING(2, "testSysIdle"), &value);
+	//Read the variable 
+    retval = UA_Client_readValueAttribute(client, UA_NODEID_STRING(2, "testVariable"), &value);
     if(retval == UA_STATUSCODE_GOOD && UA_Variant_hasScalarType(&value, &UA_TYPES[UA_TYPES_DOUBLE])) 
     {
-		sysIdle = *(UA_Double*) value.data;
+		variable = *(UA_Double *) value.data;
+		//UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND, "Variable Value : %f", variable);
     }
 	
-
+	
 	// Maybe add a latency check since I got a time stamp I can calculate the latency 
 	UA_DateTime refTimeStamp;
 	refTimeStamp = UA_DateTime_now();
