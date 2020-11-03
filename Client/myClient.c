@@ -75,6 +75,24 @@ int main(void)
     UA_ClientConfig *cc = UA_Client_getConfig(client);
     UA_ClientConfig_setDefault(cc);
 	bool first_connect = false;
+	
+	
+	
+	float systemp, millideg;
+	FILE *thermal;
+	int n;
+
+	thermal = fopen("/sys/class/thermal/thermal_zone0/temp","r");
+	n = fscanf(thermal,"%f",&milldeg);
+	fclose(thermal);
+	systemp = millideg / 1000;
+
+	printf("CPU temperature is %f degrees C\n",systemp);
+	
+	
+	
+	
+	
 
     /* default timeout is 5 seconds. Set it to 1 second here for demo */
     cc->timeout = 1000;
@@ -105,11 +123,6 @@ int main(void)
             UA_sleep_ms(1000);
             continue;
         }
-
-        /* NodeId of the variable holding the current time */
-       // const UA_NodeId nodeId = UA_NODEID_NUMERIC(0, UA_NS0ID_SERVER_SERVERSTATUS_CURRENTTIME);
-
-       // retval = UA_Client_readValueAttribute(client, nodeId, &value);
         if(retval == UA_STATUSCODE_BADCONNECTIONCLOSED) 
 		{
             UA_LOG_ERROR(UA_Log_Stdout, UA_LOGCATEGORY_CLIENT, "Connection was closed. Reconnecting ...");
