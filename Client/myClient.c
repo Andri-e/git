@@ -76,18 +76,7 @@ static void readNode(UA_Client *client, UA_StatusCode retval, UA_Variant value)
 		//UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND, "Variable Value : %f", sysIdle);
 		//printf("\n\n\nBusy for : %f %% of the time.\n\n\n", sysIdle);
     }
-	
-
-	/*
-	//Read the cpu load  
-    retval = UA_Client_readValueAttribute(client, UA_NODEID_STRING(2, "testSysLoad"), &value);
-    if(retval == UA_STATUSCODE_GOOD && UA_Variant_hasScalarType(&value, &UA_TYPES[UA_TYPES_DOUBLE])) 
-    {
-		sysload = *(UA_Double *) value.data;
-		UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND, "Variable Value : %f", sysload);
-    }
-	*/
-	
+		
 	/*
     //Read the variable 
     retval = UA_Client_readValueAttribute(client, UA_NODEID_STRING(2, "testVariable"), &value);
@@ -98,7 +87,7 @@ static void readNode(UA_Client *client, UA_StatusCode retval, UA_Variant value)
     }
 	*/
 	//UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND, "%.*s , %d , %u-%u-%u %u:%u:%u.%03u , %f . ", variableName.length, variableName.data, serialNumber, dts.day, dts.month, dts.year, dts.hour, dts.min, dts.sec, dts.milliSec, variable );
-	UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND, "%.*s , %d , %u-%u-%u %u:%u:%u.%03u , %f , %f ", variableName.length, variableName.data, serialNumber, dts.day, dts.month, dts.year, dts.hour, dts.min, dts.sec, dts.milliSec, sysTemp, sysIdle );
+	UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND, "%.*s , %d , %u-%u-%u %u:%u:%u.%03u , %f , %f ", variableName.length, variableName.data, serialNumber, dts.day, dts.month, dts.year, dts.hour, dts.min, dts.sec, dts.milliSec, sysTemp °C, sysIdle % );
 }
 
 // myClient main 
@@ -136,7 +125,7 @@ int main(void)
                         "Re-Connected at : %02u-%02u-%04u %02u:%02u:%02u.%03u",
                         dts.day, dts.month, dts.year, dts.hour, dts.min, dts.sec, dts.milliSec);
 						
-            UA_sleep_ms(2000);
+            UA_sleep_ms(1000);
             continue;
         }
         if(retval == UA_STATUSCODE_BADCONNECTIONCLOSED) 
