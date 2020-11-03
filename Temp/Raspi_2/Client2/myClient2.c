@@ -80,7 +80,7 @@ static void readNode(UA_Client *client, UA_StatusCode retval, UA_Variant value)
     }
 	*/
 	
-	UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND, "%.*s , %d , %u-%u-%u %u:%u:%u.%03u ,%f ", userName.length, userName.data, userId, dts.day, dts.month, dts.year, dts.hour, dts.min, dts.sec, dts.milliSec, variable );
+	UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND, "%.*s \t%d \t%u-%u-%u %u:%u:%u.%03u \t%f ", userName.length, userName.data, userId, dts.day, dts.month, dts.year, dts.hour, dts.min, dts.sec, dts.milliSec, variable );
 }
 
 // myClient main 
