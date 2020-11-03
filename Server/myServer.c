@@ -151,8 +151,7 @@ int main(int argc, char * argv[])
 	
 	
 	// Read cpu Temp 
-	float systemp; 
-	double millideg;
+	float systemp, millideg;
 	FILE *thermal;
 	int n;
 
