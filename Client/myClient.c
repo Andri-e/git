@@ -128,7 +128,10 @@ int main(void)
 			UA_StatusCode retval = UA_Client_connect(client, "opc.tcp://192.168.1.58:4840");
             continue;
         }
-		readNode(client, retval, value);
+		else 
+		{
+			readNode(client, retval, value);
+		}
 		
         UA_sleep_ms(500);				// Just a delay to reduce the spam
     };
