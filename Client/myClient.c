@@ -69,13 +69,7 @@ static void readNode(UA_Client *client, UA_StatusCode retval, UA_Variant value)
     if(retval == UA_STATUSCODE_GOOD && UA_Variant_hasScalarType(&value, &UA_TYPES[UA_TYPES_DOUBLE])) 
     {
 		sysIdle = *(UA_Double*) value.data;
-    }
-	
-	if(retval != UA_STATUSCODE_GOOD) 						
-	{ 
-		UA_Variant_clear(&value);
-	} 
-	
+    }	
 	
 	// Maybe add a latency check since I got a time stamp I can calculate the latency 
 	UA_DateTime refTimeStamp;
@@ -135,7 +129,7 @@ int main(void)
         }
 		else 
 		{
-			readNode(client, retval, value);
+			//readNode(client, retval, value);
 		}
 		
         UA_sleep_ms(500);				// Just a delay to reduce the spam
