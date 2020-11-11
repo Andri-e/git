@@ -13,7 +13,7 @@ UA_Boolean running = true;
 // ---------------------------------------
 
 
-#define DISCOVERY_SERVER_ENDPOINT "opc.tcp://raspberrypi:4840"
+#define DISCOVERY_SERVER_ENDPOINT "opc.tcp://192.168.1.58:4840"
 
 
 static void stopHandler(int sign) 
