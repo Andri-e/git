@@ -131,7 +131,10 @@ int main(void)
 			UA_StatusCode retval = UA_Client_connect(client, DISCOVERY_SERVER_ENDPOINT);
             continue;
         }
+		else 
+		{
 		readNode(client, retval, value);
+		}
 		
         UA_sleep_ms(500);				// Just a delay to reduce the spam
     };
