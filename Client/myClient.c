@@ -133,6 +133,7 @@ int main(void)
 			//string asd = retval; 
 			//printf("\n\n%s\n\n", retval);
 			UA_Variant_clear(&value);
+			UA_Variant_clear(&value);
 			readNode(client, retval, value);
 		}
 		
