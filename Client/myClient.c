@@ -114,7 +114,7 @@ int main(void)
 	// While loop that keeps reading the value from the server until it is disconnected 
     while(running) 
 	{
-        while(retval != UA_STATUSCODE_GOOD) 						// If status code not good then log time and try to reconect 
+        if(retval != UA_STATUSCODE_GOOD) 						// If status code not good then log time and try to reconect 
 		{ 
 			UA_LOG_ERROR(UA_Log_Stdout, UA_LOGCATEGORY_CLIENT, "Not connected. Retrying to connect in 1 second");		
 			UA_DateTime raw_date = *(UA_DateTime *) value.data;

@@ -12,10 +12,6 @@ UA_Boolean running = true;
 
 // ---------------------------------------
 
-
-#define DISCOVERY_SERVER_ENDPOINT "opc.tcp://192.168.1.58:4840"
-
-
 static void stopHandler(int sign) 
 {
     UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_CLIENT, "Received Ctrl-C");
@@ -73,9 +69,8 @@ static void readNode(UA_Client *client, UA_StatusCode retval, UA_Variant value)
     if(retval == UA_STATUSCODE_GOOD && UA_Variant_hasScalarType(&value, &UA_TYPES[UA_TYPES_DOUBLE])) 
     {
 		sysIdle = *(UA_Double*) value.data;
-    }
+    }	
 	
-
 	// Maybe add a latency check since I got a time stamp I can calculate the latency 
 	UA_DateTime refTimeStamp;
 	refTimeStamp = UA_DateTime_now();
@@ -113,7 +108,8 @@ int main(void)
      * wrapper for the raw read service available as UA_Client_Service_read. */
     UA_Variant value; /* Variants can hold scalar values and arrays of any type */
     UA_Variant_init(&value);
-	UA_StatusCode retval = UA_Client_connect(client, DISCOVERY_SERVER_ENDPOINT);
+	//UA_StatusCode retval = UA_Client_connect(client, "opc.tcp://localhost:4840");
+	UA_StatusCode retval = UA_Client_connect(client, "opc.tcp://192.168.1.58:4840");
 	
 	// While loop that keeps reading the value from the server until it is disconnected 
     while(running) 
@@ -127,14 +123,12 @@ int main(void)
                         "Re-Connected at : %02u-%02u-%04u %02u:%02u:%02u.%03u",
                         dts.day, dts.month, dts.year, dts.hour, dts.min, dts.sec, dts.milliSec);
 						
-            UA_sleep_ms(1000);
-			UA_StatusCode retval = UA_Client_connect(client, DISCOVERY_SERVER_ENDPOINT);
+            UA_sleep_ms(10000);
+			UA_StatusCode retval = UA_Client_connect(client, "opc.tcp://192.168.1.58:4840");
             continue;
         }
-		else 
-		{
+		
 		readNode(client, retval, value);
-		}
 		
         UA_sleep_ms(500);				// Just a delay to reduce the spam
     };
