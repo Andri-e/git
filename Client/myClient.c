@@ -127,9 +127,11 @@ int main(void)
 			UA_StatusCode retval = UA_Client_connect(client, "opc.tcp://192.168.1.58:4840");
             continue;
         }
-
+		
 		if (retval == UA_STATUSCODE_GOOD)
 		{
+			string asd = retval; 
+			printf("\n\n%s\n\n", asd);
 			readNode(client, retval, value);
 		}
 		
