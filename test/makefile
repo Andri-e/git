@@ -1,7 +1,7 @@
 myServer: .open62541.o myServer.o
 	gcc .open62541.o myServer.o -o myServer
 
-../Open62541/open62541.o: .open62541.c
+.open62541.o: .open62541.c
 	gcc -c -std=c99 .open62541.c -o .open62541.o
 	
 myServer.o: myServer.c 
