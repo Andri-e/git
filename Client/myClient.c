@@ -128,7 +128,7 @@ int main(void)
             continue;
         }
 		
-		if (retval == UA_STATUSCODE_GOOD)
+
 		{
 			//string asd = retval; 
 			//printf("\n\n%s\n\n", retval);
