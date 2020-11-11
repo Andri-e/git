@@ -109,7 +109,8 @@ int main(void)
      * wrapper for the raw read service available as UA_Client_Service_read. */
     UA_Variant value; /* Variants can hold scalar values and arrays of any type */
     UA_Variant_init(&value);
-	UA_StatusCode retval = UA_Client_connect(client, "opc.tcp://localhost:4840");
+	//UA_StatusCode retval = UA_Client_connect(client, "opc.tcp://localhost:4840");
+	UA_StatusCode retval = UA_Client_connect(client, "opc.tcp://192.168.1.58:4840");
 	
 	// While loop that keeps reading the value from the server until it is disconnected 
     while(running) 
@@ -124,7 +125,7 @@ int main(void)
                         dts.day, dts.month, dts.year, dts.hour, dts.min, dts.sec, dts.milliSec);
 						
             UA_sleep_ms(1000);
-			UA_StatusCode retval = UA_Client_connect(client, "opc.tcp://localhost:4840");
+			UA_StatusCode retval = UA_Client_connect(client, "opc.tcp://192.168.1.58:4840");
             continue;
         }
 		readNode(client, retval, value);
