@@ -128,7 +128,7 @@ int main(void)
                         dts.day, dts.month, dts.year, dts.hour, dts.min, dts.sec, dts.milliSec);
 						
             UA_sleep_ms(1000);
-			UA_StatusCode retval = UA_Client_connect(client, "opc.tcp://localhost:4840");
+			UA_StatusCode retval = UA_Client_connect(client, DISCOVERY_SERVER_ENDPOINT);
             continue;
         }
 		readNode(client, retval, value);
