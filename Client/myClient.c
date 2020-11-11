@@ -71,7 +71,12 @@ static void readNode(UA_Client *client, UA_StatusCode retval, UA_Variant value)
 		sysIdle = *(UA_Double*) value.data;
     }
 	
-
+	if(retval != UA_STATUSCODE_GOOD) 						
+	{ 
+		UA_Variant_clear(&value);
+	} 
+	
+	
 	// Maybe add a latency check since I got a time stamp I can calculate the latency 
 	UA_DateTime refTimeStamp;
 	refTimeStamp = UA_DateTime_now();
