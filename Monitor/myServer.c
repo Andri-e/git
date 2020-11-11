@@ -1,11 +1,12 @@
-#include <open62541/client_subscriptions.h>
-#include <open62541/plugin/log_stdout.h>
-#include <open62541/server.h>
-#include <open62541/server_config_default.h>
+#include "open62541.h"
 
 #include <signal.h>
 #include <stdlib.h>
 
+// See if I need the headers below 
+#include<string.h>
+#include<unistd.h>
+#include<stdio.h>
 
 static volatile UA_Boolean running = true;
 static void stopHandler(int sign) {
