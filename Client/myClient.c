@@ -131,7 +131,8 @@ int main(void)
 		if (retval == UA_STATUSCODE_GOOD)
 		{
 			//string asd = retval; 
-			printf("\n\n%s\n\n", retval);
+			//printf("\n\n%s\n\n", retval);
+			UA_Variant_clear(&value);
 			readNode(client, retval, value);
 		}
 		
