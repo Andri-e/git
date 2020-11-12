@@ -93,7 +93,7 @@ int main(void)
     
 	signal(SIGINT, stopHandler); // catches ctrl-c 
 
-	/*
+	
 	UA_Client *client = UA_Client_new();
     UA_ClientConfig *cc = UA_Client_getConfig(client);
     UA_ClientConfig_setDefault(cc);
@@ -107,7 +107,7 @@ int main(void)
     UA_Variant_init(&value);
 	//UA_StatusCode retval = UA_Client_connect(client, "opc.tcp://localhost:4840");
 	UA_StatusCode retval = UA_Client_connect(client, "opc.tcp://192.168.1.58:4840");
-	*/
+	
 
     
 	// While loop that keeps reading the value from the server until it is disconnected 
