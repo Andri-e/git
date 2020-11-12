@@ -163,7 +163,7 @@ static void beforeReadTemperature(UA_Server *server,
 	fclose(thermal);
 	systemp = millideg / 1000;
 
-    updateCurrentTime(server);
+    //updateCurrentTime(server);
 
 	// Way to update the variable 
 	UA_Variant value;
