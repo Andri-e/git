@@ -10,11 +10,15 @@
  * to receive and display values that are published by tutorial_pubsub_publish
  * example in the TargetVariables of Subscriber Information Model .
  */
-#include <open62541/plugin/log_stdout.h>
-#include <open62541/plugin/pubsub_udp.h>
-#include <open62541/server.h>
-#include <open62541/server_config_default.h>
-#include <open62541/types_generated.h>
+//#include <open62541/plugin/log_stdout.h>
+//#include <open62541/plugin/pubsub_udp.h>
+//#include <open62541/server.h>
+//#include <open62541/server_config_default.h>
+//#include <open62541/types_generated.h>
+
+
+
+#include "open62541.h"
 
 #include "ua_pubsub.h"
 
