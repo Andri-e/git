@@ -5,14 +5,14 @@
 
 UA_Boolean running = true;
 
-/*
+
 static void stopHandler(int sign) 
 {
     UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_CLIENT, "Received Ctrl-C");
     running = 0;
 }
 
-
+/*
 // read out the nodes 
 static void readNode(UA_Client *client, UA_StatusCode retval, UA_Variant value)
 {
@@ -90,9 +90,10 @@ static void readNode(UA_Client *client, UA_StatusCode retval, UA_Variant value)
 // myClient main 
 int main(void)
 {
-    /*
+    
 	signal(SIGINT, stopHandler); // catches ctrl-c 
-	
+
+	/*
 	UA_Client *client = UA_Client_new();
     UA_ClientConfig *cc = UA_Client_getConfig(client);
     UA_ClientConfig_setDefault(cc);
@@ -108,10 +109,11 @@ int main(void)
 	UA_StatusCode retval = UA_Client_connect(client, "opc.tcp://192.168.1.58:4840");
 	*/
 
-    /*
+    
 	// While loop that keeps reading the value from the server until it is disconnected 
     while(running) 
 	{
+        /*
         if(retval != UA_STATUSCODE_GOOD) 						// If status code not good then log time and try to reconect 
 		{ 
 			UA_LOG_ERROR(UA_Log_Stdout, UA_LOGCATEGORY_CLIENT, "Not connected. Retrying to connect in 1 second");		
@@ -125,17 +127,17 @@ int main(void)
 			UA_StatusCode retval = UA_Client_connect(client, "opc.tcp://192.168.1.58:4840");
             continue;
         }
-		
-		readNode(client, retval, value);
+		*/
+		//readNode(client, retval, value);
 		
         UA_sleep_ms(500);				// Just a delay to reduce the spam
     };
 
     // Clean up 
-    UA_Variant_clear(&value);
-    UA_Client_delete(client); //Disconnects the client internally 
+ //   UA_Variant_clear(&value);
+ //   UA_Client_delete(client); //Disconnects the client internally 
     return EXIT_SUCCESS;
-    */
+    
 	
 }
 
