@@ -171,7 +171,7 @@ static void addVariable_3_returnCondition_1_toNormalState(UA_Server *server, UA_
 }
 */
 
-/*
+
 static void afterWriteCallbackVariable_1(UA_Server *server, const UA_NodeId *sessionId,
                              void *sessionContext, const UA_NodeId *nodeId,
                              void *nodeContext, const UA_NumericRange *range,
@@ -234,7 +234,7 @@ static void afterWriteCallbackVariable_1(UA_Server *server, const UA_NodeId *ses
     }
 }
 
-*/
+
 
 /**
  * The callback only changes the severity field of the condition 2. The severity
@@ -507,7 +507,7 @@ static UA_StatusCode setUpEnvironment(UA_Server *server)
      * and confirming. We will set Retain field to true and enable the condition
      * so we can receive event notifications (we cannot call enable method on
      * unexposed condition using a client like UaExpert or Softing). */
-    retval = addCondition_2(server);
+    UA_StatusCode retval = addCondition_2(server);
     if(retval != UA_STATUSCODE_GOOD) 
 	{
         UA_LOG_ERROR(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND,
