@@ -11,9 +11,13 @@
 #ifndef UA_PUBSUB_H_
 #define UA_PUBSUB_H_
 
-#include <open62541/plugin/pubsub.h>
-#include <open62541/server.h>
-#include <open62541/server_pubsub.h>
+/*
+#include "open62541/plugin/pubsub.h"
+#include "open62541/server.h"
+#include "open62541/server_pubsub.h"
+*/
+
+#include "open62541.h"
 
 #include "open62541_queue.h"
 #include "ua_pubsub_networkmessage.h"
