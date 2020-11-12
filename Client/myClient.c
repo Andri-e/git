@@ -123,12 +123,12 @@ int main(void)
                         "Re-Connected at : %02u-%02u-%04u %02u:%02u:%02u.%03u",
                         dts.day, dts.month, dts.year, dts.hour, dts.min, dts.sec, dts.milliSec);
 						
-            UA_sleep_ms(10000);
+            UA_sleep_ms(1000);
 			UA_StatusCode retval = UA_Client_connect(client, "opc.tcp://192.168.1.58:4840");
             continue;
         }
 		
-		readNode(client, retval, value);
+		//readNode(client, retval, value);
 		
         UA_sleep_ms(500);				// Just a delay to reduce the spam
     };
