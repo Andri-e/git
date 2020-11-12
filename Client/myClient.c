@@ -59,14 +59,14 @@ static void readNode(UA_Client *client, UA_StatusCode retval, UA_Variant value)
 		sysTemp = *(UA_Float *) value.data;
     }
 	
-	/*
+	
 	//Read the cpu idle time
     retval = UA_Client_readValueAttribute(client, UA_NODEID_STRING(2, "testSysIdle"), &value);
     if(retval == UA_STATUSCODE_GOOD && UA_Variant_hasScalarType(&value, &UA_TYPES[UA_TYPES_DOUBLE])) 
     {
 		sysIdle = *(UA_Double*) value.data;
     }	
-	
+	/*
 	// Maybe add a latency check since I got a time stamp I can calculate the latency 
 	UA_DateTime refTimeStamp;
 	refTimeStamp = UA_DateTime_now();
