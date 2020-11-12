@@ -78,6 +78,7 @@ static UA_StatusCode addConditionSourceObject(UA_Server *server)
  * the Object created in addConditionSourceObject(). The condition will be
  * exposed in Address Space through the HasComponent reference to the condition
  * source. */
+ /*
 static UA_StatusCode addCondition_1(UA_Server *server) 
 {
     UA_StatusCode retval = addConditionSourceObject(server);
@@ -97,6 +98,7 @@ static UA_StatusCode addCondition_1(UA_Server *server)
 
     return retval;
 }
+*/
 
 /**
  * Create a condition instance from OffNormalAlarmType. The condition source is
@@ -112,6 +114,7 @@ static UA_StatusCode addCondition_2(UA_Server *server)
     return retval;
 }
 
+/*
 static void addVariable_1_triggerAlarmOfCondition_1(UA_Server *server, UA_NodeId* outNodeId) 
 {
     UA_VariableAttributes attr = UA_VariableAttributes_default;
@@ -128,6 +131,8 @@ static void addVariable_1_triggerAlarmOfCondition_1(UA_Server *server, UA_NodeId
                               parentReferenceNodeId, CallbackTestVariableName,
                               variableTypeNodeId, attr, NULL, outNodeId);
 }
+*/
+
 
 static void addVariable_2_changeSeverityOfCondition_2(UA_Server *server, UA_NodeId* outNodeId) 
 {
@@ -146,6 +151,7 @@ static void addVariable_2_changeSeverityOfCondition_2(UA_Server *server, UA_Node
                               variableTypeNodeId, attr, NULL, outNodeId);
 }
 
+/*
 static void addVariable_3_returnCondition_1_toNormalState(UA_Server *server, UA_NodeId* outNodeId) 
 {
     UA_VariableAttributes attr = UA_VariableAttributes_default;
@@ -163,7 +169,9 @@ static void addVariable_3_returnCondition_1_toNormalState(UA_Server *server, UA_
                               parentReferenceNodeId, CallbackTestVariableName,
                               variableTypeNodeId, attr, NULL, outNodeId);
 }
+*/
 
+/*
 static void afterWriteCallbackVariable_1(UA_Server *server, const UA_NodeId *sessionId,
                              void *sessionContext, const UA_NodeId *nodeId,
                              void *nodeContext, const UA_NumericRange *range,
@@ -180,9 +188,9 @@ static void afterWriteCallbackVariable_1(UA_Server *server, const UA_NodeId *ses
 
     if(*(UA_Boolean *)(data->value.data) == true) 
 	{
-        /* By writing "true" in ActiveState/Id, the A&C server will set the
-         * related fields automatically and then will trigger event
-         * notification. */
+        // By writing "true" in ActiveState/Id, the A&C server will set the
+         // related fields automatically and then will trigger event
+         //notification. 
         UA_Boolean activeStateId = true;
         UA_Variant_setScalar(&value, &activeStateId, &UA_TYPES[UA_TYPES_BOOLEAN]);
         retval |= UA_Server_setConditionVariableFieldProperty(server, conditionInstance_1,
@@ -198,11 +206,11 @@ static void afterWriteCallbackVariable_1(UA_Server *server, const UA_NodeId *ses
     } 
 	else 
 	{
-        /* By writing "false" in ActiveState/Id, the A&C server will set only
-         * the ActiveState field automatically to the value "Inactive". The user
-         * should trigger the event manually by calling
-         * UA_Server_triggerConditionEvent inside the application or call
-         * ConditionRefresh method with client to update the event notification. */
+        // By writing "false" in ActiveState/Id, the A&C server will set only
+        //  the ActiveState field automatically to the value "Inactive". The user
+        //  should trigger the event manually by calling
+        //  UA_Server_triggerConditionEvent inside the application or call
+        //  ConditionRefresh method with client to update the event notification. 
         UA_Boolean activeStateId = false;
         UA_Variant_setScalar(&value, &activeStateId, &UA_TYPES[UA_TYPES_BOOLEAN]);
         retval = UA_Server_setConditionVariableFieldProperty(server, conditionInstance_1,
@@ -225,6 +233,8 @@ static void afterWriteCallbackVariable_1(UA_Server *server, const UA_NodeId *ses
         }
     }
 }
+
+*/
 
 /**
  * The callback only changes the severity field of the condition 2. The severity
@@ -440,6 +450,7 @@ static UA_StatusCode setUpEnvironment(UA_Server *server)
 
     /* Exposed condition 1. We will add to it user specific callbacks when
      * entering enabled state, when acknowledging and when confirming. */
+/*
     UA_StatusCode retval = addCondition_1(server);
     if(retval != UA_STATUSCODE_GOOD) 
 	{
@@ -448,7 +459,6 @@ static UA_StatusCode setUpEnvironment(UA_Server *server)
                      UA_StatusCode_name(retval));
         return retval;
     }
-/*
     //UA_TwoStateVariableChangeCallback userSpecificCallback = enteringEnabledStateCallback;
     retval = UA_Server_setConditionTwoStateVariableCallback(server, conditionInstance_1,
                                                             conditionSource, false,
