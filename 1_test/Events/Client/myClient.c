@@ -1,205 +1,330 @@
-/* This work is licensed under a Creative Commons CCZero 1.0 Universal License.
- * See http://creativecommons.org/publicdomain/zero/1.0/ for more information. */
-
-//#include <open62541/client.h>
-//#include <open62541/client_config_default.h>
-//#include <open62541/client_highlevel.h>
-//#include <open62541/client_subscriptions.h>
-//#include <open62541/plugin/log_stdout.h>
-//#include <open62541/server.h>
-//#include <open62541/server_config_default.h>
-//#include <open62541/util.h>
-
-
 #include "open62541.h"
 
 #include <signal.h>
+#include <stdlib.h>
 
-#ifdef _MSC_VER
-#pragma warning(disable:4996) // warning C4996: 'UA_Client_Subscriptions_addMonitoredEvent': was declared deprecated
-#endif
+UA_Boolean running = true;
 
-#ifdef __clang__
-#pragma clang diagnostic ignored "-Wdeprecated-declarations"
-#endif
+// ---------------------------------------
 
-#ifdef __GNUC__
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-#endif
+// #define DISCOVERY_SERVER_ENDPOINT "opc.tcp://localhost:4840"
 
-static UA_Boolean running = true;
-static void stopHandler(int sig) {
-    UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND, "received ctrl-c");
-    running = false;
+
+// ---------------------------------------
+
+static void stopHandler(int sign) 
+{
+    UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_CLIENT, "Received Ctrl-C");
+    running = 0;
 }
 
-#ifdef UA_ENABLE_SUBSCRIPTIONS
 
-static void handler_events(UA_Client *client, UA_UInt32 subId, void *subContext,
-               UA_UInt32 monId, void *monContext,
-               size_t nEventFields, UA_Variant *eventFields) 
+// read out the nodes 
+static void readNode(UA_Client *client, UA_StatusCode retval, UA_Variant value)
 {
+    //Variables for read access 
+    UA_String variableName;
+    UA_Int32 serialNumber;
+	UA_DateTime timeStamp;
+	UA_Float sysTemp;
+	UA_Double sysIdle;
+	
+	//UA_Double variable;
+	
+	UA_Variant_clear(&value);
+	UA_DateTimeStruct dts = UA_DateTime_toStruct(timeStamp);	
 
-    printf("\nHandler Events called ");
+    //Read Variable name
+    retval = UA_Client_readValueAttribute(client, UA_NODEID_STRING(2, "testVariableName"), &value);
+    if(retval == UA_STATUSCODE_GOOD && UA_Variant_hasScalarType(&value, &UA_TYPES[UA_TYPES_STRING])) 
+    {
+		variableName = *(UA_String *) value.data;
+    }
 
-    UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND, "Notification");
+    //Read Serial Number 
+    retval = UA_Client_readValueAttribute(client, UA_NODEID_STRING(2, "testSerial"), &value);
+    if(retval == UA_STATUSCODE_GOOD && UA_Variant_hasScalarType(&value, &UA_TYPES[UA_TYPES_INT32])) 
+    {
+		serialNumber = *(UA_Int32 *) value.data;
+    }
+	
+	//Read the time stamp
+    retval = UA_Client_readValueAttribute(client, UA_NODEID_STRING(2, "testTimeStamp"), &value);
+    if(retval == UA_STATUSCODE_GOOD && UA_Variant_hasScalarType(&value, &UA_TYPES[UA_TYPES_DATETIME])) 
+    {
+		timeStamp = *(UA_DateTime *) value.data;
+		UA_DateTimeStruct dts = UA_DateTime_toStruct(timeStamp);	
+    }
 
-    /* The context should point to the monId on the stack */
-    UA_assert(*(UA_UInt32*)monContext == monId);
+	//Read the cpu temp
+    retval = UA_Client_readValueAttribute(client, UA_NODEID_STRING(2, "testSysTemp"), &value);
+    if(retval == UA_STATUSCODE_GOOD && UA_Variant_hasScalarType(&value, &UA_TYPES[UA_TYPES_FLOAT])) 
+    {
+		sysTemp = *(UA_Float *) value.data;
+    }
+	
+	
+	//Read the cpu idle time
+    retval = UA_Client_readValueAttribute(client, UA_NODEID_STRING(2, "testSysIdle"), &value);
+    if(retval == UA_STATUSCODE_GOOD && UA_Variant_hasScalarType(&value, &UA_TYPES[UA_TYPES_DOUBLE])) 
+    {
+		sysIdle = *(UA_Double*) value.data;
+    }	
+	
+	// Maybe add a latency check since I got a time stamp I can calculate the latency 
+	UA_DateTime refTimeStamp;
+	refTimeStamp = UA_DateTime_now();
+	UA_DateTimeStruct dts_1 = UA_DateTime_toStruct(refTimeStamp);	
+	UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND, "%u-%u-%u %u:%u:%u.%03u", dts_1.day, dts_1.month, dts_1.year, dts_1.hour, dts_1.min, dts_1.sec, dts_1.milliSec);
+	
 
-    for(size_t i = 0; i < nEventFields; ++i) {
-        if(UA_Variant_hasScalarType(&eventFields[i], &UA_TYPES[UA_TYPES_UINT16])) {
-            UA_UInt16 severity = *(UA_UInt16 *)eventFields[i].data;
-            UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND, "Severity: %u", severity);
-        } else if (UA_Variant_hasScalarType(&eventFields[i], &UA_TYPES[UA_TYPES_LOCALIZEDTEXT])) {
-            UA_LocalizedText *lt = (UA_LocalizedText *)eventFields[i].data;
+		
+	/*
+    //Read the variable 
+    retval = UA_Client_readValueAttribute(client, UA_NODEID_STRING(2, "testVariable"), &value);
+    if(retval == UA_STATUSCODE_GOOD && UA_Variant_hasScalarType(&value, &UA_TYPES[UA_TYPES_DOUBLE])) 
+    {
+		variable = *(UA_Double *) value.data;
+		//UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND, "Variable Value : %f", variable);
+    }
+	*/
+	
+	UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND, "%.*s , %d , %u-%u-%u %u:%u:%u.%03u , %f °C, %f %%", variableName.length, variableName.data, serialNumber, dts.day, dts.month, dts.year, dts.hour, dts.min, dts.sec, dts.milliSec, sysTemp, sysIdle );
+}
+
+// myClient main 
+int main(void)
+{
+	signal(SIGINT, stopHandler); // catches ctrl-c 
+	
+	UA_Client *client = UA_Client_new();
+    UA_ClientConfig *cc = UA_Client_getConfig(client);
+    UA_ClientConfig_setDefault(cc);
+
+    // default timeout is 5 seconds. Set it to 1 second here for demo 
+    cc->timeout = 1000;
+
+    /* Read the value attribute of the node. UA_Client_readValueAttribute is a
+     * wrapper for the raw read service available as UA_Client_Service_read. */
+    UA_Variant value; /* Variants can hold scalar values and arrays of any type */
+    UA_Variant_init(&value);
+	//UA_StatusCode retval = UA_Client_connect(client, "opc.tcp://localhost:4840");
+	UA_StatusCode retval = UA_Client_connect(client, "opc.tcp://192.168.1.58:4840");
+	
+	// While loop that keeps reading the value from the server until it is disconnected 
+    while(running) 
+	{
+        if(retval != UA_STATUSCODE_GOOD) 						// If status code not good then log time and try to reconect 
+		{ 
+			UA_LOG_ERROR(UA_Log_Stdout, UA_LOGCATEGORY_CLIENT, "Not connected. Retrying to connect in 1 second");		
+			UA_DateTime raw_date = *(UA_DateTime *) value.data;
+            UA_DateTimeStruct dts = UA_DateTime_toStruct(raw_date);
             UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND,
-                        "Message: '%.*s'", (int)lt->text.length, lt->text.data);
+                        "Re-Connected at : %02u-%02u-%04u %02u:%02u:%02u.%03u",
+                        dts.day, dts.month, dts.year, dts.hour, dts.min, dts.sec, dts.milliSec);
+						
+            UA_sleep_ms(1000);
+			UA_StatusCode retval = UA_Client_connect(client, "opc.tcp://192.168.1.58:4840");
+            continue;
         }
-        else 
-        {
-#ifdef UA_ENABLE_TYPEDESCRIPTION
-            UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND,
-                        "Don't know how to handle type: '%s'", eventFields[i].type->typeName);
-#else
-            UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND,
-                        "Don't know how to handle type, enable UA_ENABLE_TYPEDESCRIPTION "
-                        "for typename");
-#endif
-        }
-    }
+		
+		//readNode(client, retval, value);
+		printf("\nsomething");
+		
+        UA_sleep_ms(500);				// Just a delay to reduce the spam
+    };
+
+    // Clean up 
+    UA_Variant_clear(&value);
+    UA_Client_delete(client); //Disconnects the client internally 
+    return EXIT_SUCCESS;
+	
 }
 
-const size_t nSelectClauses = 2;
 
-static UA_SimpleAttributeOperand * setupSelectClauses(void) 
-{
-    UA_SimpleAttributeOperand *selectClauses = (UA_SimpleAttributeOperand*)
-        UA_Array_new(nSelectClauses, &UA_TYPES[UA_TYPES_SIMPLEATTRIBUTEOPERAND]);
-    if(!selectClauses)
-        return NULL;
 
-    for(size_t i =0; i<nSelectClauses; ++i) 
-    {
-        UA_SimpleAttributeOperand_init(&selectClauses[i]);
-    }
-
-    selectClauses[0].typeDefinitionId = UA_NODEID_NUMERIC(0, UA_NS0ID_BASEEVENTTYPE);
-    selectClauses[0].browsePathSize = 1;
-    selectClauses[0].browsePath = (UA_QualifiedName*) UA_Array_new(selectClauses[0].browsePathSize, &UA_TYPES[UA_TYPES_QUALIFIEDNAME]);
-    if(!selectClauses[0].browsePath) 
-    {
-        UA_SimpleAttributeOperand_delete(selectClauses);
-        return NULL;
-    }
-    selectClauses[0].attributeId = UA_ATTRIBUTEID_VALUE;
-    selectClauses[0].browsePath[0] = UA_QUALIFIEDNAME_ALLOC(0, "Message");
-
-    selectClauses[1].typeDefinitionId = UA_NODEID_NUMERIC(0, UA_NS0ID_BASEEVENTTYPE);
-    selectClauses[1].browsePathSize = 1;
-    selectClauses[1].browsePath = (UA_QualifiedName*) UA_Array_new(selectClauses[1].browsePathSize, &UA_TYPES[UA_TYPES_QUALIFIEDNAME]);
-    if(!selectClauses[1].browsePath) 
-    {
-        UA_SimpleAttributeOperand_delete(selectClauses);
-        return NULL;
-    }
-    selectClauses[1].attributeId = UA_ATTRIBUTEID_VALUE;
-    selectClauses[1].browsePath[0] = UA_QUALIFIEDNAME_ALLOC(0, "Severity");
-
-    printf("\n Select Clauses caleld ");
-
-    return selectClauses;
-}
-
-#endif
-
-int main(int argc, char *argv[]) 
-{
-
-    signal(SIGINT, stopHandler);
-    signal(SIGTERM, stopHandler);
+// ---------------------------------
 
 /*
-    if(argc < 2) 
     {
-        printf("Usage: tutorial_client_events <opc.tcp://server-url>\n");
-        return EXIT_FAILURE;
-    }
-*/
-    UA_Client *client = UA_Client_new();
-    UA_ClientConfig_setDefault(UA_Client_getConfig(client));
+        UA_ServerOnNetwork *serverOnNetwork = NULL;
+        size_t serverOnNetworkSize = 0;
 
-    /* opc.tcp://uademo.prosysopc.com:53530/OPCUA/SimulationServer */
-    /* opc.tcp://opcua.demo-this.com:51210/UA/SampleServer */
-    // UA_StatusCode retval = UA_Client_connect(client, argv[1]);
-    UA_StatusCode retval = UA_Client_connect(client, "opc.tcp://192.168.1.58:4840");
-    if(retval != UA_STATUSCODE_GOOD) 
+        UA_Client *client = UA_Client_new();
+        UA_ClientConfig_setDefault(UA_Client_getConfig(client));
+        UA_StatusCode retval = UA_Client_findServersOnNetwork(client, DISCOVERY_SERVER_ENDPOINT, 0, 0,
+                                                              0, NULL, &serverOnNetworkSize, &serverOnNetwork);
+        if(retval != UA_STATUSCODE_GOOD) {
+            UA_LOG_ERROR(UA_Log_Stdout, UA_LOGCATEGORY_SERVER,
+                         "Could not call FindServersOnNetwork service. "
+                         "Is the discovery server started? StatusCode %s",
+                         UA_StatusCode_name(retval));
+            UA_Client_delete(client);
+            return EXIT_FAILURE;
+        }
+
+        // output all the returned/registered servers
+        for(size_t i = 0; i < serverOnNetworkSize; i++) {
+            UA_ServerOnNetwork *server = &serverOnNetwork[i];
+            printf("Server[%lu]: %.*s", (unsigned long) i,
+                   (int) server->serverName.length, server->serverName.data);
+            printf("\n\tRecordID: %d", server->recordId);
+            printf("\n\tDiscovery URL: %.*s", (int) server->discoveryUrl.length,
+                   server->discoveryUrl.data);
+            printf("\n\tCapabilities: ");
+            for(size_t j = 0; j < server->serverCapabilitiesSize; j++) {
+                printf("%.*s,", (int) server->serverCapabilities[j].length,
+                       server->serverCapabilities[j].data);
+            }
+            printf("\n\n");
+        }
+
+        UA_Array_delete(serverOnNetwork, serverOnNetworkSize,
+                        &UA_TYPES[UA_TYPES_SERVERONNETWORK]);
+    }
+	
+
+    // Example for calling FindServers 
+    UA_ApplicationDescription *applicationDescriptionArray = NULL;
+    size_t applicationDescriptionArraySize = 0;
+
+    UA_StatusCode retval;
     {
+        UA_Client *client = UA_Client_new();
+        UA_ClientConfig_setDefault(UA_Client_getConfig(client));
+        retval = UA_Client_findServers(client, DISCOVERY_SERVER_ENDPOINT, 0, NULL, 0, NULL,
+                                       &applicationDescriptionArraySize, &applicationDescriptionArray);
         UA_Client_delete(client);
+    }
+    if(retval != UA_STATUSCODE_GOOD) {
+        UA_LOG_ERROR(UA_Log_Stdout, UA_LOGCATEGORY_SERVER, "Could not call FindServers service. "
+                "Is the discovery server started? StatusCode %s", UA_StatusCode_name(retval));
         return EXIT_FAILURE;
     }
 
-#ifdef UA_ENABLE_SUBSCRIPTIONS
-    /* Create a subscription */
-    UA_CreateSubscriptionRequest request = UA_CreateSubscriptionRequest_default();
-    UA_CreateSubscriptionResponse response = UA_Client_Subscriptions_create(client, request, NULL, NULL, NULL);
-
-    if(response.responseHeader.serviceResult != UA_STATUSCODE_GOOD) 
-    {
-        UA_Client_disconnect(client);
-        UA_Client_delete(client);
-        return EXIT_FAILURE;
-    }
-    UA_UInt32 subId = response.subscriptionId;
-    UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND, "Create subscription succeeded, id %u", subId);
-
-    /* Add a MonitoredItem */
-    UA_MonitoredItemCreateRequest item;
-    UA_MonitoredItemCreateRequest_init(&item);
-    item.itemToMonitor.nodeId = UA_NODEID_NUMERIC(0, 2253); // Root->Objects->Server
-    item.itemToMonitor.attributeId = UA_ATTRIBUTEID_EVENTNOTIFIER;
-    item.monitoringMode = UA_MONITORINGMODE_REPORTING;
-
-    UA_EventFilter filter;
-    UA_EventFilter_init(&filter);
-    filter.selectClauses = setupSelectClauses();
-    filter.selectClausesSize = nSelectClauses;
-
-    item.requestedParameters.filter.encoding = UA_EXTENSIONOBJECT_DECODED;
-    item.requestedParameters.filter.content.decoded.data = &filter;
-    item.requestedParameters.filter.content.decoded.type = &UA_TYPES[UA_TYPES_EVENTFILTER];
-
-    UA_UInt32 monId = 0;
-
-    UA_MonitoredItemCreateResult result = UA_Client_MonitoredItems_createEvent( client, subId,
-                                                                                UA_TIMESTAMPSTORETURN_BOTH, item,
-                                                                                &monId, handler_events, NULL);
-
-    if(result.statusCode != UA_STATUSCODE_GOOD) 
-    {
-        UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND, "Could not add the MonitoredItem with %s", UA_StatusCode_name(retval));
-        goto cleanup;
-    } 
-    else 
-    {
-        UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND, "Monitoring 'Root->Objects->Server', id %u", response.subscriptionId);
+    // output all the returned/registered servers
+    for(size_t i = 0; i < applicationDescriptionArraySize; i++) {
+        UA_ApplicationDescription *description = &applicationDescriptionArray[i];
+        printf("Server[%lu]: %.*s", (unsigned long) i, (int) description->applicationUri.length,
+               description->applicationUri.data);
+        printf("\n\tName: %.*s", (int) description->applicationName.text.length,
+               description->applicationName.text.data);
+        printf("\n\tApplication URI: %.*s", (int) description->applicationUri.length,
+               description->applicationUri.data);
+        printf("\n\tProduct URI: %.*s", (int) description->productUri.length,
+               description->productUri.data);
+        printf("\n\tType: ");
+        switch(description->applicationType) {
+            case UA_APPLICATIONTYPE_SERVER:
+                printf("Server");
+                break;
+            case UA_APPLICATIONTYPE_CLIENT:
+                printf("Client");
+                break;
+            case UA_APPLICATIONTYPE_CLIENTANDSERVER:
+                printf("Client and Server");
+                break;
+            case UA_APPLICATIONTYPE_DISCOVERYSERVER:
+                printf("Discovery Server");
+                break;
+            default:
+                printf("Unknown");
+        }
+        printf("\n\tDiscovery URLs:");
+        for(size_t j = 0; j < description->discoveryUrlsSize; j++) {
+            printf("\n\t\t[%lu]: %.*s", (unsigned long) j,
+                   (int) description->discoveryUrls[j].length,
+                   description->discoveryUrls[j].data);
+        }
+        printf("\n\n");
     }
 
-    monId = result.monitoredItemId;
 
-    while(running)
-    {
-        retval = UA_Client_run_iterate(client, 100);
-    } 
     
-    /* Delete the subscription */
- cleanup:
-    UA_MonitoredItemCreateResult_clear(&result);
-    UA_Client_Subscriptions_deleteSingle(client, response.subscriptionId);
-    UA_Array_delete(filter.selectClauses, nSelectClauses, &UA_TYPES[UA_TYPES_SIMPLEATTRIBUTEOPERAND]);
-#endif
+    // Now that we have the list of available servers, call get endpoints on all of them
+     
 
-    UA_Client_disconnect(client);
-    UA_Client_delete(client);
-    return retval == UA_STATUSCODE_GOOD ? EXIT_SUCCESS : EXIT_FAILURE;
-}
+    printf("-------- Server Endpoints --------\n");
+
+    for(size_t i = 0; i < applicationDescriptionArraySize; i++) {
+        UA_ApplicationDescription *description = &applicationDescriptionArray[i];
+        if(description->discoveryUrlsSize == 0) {
+            UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_CLIENT,
+                        "[GetEndpoints] Server %.*s did not provide any discovery urls. Skipping.",
+                        (int)description->applicationUri.length, description->applicationUri.data);
+            continue;
+        }
+
+        printf("\nEndpoints for Server[%lu]: %.*s\n", (unsigned long) i,
+               (int) description->applicationUri.length, description->applicationUri.data);
+
+        UA_Client *client = UA_Client_new();
+        UA_ClientConfig_setDefault(UA_Client_getConfig(client));
+
+        char *discoveryUrl = (char *) UA_malloc(sizeof(char) * description->discoveryUrls[0].length + 1);
+        memcpy(discoveryUrl, description->discoveryUrls[0].data, description->discoveryUrls[0].length);
+        discoveryUrl[description->discoveryUrls[0].length] = '\0';
+
+        UA_EndpointDescription *endpointArray = NULL;
+        size_t endpointArraySize = 0;
+        //TODO: adapt to the new async getEndpoint
+        retval = UA_Client_getEndpoints(client, discoveryUrl, &endpointArraySize, &endpointArray);
+        UA_free(discoveryUrl);
+        if(retval != UA_STATUSCODE_GOOD) {
+            UA_Client_disconnect(client);
+            UA_Client_delete(client);
+            break;
+        }
+
+        for(size_t j = 0; j < endpointArraySize; j++) {
+            UA_EndpointDescription *endpoint = &endpointArray[j];
+            printf("\n\tEndpoint[%lu]:", (unsigned long) j);
+            printf("\n\t\tEndpoint URL: %.*s", (int) endpoint->endpointUrl.length, endpoint->endpointUrl.data);
+            printf("\n\t\tTransport profile URI: %.*s", (int) endpoint->transportProfileUri.length,
+                   endpoint->transportProfileUri.data);
+            printf("\n\t\tSecurity Mode: ");
+            switch(endpoint->securityMode) {
+            case UA_MESSAGESECURITYMODE_INVALID:
+                printf("Invalid");
+                break;
+            case UA_MESSAGESECURITYMODE_NONE:
+                printf("None");
+                break;
+            case UA_MESSAGESECURITYMODE_SIGN:
+                printf("Sign");
+                break;
+            case UA_MESSAGESECURITYMODE_SIGNANDENCRYPT:
+                printf("Sign and Encrypt");
+                break;
+            default:
+                printf("No valid security mode");
+                break;
+            }
+            printf("\n\t\tSecurity profile URI: %.*s", (int) endpoint->securityPolicyUri.length,
+                   endpoint->securityPolicyUri.data);
+            printf("\n\t\tSecurity Level: %d", endpoint->securityLevel);
+        }
+
+        UA_Array_delete(endpointArray, endpointArraySize, &UA_TYPES[UA_TYPES_ENDPOINTDESCRIPTION]);
+        UA_Client_delete(client);
+    }
+
+    printf("\n");
+
+    UA_Array_delete(applicationDescriptionArray, applicationDescriptionArraySize,
+                    &UA_TYPES[UA_TYPES_APPLICATIONDESCRIPTION]);
+					
+					
+*/
+
+
+
+
+
+
+
+
+
+
+
+// -------------------------------------------------------
