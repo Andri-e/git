@@ -35,10 +35,10 @@ static void stopHandler(int sig) {
 
 #ifdef UA_ENABLE_SUBSCRIPTIONS
 
-static void
-handler_events(UA_Client *client, UA_UInt32 subId, void *subContext,
+static void handler_events(UA_Client *client, UA_UInt32 subId, void *subContext,
                UA_UInt32 monId, void *monContext,
-               size_t nEventFields, UA_Variant *eventFields) {
+               size_t nEventFields, UA_Variant *eventFields) 
+{
     UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND, "Notification");
 
     /* The context should point to the monId on the stack */
@@ -53,7 +53,8 @@ handler_events(UA_Client *client, UA_UInt32 subId, void *subContext,
             UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND,
                         "Message: '%.*s'", (int)lt->text.length, lt->text.data);
         }
-        else {
+        else 
+        {
 #ifdef UA_ENABLE_TYPEDESCRIPTION
             UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND,
                         "Don't know how to handle type: '%s'", eventFields[i].type->typeName);
@@ -68,22 +69,23 @@ handler_events(UA_Client *client, UA_UInt32 subId, void *subContext,
 
 const size_t nSelectClauses = 2;
 
-static UA_SimpleAttributeOperand *
-setupSelectClauses(void) {
+static UA_SimpleAttributeOperand * setupSelectClauses(void) 
+{
     UA_SimpleAttributeOperand *selectClauses = (UA_SimpleAttributeOperand*)
         UA_Array_new(nSelectClauses, &UA_TYPES[UA_TYPES_SIMPLEATTRIBUTEOPERAND]);
     if(!selectClauses)
         return NULL;
 
-    for(size_t i =0; i<nSelectClauses; ++i) {
+    for(size_t i =0; i<nSelectClauses; ++i) 
+    {
         UA_SimpleAttributeOperand_init(&selectClauses[i]);
     }
 
     selectClauses[0].typeDefinitionId = UA_NODEID_NUMERIC(0, UA_NS0ID_BASEEVENTTYPE);
     selectClauses[0].browsePathSize = 1;
-    selectClauses[0].browsePath = (UA_QualifiedName*)
-        UA_Array_new(selectClauses[0].browsePathSize, &UA_TYPES[UA_TYPES_QUALIFIEDNAME]);
-    if(!selectClauses[0].browsePath) {
+    selectClauses[0].browsePath = (UA_QualifiedName*) UA_Array_new(selectClauses[0].browsePathSize, &UA_TYPES[UA_TYPES_QUALIFIEDNAME]);
+    if(!selectClauses[0].browsePath) 
+    {
         UA_SimpleAttributeOperand_delete(selectClauses);
         return NULL;
     }
@@ -92,9 +94,9 @@ setupSelectClauses(void) {
 
     selectClauses[1].typeDefinitionId = UA_NODEID_NUMERIC(0, UA_NS0ID_BASEEVENTTYPE);
     selectClauses[1].browsePathSize = 1;
-    selectClauses[1].browsePath = (UA_QualifiedName*)
-        UA_Array_new(selectClauses[1].browsePathSize, &UA_TYPES[UA_TYPES_QUALIFIEDNAME]);
-    if(!selectClauses[1].browsePath) {
+    selectClauses[1].browsePath = (UA_QualifiedName*) UA_Array_new(selectClauses[1].browsePathSize, &UA_TYPES[UA_TYPES_QUALIFIEDNAME]);
+    if(!selectClauses[1].browsePath) 
+    {
         UA_SimpleAttributeOperand_delete(selectClauses);
         return NULL;
     }
@@ -106,17 +108,18 @@ setupSelectClauses(void) {
 
 #endif
 
-int main(int argc, char *argv[]) {
+int main(int argc, char *argv[]) 
+{
 
     signal(SIGINT, stopHandler);
     signal(SIGTERM, stopHandler);
 
-/*
+
     if(argc < 2) {
         printf("Usage: tutorial_client_events <opc.tcp://server-url>\n");
         return EXIT_FAILURE;
     }
-*/
+
     UA_Client *client = UA_Client_new();
     UA_ClientConfig_setDefault(UA_Client_getConfig(client));
 
@@ -124,7 +127,8 @@ int main(int argc, char *argv[]) {
     /* opc.tcp://opcua.demo-this.com:51210/UA/SampleServer */
     // UA_StatusCode retval = UA_Client_connect(client, argv[1]);
     UA_StatusCode retval = UA_Client_connect(client, "opc.tcp://192.168.1.58:4840");
-    if(retval != UA_STATUSCODE_GOOD) {
+    if(retval != UA_STATUSCODE_GOOD) 
+    {
         UA_Client_delete(client);
         return EXIT_FAILURE;
     }
@@ -132,9 +136,10 @@ int main(int argc, char *argv[]) {
 #ifdef UA_ENABLE_SUBSCRIPTIONS
     /* Create a subscription */
     UA_CreateSubscriptionRequest request = UA_CreateSubscriptionRequest_default();
-    UA_CreateSubscriptionResponse response = UA_Client_Subscriptions_create(client, request,
-                                                                            NULL, NULL, NULL);
-    if(response.responseHeader.serviceResult != UA_STATUSCODE_GOOD) {
+    UA_CreateSubscriptionResponse response = UA_Client_Subscriptions_create(client, request, NULL, NULL, NULL);
+
+    if(response.responseHeader.serviceResult != UA_STATUSCODE_GOOD) 
+    {
         UA_Client_disconnect(client);
         UA_Client_delete(client);
         return EXIT_FAILURE;
@@ -160,25 +165,27 @@ int main(int argc, char *argv[]) {
 
     UA_UInt32 monId = 0;
 
-    UA_MonitoredItemCreateResult result =
-        UA_Client_MonitoredItems_createEvent(client, subId,
-                                             UA_TIMESTAMPSTORETURN_BOTH, item,
-                                             &monId, handler_events, NULL);
+    UA_MonitoredItemCreateResult result = UA_Client_MonitoredItems_createEvent( client, subId,
+                                                                                UA_TIMESTAMPSTORETURN_BOTH, item,
+                                                                                &monId, handler_events, NULL);
 
-    if(result.statusCode != UA_STATUSCODE_GOOD) {
-        UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND,
-                    "Could not add the MonitoredItem with %s", UA_StatusCode_name(retval));
+    if(result.statusCode != UA_STATUSCODE_GOOD) 
+    {
+        UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND, "Could not add the MonitoredItem with %s", UA_StatusCode_name(retval));
         goto cleanup;
-    } else {
-        UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND,
-                    "Monitoring 'Root->Objects->Server', id %u", response.subscriptionId);
+    } 
+    else 
+    {
+        UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND, "Monitoring 'Root->Objects->Server', id %u", response.subscriptionId);
     }
 
     monId = result.monitoredItemId;
 
     while(running)
+    {
         retval = UA_Client_run_iterate(client, 100);
-
+    } 
+    
     /* Delete the subscription */
  cleanup:
     UA_MonitoredItemCreateResult_clear(&result);

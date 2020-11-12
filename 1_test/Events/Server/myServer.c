@@ -30,7 +30,8 @@
 static UA_NodeId eventType;
 
 static UA_StatusCode
-addNewEventType(UA_Server *server) {
+addNewEventType(UA_Server *server) 
+{
     UA_ObjectTypeAttributes attr = UA_ObjectTypeAttributes_default;
     attr.displayName = UA_LOCALIZEDTEXT("en-US", "SimpleEventType");
     attr.description = UA_LOCALIZEDTEXT("en-US", "The simple event type we created");
@@ -54,9 +55,9 @@ addNewEventType(UA_Server *server) {
 static UA_StatusCode
 setUpEvent(UA_Server *server, UA_NodeId *outId) {
     UA_StatusCode retval = UA_Server_createEvent(server, eventType, outId);
-    if (retval != UA_STATUSCODE_GOOD) {
-        UA_LOG_WARNING(UA_Log_Stdout, UA_LOGCATEGORY_SERVER,
-                       "createEvent failed. StatusCode %s", UA_StatusCode_name(retval));
+    if (retval != UA_STATUSCODE_GOOD) 
+    {
+        UA_LOG_WARNING(UA_Log_Stdout, UA_LOGCATEGORY_SERVER, "createEvent failed. StatusCode %s", UA_StatusCode_name(retval));
         return retval;
     }
 
@@ -94,25 +95,23 @@ generateEventMethodCallback(UA_Server *server,
                          const UA_NodeId *methodId, void *methodContext,
                          const UA_NodeId *objectId, void *objectContext,
                          size_t inputSize, const UA_Variant *input,
-                         size_t outputSize, UA_Variant *output) {
+                         size_t outputSize, UA_Variant *output) 
+{
 
     UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND, "Creating event");
 
     /* set up event */
     UA_NodeId eventNodeId;
     UA_StatusCode retval = setUpEvent(server, &eventNodeId);
-    if(retval != UA_STATUSCODE_GOOD) {
-        UA_LOG_WARNING(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND,
-                       "Creating event failed. StatusCode %s", UA_StatusCode_name(retval));
+    if(retval != UA_STATUSCODE_GOOD) 
+    {
+        UA_LOG_WARNING(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND, "Creating event failed. StatusCode %s", UA_StatusCode_name(retval));
         return retval;
     }
 
-    retval = UA_Server_triggerEvent(server, eventNodeId,
-                                    UA_NODEID_NUMERIC(0, UA_NS0ID_SERVER),
-                                    NULL, UA_TRUE);
+    retval = UA_Server_triggerEvent(server, eventNodeId, UA_NODEID_NUMERIC(0, UA_NS0ID_SERVER), NULL, UA_TRUE);
     if(retval != UA_STATUSCODE_GOOD)
-        UA_LOG_WARNING(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND, 
-                       "Triggering event failed. StatusCode %s", UA_StatusCode_name(retval));
+        UA_LOG_WARNING(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND,  "Triggering event failed. StatusCode %s", UA_StatusCode_name(retval));
 
     return retval;
 }
@@ -126,7 +125,8 @@ generateEventMethodCallback(UA_Server *server,
  */
 
 static void
-addGenerateEventMethod(UA_Server *server) {
+addGenerateEventMethod(UA_Server *server)
+{
     UA_MethodAttributes generateAttr = UA_MethodAttributes_default;
     generateAttr.description = UA_LOCALIZEDTEXT("en-US","Generate an event.");
     generateAttr.displayName = UA_LOCALIZEDTEXT("en-US","Generate Event");
@@ -143,7 +143,8 @@ addGenerateEventMethod(UA_Server *server) {
 /** It follows the main server code, making use of the above definitions. */
 
 static volatile UA_Boolean running = true;
-static void stopHandler(int sig) {
+static void stopHandler(int sig)
+{
     running = false;
 }
 
