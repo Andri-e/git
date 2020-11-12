@@ -19,7 +19,7 @@
 
 #include "open62541.h"
 
-#include "open62541_queue.h"
+//#include "open62541_queue.h"
 #include "ua_pubsub_networkmessage.h"
 
 _UA_BEGIN_DECLS
