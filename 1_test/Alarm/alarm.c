@@ -114,7 +114,7 @@ static UA_StatusCode addCondition_2(UA_Server *server)
     return retval;
 }
 
-/*
+
 static void addVariable_1_triggerAlarmOfCondition_1(UA_Server *server, UA_NodeId* outNodeId) 
 {
     UA_VariableAttributes attr = UA_VariableAttributes_default;
@@ -131,7 +131,7 @@ static void addVariable_1_triggerAlarmOfCondition_1(UA_Server *server, UA_NodeId
                               parentReferenceNodeId, CallbackTestVariableName,
                               variableTypeNodeId, attr, NULL, outNodeId);
 }
-*/
+
 
 
 static void addVariable_2_changeSeverityOfCondition_2(UA_Server *server, UA_NodeId* outNodeId) 
