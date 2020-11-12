@@ -248,7 +248,7 @@ int main(int argc, char * argv[])
 	nodeSetup(server);
 	
 	// Add callback for updating the TimeStamp / Variable
-	addValueCallbackToCurrentTimeVariable(server);
+	//addValueCallbackToCurrentTimeVariable(server);
 	addValueCallbackToCurrentTemerature(server);
 	addValueCallbackToCurrentIdle(server);
 	
