@@ -106,6 +106,8 @@ static UA_SimpleAttributeOperand * setupSelectClauses(void)
     selectClauses[1].attributeId = UA_ATTRIBUTEID_VALUE;
     selectClauses[1].browsePath[0] = UA_QUALIFIEDNAME_ALLOC(0, "Severity");
 
+    printf("\n Select Clauses caleld ")
+
     return selectClauses;
 }
 
