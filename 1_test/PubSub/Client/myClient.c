@@ -20,7 +20,7 @@
 
 #include "open62541.h"
 
-#include "ua_pubsub.h"
+//#include "ua_pubsub.h"
 
 #ifdef UA_ENABLE_PUBSUB_ETH_UADP
 #include <open62541/plugin/pubsub_ethernet.h>
