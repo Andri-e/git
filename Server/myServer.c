@@ -145,6 +145,8 @@ static void updateCurrentTime(UA_Server *server)
     UA_Server_writeValue(server, UA_NODEID_STRING(2, "testTimeStamp"), value);
 }
 
+
+
 // CPU Temperature Callback 
 static void beforeReadTemperature(UA_Server *server,
                const UA_NodeId *sessionId, void *sessionContext,
