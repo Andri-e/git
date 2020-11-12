@@ -448,8 +448,8 @@ static UA_StatusCode setUpEnvironment(UA_Server *server)
                      UA_StatusCode_name(retval));
         return retval;
     }
-
-    UA_TwoStateVariableChangeCallback userSpecificCallback = enteringEnabledStateCallback;
+/*
+    //UA_TwoStateVariableChangeCallback userSpecificCallback = enteringEnabledStateCallback;
     retval = UA_Server_setConditionTwoStateVariableCallback(server, conditionInstance_1,
                                                             conditionSource, false,
                                                             userSpecificCallback,
@@ -487,7 +487,7 @@ static UA_StatusCode setUpEnvironment(UA_Server *server)
                      UA_StatusCode_name(retval));
         return retval;
     }
-
+*/
 	
 	
 	
