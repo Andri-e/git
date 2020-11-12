@@ -129,6 +129,7 @@ int main(void)
         }
 		
 		//readNode(client, retval, value);
+		printf("\nsomething");
 		
         UA_sleep_ms(500);				// Just a delay to reduce the spam
     };
