@@ -8,7 +8,7 @@
 #ifndef UA_PLUGIN_PUBSUB_H_
 #define UA_PLUGIN_PUBSUB_H_
 
-#include <open62541/server_pubsub.h>
+#include "open62541/server_pubsub.h"
 
 _UA_BEGIN_DECLS
 
