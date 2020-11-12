@@ -115,8 +115,6 @@ static void nodeSetup(UA_Server *server)
 */
 }
 
-
-
 // Time Stamp callback 
 static void beforeReadTime(UA_Server *server,
                const UA_NodeId *sessionId, void *sessionContext,
@@ -136,17 +134,6 @@ static void addValueCallbackToCurrentTimeVariable(UA_Server *server) {
     UA_Server_setVariableNode_valueCallback(server, UA_NODEID_STRING(2, "testTimeStamp"), callback);
 }
 
-/*
-static void updateCurrentTime(UA_Server *server) 
-{
-    UA_DateTime now = UA_DateTime_now();
-    UA_Variant value;
-    UA_Variant_setScalar(&value, &now, &UA_TYPES[UA_TYPES_DATETIME]);
-    UA_Server_writeValue(server, UA_NODEID_STRING(2, "testTimeStamp"), value);
-}
-
-*/
-
 // CPU Temperature Callback 
 static void beforeReadTemperature(UA_Server *server,
                const UA_NodeId *sessionId, void *sessionContext,
@@ -162,8 +149,6 @@ static void beforeReadTemperature(UA_Server *server,
 	n = fscanf(thermal,"%f",&millideg);
 	fclose(thermal);
 	systemp = millideg / 1000;
-
-    //updateCurrentTime(server);
 
 	// Way to update the variable 
 	UA_Variant value;
