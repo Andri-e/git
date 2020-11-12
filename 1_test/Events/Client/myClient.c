@@ -39,6 +39,9 @@ static void handler_events(UA_Client *client, UA_UInt32 subId, void *subContext,
                UA_UInt32 monId, void *monContext,
                size_t nEventFields, UA_Variant *eventFields) 
 {
+
+    printf("\nHandler Events called ");
+
     UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND, "Notification");
 
     /* The context should point to the monId on the stack */
@@ -71,6 +74,9 @@ const size_t nSelectClauses = 2;
 
 static UA_SimpleAttributeOperand * setupSelectClauses(void) 
 {
+
+    printf("\n SetupSelecteClauses called ")
+
     UA_SimpleAttributeOperand *selectClauses = (UA_SimpleAttributeOperand*)
         UA_Array_new(nSelectClauses, &UA_TYPES[UA_TYPES_SIMPLEATTRIBUTEOPERAND]);
     if(!selectClauses)
