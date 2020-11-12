@@ -151,7 +151,7 @@ static void addVariable_2_changeSeverityOfCondition_2(UA_Server *server, UA_Node
                               variableTypeNodeId, attr, NULL, outNodeId);
 }
 
-/*
+
 static void addVariable_3_returnCondition_1_toNormalState(UA_Server *server, UA_NodeId* outNodeId) 
 {
     UA_VariableAttributes attr = UA_VariableAttributes_default;
@@ -169,7 +169,7 @@ static void addVariable_3_returnCondition_1_toNormalState(UA_Server *server, UA_
                               parentReferenceNodeId, CallbackTestVariableName,
                               variableTypeNodeId, attr, NULL, outNodeId);
 }
-*/
+
 
 
 static void afterWriteCallbackVariable_1(UA_Server *server, const UA_NodeId *sessionId,
