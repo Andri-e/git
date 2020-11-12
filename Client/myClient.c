@@ -99,6 +99,8 @@ static void readNode(UA_Client *client, UA_StatusCode retval, UA_Variant value)
     printf("\nVariable name :  %.*s\n", variableName.length, variableName.data);
     printf("\nSerial Number : %d\n", serialNumber);
     printf("\nTime Stamp : %u-%u-%u %u:%u:%u.%03u \n",dts.day, dts.month, dts.year, dts.hour, dts.min, dts.sec, dts.milliSec );
+    printf("\nSys Temp : %f °C", sysTemp);
+    printf("\nSys Idle Time :%f %%", sysIdle);
 
 }
 
