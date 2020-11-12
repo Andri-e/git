@@ -128,8 +128,8 @@ int main(void)
             continue;
         }
 		
-		//readNode(client, retval, value);
-		printf("\nsomething");
+		readNode(client, retval, value);
+		//printf("\nsomething");
 		
         UA_sleep_ms(500);				// Just a delay to reduce the spam
     };
