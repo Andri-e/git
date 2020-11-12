@@ -236,6 +236,10 @@ int main(void)
 		
 		//readNode(client, retval, value);
 		//printf("\nsomething");
+
+        //UA_UInt32 triggeringItemId;
+        //UA_UInt32 
+        UA_SetTriggeringResponse(client );
 		
         UA_sleep_ms(500);				// Just a delay to reduce the spam
     };
@@ -246,6 +250,21 @@ int main(void)
     return EXIT_SUCCESS;
 	
 }
+
+
+
+static UA_INLINE UA_SetTriggeringResponse
+UA_Client_MonitoredItems_setTriggering(UA_Client *client,
+    const UA_SetTriggeringRequest request) 
+{
+    UA_SetTriggeringResponse response;
+    __UA_Client_Service(client,
+        &request, &UA_TYPES[UA_TYPES_SETTRIGGERINGREQUEST],
+        &response, &UA_TYPES[UA_TYPES_SETTRIGGERINGRESPONSE]);
+    return response;
+}
+
+
 
 
 
