@@ -92,6 +92,111 @@ static void readNode(UA_Client *client, UA_StatusCode retval, UA_Variant value)
 	UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND, "%.*s , %d , %u-%u-%u %u:%u:%u.%03u , %f °C, %f %%", variableName.length, variableName.data, serialNumber, dts.day, dts.month, dts.year, dts.hour, dts.min, dts.sec, dts.milliSec, sysTemp, sysIdle );
 }
 
+
+
+// -----------------------------------------------------------------------------------------------------
+
+
+// Provides default values for a new monitored item.
+static UA_INLINE UA_MonitoredItemCreateRequest
+UA_MonitoredItemCreateRequest_default(UA_NodeId nodeId) 
+{
+    UA_MonitoredItemCreateRequest request;
+    UA_MonitoredItemCreateRequest_init(&request);
+    request.itemToMonitor.nodeId = nodeId;
+    request.itemToMonitor.attributeId = UA_ATTRIBUTEID_VALUE;
+    request.monitoringMode = UA_MONITORINGMODE_REPORTING;
+    request.requestedParameters.samplingInterval = 250;
+    request.requestedParameters.discardOldest = true;
+    request.requestedParameters.queueSize = 1;
+    return request;
+}
+
+/* Callback for the deletion of a MonitoredItem */
+typedef void (*UA_Client_DeleteMonitoredItemCallback)
+    (UA_Client *client, UA_UInt32 subId, void *subContext,
+     UA_UInt32 monId, void *monContext);
+
+/* Callback for DataChange notifications */
+typedef void (*UA_Client_DataChangeNotificationCallback)
+    (UA_Client *client, UA_UInt32 subId, void *subContext,
+     UA_UInt32 monId, void *monContext,
+     UA_DataValue *value);
+
+/* Callback for Event notifications */
+typedef void (*UA_Client_EventNotificationCallback)
+    (UA_Client *client, UA_UInt32 subId, void *subContext,
+     UA_UInt32 monId, void *monContext,
+     size_t nEventFields, UA_Variant *eventFields);
+
+/* Don't use to monitor the EventNotifier attribute */
+UA_CreateMonitoredItemsResponse
+UA_Client_MonitoredItems_createDataChanges(UA_Client *client,
+    const UA_CreateMonitoredItemsRequest request, void **contexts,
+    UA_Client_DataChangeNotificationCallback *callbacks,
+    UA_Client_DeleteMonitoredItemCallback *deleteCallbacks);
+
+UA_StatusCode
+UA_Client_MonitoredItems_createDataChanges_async(UA_Client *client,
+    const UA_CreateMonitoredItemsRequest request, void **contexts,
+    UA_Client_DataChangeNotificationCallback *callbacks,
+    UA_Client_DeleteMonitoredItemCallback *deleteCallbacks,
+    UA_ClientAsyncServiceCallback createCallback,
+    void *userdata, UA_UInt32 *requestId);
+
+UA_MonitoredItemCreateResult
+UA_Client_MonitoredItems_createDataChange(UA_Client *client,
+    UA_UInt32 subscriptionId,
+    UA_TimestampsToReturn timestampsToReturn,
+    const UA_MonitoredItemCreateRequest item,
+    void *context, UA_Client_DataChangeNotificationCallback callback,
+    UA_Client_DeleteMonitoredItemCallback deleteCallback);
+
+/* Monitor the EventNotifier attribute only */
+UA_CreateMonitoredItemsResponse
+UA_Client_MonitoredItems_createEvents(UA_Client *client,
+    const UA_CreateMonitoredItemsRequest request, void **contexts,
+    UA_Client_EventNotificationCallback *callback,
+    UA_Client_DeleteMonitoredItemCallback *deleteCallback);
+
+/* Monitor the EventNotifier attribute only */
+UA_StatusCode
+UA_Client_MonitoredItems_createEvents_async(UA_Client *client,
+    const UA_CreateMonitoredItemsRequest request, void **contexts,
+    UA_Client_EventNotificationCallback *callbacks,
+    UA_Client_DeleteMonitoredItemCallback *deleteCallbacks,
+    UA_ClientAsyncServiceCallback createCallback,
+    void *userdata, UA_UInt32 *requestId);
+
+UA_MonitoredItemCreateResult
+UA_Client_MonitoredItems_createEvent(UA_Client *client,
+    UA_UInt32 subscriptionId,
+    UA_TimestampsToReturn timestampsToReturn,
+    const UA_MonitoredItemCreateRequest item,
+    void *context, UA_Client_EventNotificationCallback callback,
+    UA_Client_DeleteMonitoredItemCallback deleteCallback);
+
+UA_DeleteMonitoredItemsResponse
+UA_Client_MonitoredItems_delete(UA_Client *client, const UA_DeleteMonitoredItemsRequest);
+
+UA_StatusCode
+UA_Client_MonitoredItems_delete_async(UA_Client *client,
+    const UA_DeleteMonitoredItemsRequest request,
+    UA_ClientAsyncServiceCallback callback,
+    void *userdata, UA_UInt32 *requestId);
+
+UA_StatusCode
+UA_Client_MonitoredItems_deleteSingle(UA_Client *client, UA_UInt32 subscriptionId, UA_UInt32 monitoredItemId);
+
+/* The clientHandle parameter will be filled automatically */
+UA_ModifyMonitoredItemsResponse
+UA_Client_MonitoredItems_modify(UA_Client *client,  const UA_ModifyMonitoredItemsRequest request);
+
+
+
+// ---------------------------------------------------------------------------------------------------------------------------------
+
+
 // myClient main 
 int main(void)
 {
@@ -128,7 +233,7 @@ int main(void)
             continue;
         }
 		
-		readNode(client, retval, value);
+		//readNode(client, retval, value);
 		//printf("\nsomething");
 		
         UA_sleep_ms(500);				// Just a delay to reduce the spam
