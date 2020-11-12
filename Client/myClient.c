@@ -113,7 +113,7 @@ int main(void)
 	// While loop that keeps reading the value from the server until it is disconnected 
     while(running) 
 	{
-        /*
+        
         if(retval != UA_STATUSCODE_GOOD) 						// If status code not good then log time and try to reconect 
 		{ 
 			UA_LOG_ERROR(UA_Log_Stdout, UA_LOGCATEGORY_CLIENT, "Not connected. Retrying to connect in 1 second");		
@@ -127,15 +127,15 @@ int main(void)
 			UA_StatusCode retval = UA_Client_connect(client, "opc.tcp://192.168.1.58:4840");
             continue;
         }
-		*/
+		
 		//readNode(client, retval, value);
 		
         UA_sleep_ms(500);				// Just a delay to reduce the spam
     };
 
     // Clean up 
- //   UA_Variant_clear(&value);
- //   UA_Client_delete(client); //Disconnects the client internally 
+    UA_Variant_clear(&value);
+    UA_Client_delete(client); //Disconnects the client internally 
     return EXIT_SUCCESS;
     
 	
