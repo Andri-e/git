@@ -12,7 +12,7 @@ static void stopHandler(int sign)
     running = 0;
 }
 
-/*
+
 // read out the nodes 
 static void readNode(UA_Client *client, UA_StatusCode retval, UA_Variant value)
 {
@@ -22,7 +22,8 @@ static void readNode(UA_Client *client, UA_StatusCode retval, UA_Variant value)
 	UA_DateTime timeStamp;
 	UA_Float sysTemp;
 	UA_Double sysIdle;
-	
+
+/*	
 	//UA_Double variable;
 	
 	UA_Variant_clear(&value);
@@ -71,7 +72,7 @@ static void readNode(UA_Client *client, UA_StatusCode retval, UA_Variant value)
 	UA_DateTimeStruct dts_1 = UA_DateTime_toStruct(refTimeStamp);	
 	UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND, "%u-%u-%u %u:%u:%u.%03u", dts_1.day, dts_1.month, dts_1.year, dts_1.hour, dts_1.min, dts_1.sec, dts_1.milliSec);
 	
-
+*/
 		
 	
     //Read the variable 
@@ -83,9 +84,9 @@ static void readNode(UA_Client *client, UA_StatusCode retval, UA_Variant value)
 //   }
 	
 	
-	UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND, "%.*s , %d , %u-%u-%u %u:%u:%u.%03u , %f °C, %f %%", variableName.length, variableName.data, serialNumber, dts.day, dts.month, dts.year, dts.hour, dts.min, dts.sec, dts.milliSec, sysTemp, sysIdle );
+	//UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND, "%.*s , %d , %u-%u-%u %u:%u:%u.%03u , %f °C, %f %%", variableName.length, variableName.data, serialNumber, dts.day, dts.month, dts.year, dts.hour, dts.min, dts.sec, dts.milliSec, sysTemp, sysIdle );
 }
-*/
+
 
 // myClient main 
 int main(void)
@@ -128,7 +129,7 @@ int main(void)
             continue;
         }
 		
-		//readNode(client, retval, value);
+		readNode(client, retval, value);
 		
         UA_sleep_ms(500);				// Just a delay to reduce the spam
     };
