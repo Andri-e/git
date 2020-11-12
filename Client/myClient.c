@@ -96,7 +96,7 @@ static void readNode(UA_Client *client, UA_StatusCode retval, UA_Variant value)
   //  sysTemp, 
    // sysIdle );
 
-    printf("%.*s , %d ,",variableName.length, variableName.data);
+    printf("\n %.*s , %d \n",variableName.length, variableName.data);
 }
 
 
