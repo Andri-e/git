@@ -238,8 +238,8 @@ int main(void)
 		//printf("\nsomething");
 
         //UA_UInt32 triggeringItemId;
-        //UA_UInt32 
-        UA_SetTriggeringResponse(client );
+        UA_UInt32 triggerId = 1;
+        UA_SetTriggeringResponse(client, triggerId);
 		
         UA_sleep_ms(500);				// Just a delay to reduce the spam
     };
