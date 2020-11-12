@@ -128,8 +128,8 @@ int main(void)
             continue;
         }
 		
-		//readNode(client, retval, value);
-		printf("\nsomething");
+		readNode(client, retval, value);
+		//printf("\nsomething");
 		
         UA_sleep_ms(500);				// Just a delay to reduce the spam
     };
@@ -166,7 +166,7 @@ int main(void)
         // output all the returned/registered servers
         for(size_t i = 0; i < serverOnNetworkSize; i++) {
             UA_ServerOnNetwork *server = &serverOnNetwork[i];
-            printf("Server[%lu]: %.*s", (unsigned long) i,
+            printf("Server[%lu]: %.*s", (unsigned logng) i,
                    (int) server->serverName.length, server->serverName.data);
             printf("\n\tRecordID: %d", server->recordId);
             printf("\n\tDiscovery URL: %.*s", (int) server->discoveryUrl.length,
