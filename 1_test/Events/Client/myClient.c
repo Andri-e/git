@@ -96,7 +96,7 @@ static void readNode(UA_Client *client, UA_StatusCode retval, UA_Variant value)
 
 // -----------------------------------------------------------------------------------------------------
 
-
+/*
 // Provides default values for a new monitored item.
 static UA_INLINE UA_MonitoredItemCreateRequest
 UA_MonitoredItemCreateRequest_default(UA_NodeId nodeId) 
@@ -111,6 +111,7 @@ UA_MonitoredItemCreateRequest_default(UA_NodeId nodeId)
     request.requestedParameters.queueSize = 1;
     return request;
 }
+*/
 
 /* Callback for the deletion of a MonitoredItem */
 typedef void (*UA_Client_DeleteMonitoredItemCallback)
