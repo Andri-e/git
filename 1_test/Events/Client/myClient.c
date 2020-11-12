@@ -114,12 +114,13 @@ int main(int argc, char *argv[])
     signal(SIGINT, stopHandler);
     signal(SIGTERM, stopHandler);
 
-
-    if(argc < 2) {
+/*
+    if(argc < 2) 
+    {
         printf("Usage: tutorial_client_events <opc.tcp://server-url>\n");
         return EXIT_FAILURE;
     }
-
+*/
     UA_Client *client = UA_Client_new();
     UA_ClientConfig_setDefault(UA_Client_getConfig(client));
 
