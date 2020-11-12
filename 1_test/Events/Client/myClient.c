@@ -74,9 +74,6 @@ const size_t nSelectClauses = 2;
 
 static UA_SimpleAttributeOperand * setupSelectClauses(void) 
 {
-
-    printf("\n SetupSelecteClauses called ")
-
     UA_SimpleAttributeOperand *selectClauses = (UA_SimpleAttributeOperand*)
         UA_Array_new(nSelectClauses, &UA_TYPES[UA_TYPES_SIMPLEATTRIBUTEOPERAND]);
     if(!selectClauses)
