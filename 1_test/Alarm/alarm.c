@@ -6,6 +6,17 @@
 #include <signal.h>
 #include <stdlib.h>
 
+
+typedef enum UA_TwoStateVariableCallbackType {
+UA_ENTERING_ENABLEDSTATE,
+UA_ENTERING_ACKEDSTATE,
+UA_ENTERING_CONFIRMEDSTATE,
+UA_ENTERING_ACTIVESTATE
+} UA_TwoStateVariableCallbackType;
+
+
+
+
 /**
  * Using Alarms and Conditions Server
  * ----------------------------------
