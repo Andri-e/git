@@ -43,7 +43,7 @@ static void readNode(UA_Client *client, UA_StatusCode retval, UA_Variant value)
     {
 		serialNumber = *(UA_Int32 *) value.data;
     }
-/*	
+	
 	//Read the time stamp
     retval = UA_Client_readValueAttribute(client, UA_NODEID_STRING(2, "testTimeStamp"), &value);
     if(retval == UA_STATUSCODE_GOOD && UA_Variant_hasScalarType(&value, &UA_TYPES[UA_TYPES_DATETIME])) 
@@ -51,7 +51,7 @@ static void readNode(UA_Client *client, UA_StatusCode retval, UA_Variant value)
 		timeStamp = *(UA_DateTime *) value.data;
 		UA_DateTimeStruct dts = UA_DateTime_toStruct(timeStamp);	
     }
-
+/*
 	//Read the cpu temp
     retval = UA_Client_readValueAttribute(client, UA_NODEID_STRING(2, "testSysTemp"), &value);
     if(retval == UA_STATUSCODE_GOOD && UA_Variant_hasScalarType(&value, &UA_TYPES[UA_TYPES_FLOAT])) 
