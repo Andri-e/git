@@ -40,9 +40,6 @@ static UA_NodeId conditionSource;
 static UA_NodeId conditionInstance_1;
 static UA_NodeId conditionInstance_2;
 
-UA_TwoStateVariableCallbackType UA_ENTERING_ENABLEDSTATE;
-UA_TwoStateVariableCallbackType	UA_ENTERING_ACKEDSTATE;
-UA_TwoStateVariableCallbackType UA_ENTERING_CONFIRMEDSTATE;
 
 static UA_StatusCode addConditionSourceObject(UA_Server *server) 
 {
