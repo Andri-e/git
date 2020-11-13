@@ -124,7 +124,7 @@ int main(void)
     UA_Variant value; // Variants can hold scalar values and arrays of any type 
     UA_Variant_init(&value);
 	//UA_StatusCode retval = UA_Client_connect(client, "opc.tcp://localhost:4840");
-	UA_StatusCode retval = UA_Client_connect(client, "opc.tcp://192.168.1.59:4840");
+	UA_StatusCode retval = UA_Client_connect(client, "opc.tcp://192.168.1.58:4840");
 	
 
     
@@ -142,7 +142,7 @@ int main(void)
                         dts.day, dts.month, dts.year, dts.hour, dts.min, dts.sec, dts.milliSec);
 						
             UA_sleep_ms(10000);
-			UA_StatusCode retval = UA_Client_connect(client, "opc.tcp://192.168.1.59:4840");
+			UA_StatusCode retval = UA_Client_connect(client, "opc.tcp://192.168.1.58:4840");
             continue;
         }
 		
