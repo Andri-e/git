@@ -105,6 +105,11 @@ static void readNode(UA_Client *client, UA_StatusCode retval, UA_Variant value)
 }
 
 
+// Maybe do the read note in a repeated callback? 
+//UA_StatusCode UA_Client_addRepeatedCallback(UA_Client *client, UA_ClientCallback callback, void *data, UA_Double interval_ms, UA_UInt64 *callbackId);
+
+
+
 // myClient main 
 int main(void)
 {
