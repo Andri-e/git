@@ -119,7 +119,26 @@ int main(void) {
 
 
 
-    createMammals(server);
+    //createMammals(server);
+
+        /* Some data */
+    UA_StatusCode retval;
+    UA_ObjectTypeAttributes otAttr = UA_ObjectTypeAttributes_default;
+    otAttr.description = UA_LOCALIZEDTEXT("en-US", "Some Data");
+    otAttr.displayName = UA_LOCALIZEDTEXT("en-US", "data");
+    UA_Server_addObjectTypeNode(server, UA_NODEID_NUMERIC(1, 10000),
+                                UA_NODEID_NUMERIC(0, UA_NS0ID_BASEOBJECTTYPE),
+                                UA_NODEID_NUMERIC(0, UA_NS0ID_HASSUBTYPE),
+                                UA_QUALIFIEDNAME(1, "data"), otAttr, NULL, NULL);
+
+    UA_VariableAttributes vAttr = UA_VariableAttributes_default;
+    vAttr.description =  UA_LOCALIZEDTEXT("en-US", "Some Data");
+    vAttr.displayName =  UA_LOCALIZEDTEXT("en-US", "data");
+    UA_UInt32 ageVar = 0;
+    UA_Variant_setScalar(&vAttr.value, &ageVar, &UA_TYPES[UA_TYPES_UINT32]);
+    UA_Server_addVariableNode(server, UA_NODEID_NUMERIC(1, 10001),
+                              UA_NODEID_NUMERIC(1, 10000), UA_NODEID_NUMERIC(0, UA_NS0ID_HASPROPERTY),
+                              UA_QUALIFIEDNAME(1, "data"), UA_NODEID_NUMERIC(0, UA_NS0ID_BASEDATAVARIABLETYPE), vAttr, NULL, NULL);
 
     
 
