@@ -211,15 +211,47 @@ static void powerlinkNode(UA_Server *server)
 
     // Variable setup 
     UA_VariableAttributes varAttr = UA_VariableAttributes_default;
-    UA_String varName = UA_STRING("Default Name");
-
-    UA_Variant_setScalar(&varAttr.value, &varName, &UA_TYPES[UA_TYPES_STRING]);
+    
+    // Powerlink Device Type - Manufacturer
+    UA_String manName = UA_STRING("The Name of the Manufacturer");
+    UA_Variant_setScalar(&varAttr.value, &manName, &UA_TYPES[UA_TYPES_STRING]);
     varAttr.displayName = UA_LOCALIZEDTEXT("en-US", "Manufacturer");
     UA_Server_addVariableNode(server, UA_NODEID_NULL, 
                               PowerlinkDeviceType,
                               UA_NODEID_NUMERIC(0, UA_NS0ID_HASCOMPONENT),
-                              UA_QUALIFIEDNAME(1, "Manufacturer_1"),
+                              UA_QUALIFIEDNAME(1, "Manufacturer"),
                               UA_NODEID_NUMERIC(0, UA_NS0ID_BASEDATAVARIABLETYPE), varAttr, NULL, NULL);
+    // Powerlink Device Type - Model
+    UA_String modName = UA_STRING("Model");
+    UA_Variant_setScalar(&varAttr.value, &modName, &UA_TYPES[UA_TYPES_STRING]);
+    varAttr.displayName = UA_LOCALIZEDTEXT("en-US", "Model");
+    UA_Server_addVariableNode(server, UA_NODEID_NULL, 
+                              PowerlinkDeviceType,
+                              UA_NODEID_NUMERIC(0, UA_NS0ID_HASCOMPONENT),
+                              UA_QUALIFIEDNAME(1, "Model"),
+                              UA_NODEID_NUMERIC(0, UA_NS0ID_BASEDATAVARIABLETYPE), varAttr, NULL, NULL);
+
+    // Functional Group Type - Identification 
+    UA_String idName = UA_STRING("Indentifacation");
+    UA_Variant_setScalar(&varAttr.value, &idName, &UA_TYPES[UA_TYPES_STRING]);
+    varAttr.displayName = UA_LOCALIZEDTEXT("en-US", "Identification");
+    UA_Server_addVariableNode(server, UA_NODEID_NULL, 
+                              FunctionGroupType,
+                              UA_NODEID_NUMERIC(0, UA_NS0ID_HASCOMPONENT),
+                              UA_QUALIFIEDNAME(1, "Identification"),
+                              UA_NODEID_NUMERIC(0, UA_NS0ID_BASEDATAVARIABLETYPE), varAttr, NULL, NULL);
+    // Powerlink Cn Connection Point Type 
+    UA_String conName = UA_STRING("ControlledNode");
+    UA_Variant_setScalar(&varAttr.value, &modName, &UA_TYPES[UA_TYPES_STRING]);
+    varAttr.displayName = UA_LOCALIZEDTEXT("en-US", "ControlledNode");
+    UA_Server_addVariableNode(server, UA_NODEID_NULL, 
+                              PowerlinkDeviceType,
+                              UA_NODEID_NUMERIC(0, UA_NS0ID_HASCOMPONENT),
+                              UA_QUALIFIEDNAME(1, "ControlledNode"),
+                              UA_NODEID_NUMERIC(0, UA_NS0ID_BASEDATAVARIABLETYPE), varAttr, NULL, NULL);
+
+    // Hmmm not sure if this is the correct thing.. 
+
 /*
     UA_VariableAttributes tsAttr = UA_VariableAttributes_default;
     UA_Variant_setScalar(&tsAttr.value, &timeStamp, &UA_TYPES[UA_TYPES_DATETIME]);
@@ -229,6 +261,121 @@ static void powerlinkNode(UA_Server *server)
                               UA_QUALIFIEDNAME(2, "timeStamp"),
                               UA_NODEID_NUMERIC(0, UA_NS0ID_BASEDATAVARIABLETYPE), tsAttr, NULL, NULL);	
 */
+}
+
+static void powerlinkNode2(UA_Server *server)
+{
+    
+    // OPC UA - POWERLINK
+    UA_NodeId DeviceType;
+    UA_NodeId PowerlinkDeviceType;
+    UA_NodeId DeviceTypeObj;
+    UA_NodeId FunctionalGroupType;
+    UA_NodeId PowerlinkCnConnectionPointType;
+    UA_NodeId MnControlledNodeObj;
+
+
+    UA_ObjectAttributes oAttr = UA_ObjectAttributes_default;    
+    // Device Type node 
+    oAttr.displayName = UA_LOCALIZEDTEXT("en-US", "Device Type");
+    UA_Server_addObjectNode(server, UA_NODEID_NULL,
+                            UA_NODEID_NUMERIC(0, UA_NS0ID_OBJECTSFOLDER),
+                            UA_NODEID_NUMERIC(0, UA_NS0ID_ORGANIZES),
+                            UA_QUALIFIEDNAME(1, "DeviceType"), 
+                            UA_NODEID_NUMERIC(0, UA_NS0ID_BASEOBJECTTYPE),
+                            oAttr, NULL, &DeviceType);
+    // Powerlink device type object
+    oAttr.displayName = UA_LOCALIZEDTEXT("en-US", "Powerlink Device Type");
+    UA_Server_addObjectNode(server, UA_NODEID_NULL,
+                            DeviceType,
+                            UA_NODEID_NUMERIC(0, UA_NS0ID_ORGANIZES),
+                            UA_QUALIFIEDNAME(1, "PowerlinkDeviceType"), 
+                            UA_NODEID_NUMERIC(0, UA_NS0ID_BASEOBJECTTYPE),
+                            oAttr, NULL, &PowerlinkDeviceType);
+    // Device type object 
+    oAttr.displayName = UA_LOCALIZEDTEXT("en-US", "Device Type");
+    UA_Server_addObjectNode(server, UA_NODEID_NULL,
+                            PowerlinkDeviceType,
+                            UA_NODEID_NUMERIC(0, UA_NS0ID_ORGANIZES),
+                            UA_QUALIFIEDNAME(1, "DeviceType"), 
+                            UA_NODEID_NUMERIC(0, UA_NS0ID_BASEOBJECTTYPE),
+                            oAttr, NULL, &DeviceTypeObj);
+    // Functional Group Type 
+    oAttr.displayName = UA_LOCALIZEDTEXT("en-US", "Functional Group Type");
+    UA_Server_addObjectNode(server, UA_NODEID_NULL,
+                            PowerlinkDeviceType,
+                            UA_NODEID_NUMERIC(0, UA_NS0ID_ORGANIZES),
+                            UA_QUALIFIEDNAME(1, "Functional Group Type"), 
+                            UA_NODEID_NUMERIC(0, UA_NS0ID_BASEOBJECTTYPE),
+                            oAttr, NULL, &FunctionalGroupType);
+    // Powerlink Controlled node, Powerlink Cn Connection Point Type
+    oAttr.displayName = UA_LOCALIZEDTEXT("en-US", "Powerlink CnC onnection Point Type");
+    UA_Server_addObjectNode(server, UA_NODEID_NULL,
+                            PowerlinkDeviceType,
+                            UA_NODEID_NUMERIC(0, UA_NS0ID_ORGANIZES),
+                            UA_QUALIFIEDNAME(1, "PowerlinkCnConnectionPointType"), 
+                            UA_NODEID_NUMERIC(0, UA_NS0ID_BASEOBJECTTYPE),
+                            oAttr, NULL, &PowerlinkCnConnectionPointType);
+    // Powerlink Managing Node, Powerlink Mn Connection point type
+    oAttr.displayName = UA_LOCALIZEDTEXT("en-US", "Mn Connection Point Type");
+    UA_Server_addObjectNode(server, UA_NODEID_NULL,
+                            PowerlinkDeviceType,
+                            UA_NODEID_NUMERIC(0, UA_NS0ID_ORGANIZES),
+                            UA_QUALIFIEDNAME(1, "Mn ConnectionPointType"), 
+                            UA_NODEID_NUMERIC(0, UA_NS0ID_BASEOBJECTTYPE),
+                            oAttr, NULL, &MnControlledNodeObj);
+
+    // ------------------------------ DeviceType Mapping - Pages 34 ----------------------------------------------
+    // Serial number - String 
+    UA_VariableAttributes dtAttr = UA_VariableAttributes_default;
+    UA_String SerialNumber = "ABC - 12345";
+    UA_Variant_setScalar(&dtAttr.value, &SerialNumber, &UA_TYPES[UA_TYPES_STRING]);
+    UA_Server_addVariableNode(server, UA_NODEID_STRING(2, "Serial Number"), 
+                              DeviceTypeObj,
+                              UA_NODEID_NUMERIC(0, UA_NS0ID_HASCOMPONENT),
+                              UA_QUALIFIEDNAME(2, "SerialNumber"),
+                              UA_NODEID_NUMERIC(0, UA_NS0ID_BASEDATAVARIABLETYPE), dtAttr, NULL, NULL);	
+    // Revision Counter - Int32
+    UA_Int32 RevisionCounter = 0;
+    UA_Variant_setScalar(&dtAttr.value, &RevisionCounter, &UA_TYPES[UA_TYPES_INT32]);
+    UA_Server_addVariableNode(server, UA_NODEID_STRING(2, "RevisionCounter"), 
+                              DeviceTypeObj,
+                              UA_NODEID_NUMERIC(0, UA_NS0ID_HASCOMPONENT),
+                              UA_QUALIFIEDNAME(2, "RevisionCounter"),
+                              UA_NODEID_NUMERIC(0, UA_NS0ID_BASEDATAVARIABLETYPE), dtAttr, NULL, NULL);	
+
+    // Manufacturer - Localized Text 
+    UA_LocalizedText Manufacturer = Andri;
+    UA_Variant_setScalar(&dtAttr.value, &Manufacturer, &UA_TYPES[UA_TYPES_LOCALIZEDTEXT]);
+    UA_Server_addVariableNode(server, UA_NODEID_STRING(2, "Manufacturer"), 
+                              DeviceTypeObj,
+                              UA_NODEID_NUMERIC(0, UA_NS0ID_HASCOMPONENT),
+                              UA_QUALIFIEDNAME(2, "Manufacturer"),
+                              UA_NODEID_NUMERIC(0, UA_NS0ID_BASEDATAVARIABLETYPE), dtAttr, NULL, NULL);	
+
+    // Model - Localized Text 
+
+    // Device Manual - String 
+
+    // Device Revision - String 
+
+    // Software Reversion - String 
+
+    // Hardware Revision - String 
+
+    // Device Class - String 
+
+
+
+
+    // Functional Group Variables - NetworkAddress, Identification, Diagnostics, Configuration, Control, Status 
+    // Need to find more info on this. 
+
+    // PowerlinkCnConnectionPointType - Page 38 
+
+    // PowerlinkMnConnectionPointType - Page 40  
+
+
 }
 
 
@@ -248,6 +395,7 @@ int main(void) {
     UA_ServerConfig_setDefault(UA_Server_getConfig(server));
 
     powerlinkNode(server);
+    powerlinkNode2(server);
 
     UA_StatusCode retval = UA_Server_run(server, &running);
 
