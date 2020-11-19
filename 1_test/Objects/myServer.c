@@ -345,7 +345,7 @@ static void powerlinkNode2(UA_Server *server)
                               UA_NODEID_NUMERIC(0, UA_NS0ID_BASEDATAVARIABLETYPE), dtAttr, NULL, NULL);	
 
     // Manufacturer - Localized Text 
-    UA_LocalizedText Manufacturer = UA_STRING("Andri");
+    UA_LocalizedText Manufacturer = UA_LOCALIZEDTEXT("Andri");
     UA_Variant_setScalar(&dtAttr.value, &Manufacturer, &UA_TYPES[UA_TYPES_LOCALIZEDTEXT]);
     UA_Server_addVariableNode(server, UA_NODEID_STRING(2, "Manufacturer"), 
                               DeviceTypeObj,
