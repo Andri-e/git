@@ -333,7 +333,7 @@ static void powerlinkNode2(UA_Server *server)
     UA_String SerialNumber = UA_STRING("ABC - 12345");
     UA_Variant_setScalar(&dtAttr.value, &SerialNumber, &UA_TYPES[UA_TYPES_STRING]);
     dtAttr.displayName = UA_LOCALIZEDTEXT("en-US", "Serial Number");
-    UA_Server_addVariableNode(server, UA_NODEID_NULL,, 
+    UA_Server_addVariableNode(server, UA_NODEID_NULL, 
                               DeviceTypeObj,
                               UA_NODEID_NUMERIC(0, UA_NS0ID_HASCOMPONENT),
                               UA_QUALIFIEDNAME(2, "SerialNumber"),
@@ -342,7 +342,7 @@ static void powerlinkNode2(UA_Server *server)
     UA_Int32 RevisionCounter = 0;
     UA_Variant_setScalar(&dtAttr.value, &RevisionCounter, &UA_TYPES[UA_TYPES_INT32]);
     dtAttr.displayName = UA_LOCALIZEDTEXT("en-US", "Revision Counter");
-    UA_Server_addVariableNode(server, UA_NODEID_NULL,, 
+    UA_Server_addVariableNode(server, UA_NODEID_NULL,
                               DeviceTypeObj,
                               UA_NODEID_NUMERIC(0, UA_NS0ID_HASCOMPONENT),
                               UA_QUALIFIEDNAME(2, "RevisionCounter"),
@@ -352,7 +352,7 @@ static void powerlinkNode2(UA_Server *server)
     UA_LocalizedText Manufacturer = UA_LOCALIZEDTEXT("DE", "SuperCompany");
     UA_Variant_setScalar(&dtAttr.value, &Manufacturer, &UA_TYPES[UA_TYPES_LOCALIZEDTEXT]);
     dtAttr.displayName = UA_LOCALIZEDTEXT("en-US", "Manufacturer");
-    UA_Server_addVariableNode(server, UA_NODEID_NULL,, 
+    UA_Server_addVariableNode(server, UA_NODEID_NULL, 
                               DeviceTypeObj,
                               UA_NODEID_NUMERIC(0, UA_NS0ID_HASCOMPONENT),
                               UA_QUALIFIEDNAME(2, "Manufacturer"),
@@ -362,7 +362,7 @@ static void powerlinkNode2(UA_Server *server)
     UA_LocalizedText Model = UA_LOCALIZEDTEXT("ABC", " 123");
     UA_Variant_setScalar(&dtAttr.value, &Model, &UA_TYPES[UA_TYPES_LOCALIZEDTEXT]);
     dtAttr.displayName = UA_LOCALIZEDTEXT("en-US", "Model");
-    UA_Server_addVariableNode(server, UA_NODEID_NULL,, 
+    UA_Server_addVariableNode(server, UA_NODEID_NULL, 
                               DeviceTypeObj,
                               UA_NODEID_NUMERIC(0, UA_NS0ID_HASCOMPONENT),
                               UA_QUALIFIEDNAME(2, "Model"),
@@ -372,7 +372,7 @@ static void powerlinkNode2(UA_Server *server)
     UA_String DeviceManual = UA_STRING("Device Manual : Url");
     UA_Variant_setScalar(&dtAttr.value, &DeviceManual, &UA_TYPES[UA_TYPES_STRING]);
     dtAttr.displayName = UA_LOCALIZEDTEXT("en-US", "Device Manual");
-    UA_Server_addVariableNode(server, UA_NODEID_NULL,, 
+    UA_Server_addVariableNode(server, UA_NODEID_NULL, 
                               DeviceTypeObj,
                               UA_NODEID_NUMERIC(0, UA_NS0ID_HASCOMPONENT),
                               UA_QUALIFIEDNAME(2, "DeviceManual"),
@@ -382,7 +382,7 @@ static void powerlinkNode2(UA_Server *server)
     UA_String DeviceRevision = UA_STRING("Device Revision : v0.1");
     UA_Variant_setScalar(&dtAttr.value, &DeviceRevision, &UA_TYPES[UA_TYPES_STRING]);
     dtAttr.displayName = UA_LOCALIZEDTEXT("en-US", "Device Revision");
-    UA_Server_addVariableNode(server, UA_NODEID_NULL,, 
+    UA_Server_addVariableNode(server, UA_NODEID_NULL, 
                               DeviceTypeObj,
                               UA_NODEID_NUMERIC(0, UA_NS0ID_HASCOMPONENT),
                               UA_QUALIFIEDNAME(2, "DeviceRevision"),
@@ -392,7 +392,7 @@ static void powerlinkNode2(UA_Server *server)
     UA_String SoftwareRevision = UA_STRING("v0.1");
     UA_Variant_setScalar(&dtAttr.value, &SoftwareRevision, &UA_TYPES[UA_TYPES_STRING]);
     dtAttr.displayName = UA_LOCALIZEDTEXT("en-US", "Software Revision");
-    UA_Server_addVariableNode(server, UA_NODEID_NULL,, 
+    UA_Server_addVariableNode(server, UA_NODEID_NULL, 
                               DeviceTypeObj,
                               UA_NODEID_NUMERIC(0, UA_NS0ID_HASCOMPONENT),
                               UA_QUALIFIEDNAME(2, "Software Revision"),
@@ -402,7 +402,7 @@ static void powerlinkNode2(UA_Server *server)
     UA_String HardwareRevision = UA_STRING("v0.1");
     UA_Variant_setScalar(&dtAttr.value, &HardwareRevision, &UA_TYPES[UA_TYPES_STRING]);
     dtAttr.displayName = UA_LOCALIZEDTEXT("en-US", "Hardware Revision");
-    UA_Server_addVariableNode(server, UA_NODEID_NULL,, 
+    UA_Server_addVariableNode(server, UA_NODEID_NULL, 
                               DeviceTypeObj,
                               UA_NODEID_NUMERIC(0, UA_NS0ID_HASCOMPONENT),
                               UA_QUALIFIEDNAME(2, "HardwareRevision"),
@@ -412,7 +412,7 @@ static void powerlinkNode2(UA_Server *server)
     UA_String DeviceClass = UA_STRING("Class - Something");
     UA_Variant_setScalar(&dtAttr.value, &DeviceClass, &UA_TYPES[UA_TYPES_STRING]);
     dtAttr.displayName = UA_LOCALIZEDTEXT("en-US", "Device Class");
-    UA_Server_addVariableNode(server, UA_NODEID_NULL,, 
+    UA_Server_addVariableNode(server, UA_NODEID_NULL, 
                               DeviceTypeObj,
                               UA_NODEID_NUMERIC(0, UA_NS0ID_HASCOMPONENT),
                               UA_QUALIFIEDNAME(2, "DeviceClass"),
@@ -438,7 +438,7 @@ static void powerlinkNode2(UA_Server *server)
     UA_Int32 DLL_CNCRCError_REC = 0;
     UA_Variant_setScalar(&dtAttr.value, &DLL_CNCRCError_REC, &UA_TYPES[UA_TYPES_INT32]);
     dtAttr.displayName = UA_LOCALIZEDTEXT("en-US", "DLL_CNCRCError_REC");
-    UA_Server_addVariableNode(server, UA_NODEID_NULL,, 
+    UA_Server_addVariableNode(server, UA_NODEID_NULL, 
                               FunctionalGroupDiagnosticsType,
                               UA_NODEID_NUMERIC(0, UA_NS0ID_HASCOMPONENT),
                               UA_QUALIFIEDNAME(2, "DLL_CNCRCError_REC"),
@@ -447,7 +447,7 @@ static void powerlinkNode2(UA_Server *server)
     UA_UInt32 DLL_CNLossOfSocTolerance_U32 = 0;
     UA_Variant_setScalar(&dtAttr.value, &DLL_CNLossOfSocTolerance_U32, &UA_TYPES[UA_TYPES_UINT32]);
     dtAttr.displayName = UA_LOCALIZEDTEXT("en-US", "DLL_CNLossOfSocTolerance_U32");
-    UA_Server_addVariableNode(server, UA_NODEID_NULL,, 
+    UA_Server_addVariableNode(server, UA_NODEID_NULL, 
                               FunctionalGroupDiagnosticsType,
                               UA_NODEID_NUMERIC(0, UA_NS0ID_HASCOMPONENT),
                               UA_QUALIFIEDNAME(2, "DLL_CNLossOfSocTolerance_U32"),
@@ -456,7 +456,7 @@ static void powerlinkNode2(UA_Server *server)
     UA_Int32 DLL_CNLossSoC_REC = 0;
     UA_Variant_setScalar(&dtAttr.value, &DLL_CNLossSoC_REC , &UA_TYPES[UA_TYPES_INT32]);
     dtAttr.displayName = UA_LOCALIZEDTEXT("en-US", "DLL_CNLossSoC_REC");
-    UA_Server_addVariableNode(server, UA_NODEID_NULL,, 
+    UA_Server_addVariableNode(server, UA_NODEID_NULL, 
                               FunctionalGroupDiagnosticsType,
                               UA_NODEID_NUMERIC(0, UA_NS0ID_HASCOMPONENT),
                               UA_QUALIFIEDNAME(2, "DLL_CNLossSoC_REC"),
@@ -474,7 +474,7 @@ static void powerlinkNode2(UA_Server *server)
     UA_UInt32 NMT_CNBasicEthernetTimeout_U32 = 0;
     UA_Variant_setScalar(&dtAttr.value, &NMT_CNBasicEthernetTimeout_U32, &UA_TYPES[UA_TYPES_UINT32]);
     dtAttr.displayName = UA_LOCALIZEDTEXT("en-US", "NMT_CNBasicEthernetTimeout_U32");
-    UA_Server_addVariableNode(server, UA_NODEID_NULL,, 
+    UA_Server_addVariableNode(server, UA_NODEID_NULL, 
                               FunctionalGroupDiagnosticsType,
                               UA_NODEID_NUMERIC(0, UA_NS0ID_HASCOMPONENT),
                               UA_QUALIFIEDNAME(2, "NMT_CNBasicEthernetTimeout_U32"),
