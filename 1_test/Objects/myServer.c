@@ -365,7 +365,7 @@ static void powerlinkNode2(UA_Server *server)
                               UA_NODEID_NUMERIC(0, UA_NS0ID_BASEDATAVARIABLETYPE), dtAttr, NULL, NULL);	
 
     // Device Manual - String 
-    UA_String DeviceManual = UA_String("Device Manual : Url");
+    UA_String DeviceManual = UA_STRING("Device Manual : Url");
     UA_Variant_setScalar(&dtAttr.value, &DeviceManual, &UA_TYPES[UA_TYPES_STRING]);
     UA_Server_addVariableNode(server, UA_NODEID_STRING(2, "Device Manual"), 
                               DeviceTypeObj,
@@ -374,7 +374,7 @@ static void powerlinkNode2(UA_Server *server)
                               UA_NODEID_NUMERIC(0, UA_NS0ID_BASEDATAVARIABLETYPE), dtAttr, NULL, NULL);	
 
     // Device Revision - String 
-    UA_String DeviceRevision = UA_String("Device Revision : v0.1");
+    UA_String DeviceRevision = UA_STRING("Device Revision : v0.1");
     UA_Variant_setScalar(&dtAttr.value, &DeviceRevision, &UA_TYPES[UA_TYPES_STRING]);
     UA_Server_addVariableNode(server, UA_NODEID_STRING(2, "Device Revision"), 
                               DeviceTypeObj,
@@ -383,7 +383,7 @@ static void powerlinkNode2(UA_Server *server)
                               UA_NODEID_NUMERIC(0, UA_NS0ID_BASEDATAVARIABLETYPE), dtAttr, NULL, NULL);	
 
     // Software Reversion - String 
-    UA_String SoftwareRevision = UA_String("v0.1");
+    UA_String SoftwareRevision = UA_STRING("v0.1");
     UA_Variant_setScalar(&dtAttr.value, &SoftwareRevision, &UA_TYPES[UA_TYPES_STRING]);
     UA_Server_addVariableNode(server, UA_NODEID_STRING(2, "Software Revision"), 
                               DeviceTypeObj,
@@ -392,7 +392,7 @@ static void powerlinkNode2(UA_Server *server)
                               UA_NODEID_NUMERIC(0, UA_NS0ID_BASEDATAVARIABLETYPE), dtAttr, NULL, NULL);	
 
     // Hardware Revision - String 
-    UA_String HardwareRevision = UA_String("v0.1");
+    UA_String HardwareRevision = UA_STRING("v0.1");
     UA_Variant_setScalar(&dtAttr.value, &HardwareRevision, &UA_TYPES[UA_TYPES_STRING]);
     UA_Server_addVariableNode(server, UA_NODEID_STRING(2, "Hardware Revision"), 
                               DeviceTypeObj,
@@ -401,7 +401,7 @@ static void powerlinkNode2(UA_Server *server)
                               UA_NODEID_NUMERIC(0, UA_NS0ID_BASEDATAVARIABLETYPE), dtAttr, NULL, NULL);	
 
     // Device Class - String 
-    UA_String DeviceClass = UA_String("Class - Something");
+    UA_String DeviceClass = UA_STRING("Class - Something");
     UA_Variant_setScalar(&dtAttr.value, &DeviceClass, &UA_TYPES[UA_TYPES_STRING]);
     UA_Server_addVariableNode(server, UA_NODEID_STRING(2, "Device Class"), 
                               DeviceTypeObj,
