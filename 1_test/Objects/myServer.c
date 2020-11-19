@@ -70,6 +70,20 @@ manuallyDefinePump(UA_Server *server) {
                             UA_QUALIFIEDNAME(1, "Pump (Manual)"), UA_NODEID_NUMERIC(0, UA_NS0ID_BASEOBJECTTYPE),
                             oAttr, NULL, &pumpId);
 
+
+    UA_VariableAttributes smnAttr = UA_VariableAttributes_default;
+    UA_String smanufacturerName = UA_STRING("Pump King Ltd.");
+    UA_Variant_setScalar(&smnAttr.value, &smanufacturerName, &UA_TYPES[UA_TYPES_STRING]);
+    smnAttr.displayName = UA_LOCALIZEDTEXT("en-US", "ManufacturerName");
+    UA_Server_addVariableNode(server, UA_NODEID_NULL, 
+                              pumpId,
+                              UA_NODEID_NUMERIC(0, UA_NS0ID_HASCOMPONENT),
+                              UA_QUALIFIEDNAME(1, "ManufacturerName"),
+                              UA_NODEID_NUMERIC(0, UA_NS0ID_BASEDATAVARIABLETYPE), 
+                              smnAttr, NULL, NULL);
+
+
+
     // -------------------------------
 
     UA_ObjectAttributes obAttr = UA_ObjectAttributes_default;
