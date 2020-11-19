@@ -62,6 +62,7 @@
 static void
 manuallyDefinePump(UA_Server *server) {
     UA_NodeId pumpId; /* get the nodeid assigned by the server */
+    UA_NodeId pumpId2;
     UA_ObjectAttributes oAttr = UA_ObjectAttributes_default;
     oAttr.displayName = UA_LOCALIZEDTEXT("en-US", "Pump (Manual)");
     UA_Server_addObjectNode(server, UA_NODEID_NULL,
@@ -78,7 +79,7 @@ manuallyDefinePump(UA_Server *server) {
                             UA_NODEID_NUMERIC(0, UA_NS0ID_ORGANIZES),
                             UA_QUALIFIEDNAME(1, "Pump object nodeasd"), 
                             UA_NODEID_NUMERIC(0, UA_NS0ID_BASEOBJECTTYPE),
-                            objAttr, NULL, &pumpId);
+                            objAttr, NULL, &pumpId2);
 
 
 
@@ -88,7 +89,7 @@ manuallyDefinePump(UA_Server *server) {
     UA_Variant_setScalar(&smnAttr.value, &smanufacturerName, &UA_TYPES[UA_TYPES_STRING]);
     smnAttr.displayName = UA_LOCALIZEDTEXT("en-US", "ManufacturerName");
     UA_Server_addVariableNode(server, UA_NODEID_NULL, 
-                              pumpId,
+                              pumpId2,
                               UA_NODEID_NUMERIC(0, UA_NS0ID_HASCOMPONENT),
                               UA_QUALIFIEDNAME(1, "ManufacturerName"),
                               UA_NODEID_NUMERIC(0, UA_NS0ID_BASEDATAVARIABLETYPE), 
