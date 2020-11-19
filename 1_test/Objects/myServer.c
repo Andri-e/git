@@ -122,7 +122,6 @@ int main(void) {
     //createMammals(server);
 
         /* Some data */
-    UA_StatusCode retval;
     UA_ObjectTypeAttributes otAttr = UA_ObjectTypeAttributes_default;
     otAttr.description = UA_LOCALIZEDTEXT("en-US", "Some Data");
     otAttr.displayName = UA_LOCALIZEDTEXT("en-US", "data");
