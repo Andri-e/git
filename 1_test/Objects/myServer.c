@@ -138,43 +138,46 @@ manuallyDefinePump(UA_Server *server) {
 
 
 
-    UA_VariableAttributes mnAttr = UA_VariableAttributes_default;
-    UA_String manufacturerName = UA_STRING("Pump King Ltd.");
+    UA_VariableAttributes mnsAttr = UA_VariableAttributes_default;
+    UA_String manufacturerNames = UA_STRING("Pump King Ltd.");
     UA_Variant_setScalar(&mnAttr.value, &manufacturerName, &UA_TYPES[UA_TYPES_STRING]);
-    mnAttr.displayName = UA_LOCALIZEDTEXT("en-US", "ManufacturerName");
+    mnsAttr.displayName = UA_LOCALIZEDTEXT("en-US", "ManufacturerNames");
     UA_Server_addVariableNode(server, UA_NODEID_NULL, 
                               pumpId,
                               UA_NODEID_NUMERIC(0, UA_NS0ID_HASCOMPONENT),
-                              UA_QUALIFIEDNAME(1, "ManufacturerName"),
+                              UA_QUALIFIEDNAME(1, "ManufacturerNames"),
                               UA_NODEID_NUMERIC(0, UA_NS0ID_BASEDATAVARIABLETYPE), 
-                              mnAttr, NULL, NULL);
+                              mnsAttr, NULL, NULL);
 
-    UA_VariableAttributes modelAttr = UA_VariableAttributes_default;
-    UA_String modelName = UA_STRING("Mega Pump 3000");
-    UA_Variant_setScalar(&modelAttr.value, &modelName, &UA_TYPES[UA_TYPES_STRING]);
-    modelAttr.displayName = UA_LOCALIZEDTEXT("en-US", "ModelName");
+    UA_VariableAttributes modelAttrs = UA_VariableAttributes_default;
+    UA_String modelNames = UA_STRING("Mega Pump 3000s");
+    UA_Variant_setScalar(&modelAttrs.value, &modelNames, &UA_TYPES[UA_TYPES_STRING]);
+    modelAttr.displayName = UA_LOCALIZEDTEXT("en-US", "ModelNames");
     UA_Server_addVariableNode(server, UA_NODEID_NULL, pumpId,
                               UA_NODEID_NUMERIC(0, UA_NS0ID_HASCOMPONENT),
                               UA_QUALIFIEDNAME(1, "ModelName"),
-                              UA_NODEID_NUMERIC(0, UA_NS0ID_BASEDATAVARIABLETYPE), modelAttr, NULL, NULL);
+                              UA_NODEID_NUMERIC(0, UA_NS0ID_BASEDATAVARIABLETYPE), 
+                              modelAttrs, NULL, NULL);
 
-    UA_VariableAttributes statusAttr = UA_VariableAttributes_default;
-    UA_Boolean status = true;
-    UA_Variant_setScalar(&statusAttr.value, &status, &UA_TYPES[UA_TYPES_BOOLEAN]);
-    statusAttr.displayName = UA_LOCALIZEDTEXT("en-US", "Status");
+    UA_VariableAttributes statusAttrs = UA_VariableAttributes_default;
+    UA_Boolean statuss = true;
+    UA_Variant_setScalar(&statusAttrs.value, &statuss, &UA_TYPES[UA_TYPES_BOOLEAN]);
+    statusAttrs.displayName = UA_LOCALIZEDTEXT("en-US", "Statusss");
     UA_Server_addVariableNode(server, UA_NODEID_NULL, pumpId,
                               UA_NODEID_NUMERIC(0, UA_NS0ID_HASCOMPONENT),
-                              UA_QUALIFIEDNAME(1, "Status"),
-                              UA_NODEID_NUMERIC(0, UA_NS0ID_BASEDATAVARIABLETYPE), statusAttr, NULL, NULL);
+                              UA_QUALIFIEDNAME(1, "Statusss"),
+                              UA_NODEID_NUMERIC(0, UA_NS0ID_BASEDATAVARIABLETYPE), 
+                              statusAttrs, NULL, NULL);
 
-    UA_VariableAttributes rpmAttr = UA_VariableAttributes_default;
-    UA_Double rpm = 50.0;
-    UA_Variant_setScalar(&rpmAttr.value, &rpm, &UA_TYPES[UA_TYPES_DOUBLE]);
-    rpmAttr.displayName = UA_LOCALIZEDTEXT("en-US", "MotorRPM");
+    UA_VariableAttributes rpmAttrs = UA_VariableAttributes_default;
+    UA_Double rpms = 50.0;
+    UA_Variant_setScalar(&rpmAttrs.value, &rpms, &UA_TYPES[UA_TYPES_DOUBLE]);
+    rpmAttrs.displayName = UA_LOCALIZEDTEXT("en-US", "MotorRPM");
     UA_Server_addVariableNode(server, UA_NODEID_NULL, pumpId,
                               UA_NODEID_NUMERIC(0, UA_NS0ID_HASCOMPONENT),
                               UA_QUALIFIEDNAME(1, "MotorRPMs"),
-                              UA_NODEID_NUMERIC(0, UA_NS0ID_BASEDATAVARIABLETYPE), rpmAttr, NULL, NULL);
+                              UA_NODEID_NUMERIC(0, UA_NS0ID_BASEDATAVARIABLETYPE), 
+                              rpmAttrs, NULL, NULL);
 
 
 
