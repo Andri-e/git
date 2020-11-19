@@ -3,6 +3,8 @@
 #include <signal.h>
 
 
+UA_NodeId pumpTypeId = {1, UA_NODEIDTYPE_NUMERIC, {1001}};
+
 static void
 defineObjectTypes(UA_Server *server) {
     /* Define the object type for "Device" */
