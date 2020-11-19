@@ -272,7 +272,9 @@ static void powerlinkNode2(UA_Server *server)
     UA_NodeId DeviceTypeObj;
     UA_NodeId FunctionalGroupType;
     UA_NodeId PowerlinkCnConnectionPointType;
-    UA_NodeId MnControlledNodeObj;
+    UA_NodeId PowerlinkMnConnectionPointType;
+    UA_NodeId FunctionalGroupDiagnosticsType; 
+    UA_NodeId FunctionalGroupConfigurationType; 
 
 
     UA_ObjectAttributes oAttr = UA_ObjectAttributes_default;    
@@ -323,7 +325,7 @@ static void powerlinkNode2(UA_Server *server)
                             UA_NODEID_NUMERIC(0, UA_NS0ID_ORGANIZES),
                             UA_QUALIFIEDNAME(1, "Mn ConnectionPointType"), 
                             UA_NODEID_NUMERIC(0, UA_NS0ID_BASEOBJECTTYPE),
-                            oAttr, NULL, &MnControlledNodeObj);
+                            oAttr, NULL, &PowerlinkMnConnectionPointType);
 
     // ------------------------------ DeviceType Mapping - Pages 34 ----------------------------------------------
     // Serial number - String 
@@ -345,7 +347,7 @@ static void powerlinkNode2(UA_Server *server)
                               UA_NODEID_NUMERIC(0, UA_NS0ID_BASEDATAVARIABLETYPE), dtAttr, NULL, NULL);	
 
     // Manufacturer - Localized Text 
-    UA_LocalizedText Manufacturer = UA_LOCALIZEDTEXT("Andri", "TEST");
+    UA_LocalizedText Manufacturer = UA_LOCALIZEDTEXT("DE", "SuperCompany");
     UA_Variant_setScalar(&dtAttr.value, &Manufacturer, &UA_TYPES[UA_TYPES_LOCALIZEDTEXT]);
     UA_Server_addVariableNode(server, UA_NODEID_STRING(2, "Manufacturer"), 
                               DeviceTypeObj,
@@ -354,26 +356,141 @@ static void powerlinkNode2(UA_Server *server)
                               UA_NODEID_NUMERIC(0, UA_NS0ID_BASEDATAVARIABLETYPE), dtAttr, NULL, NULL);	
 
     // Model - Localized Text 
+    UA_LocalizedText Model = UA_LOCALIZEDTEXT("ABC", " 123");
+    UA_Variant_setScalar(&dtAttr.value, &Model, &UA_TYPES[UA_TYPES_LOCALIZEDTEXT]);
+    UA_Server_addVariableNode(server, UA_NODEID_STRING(2, "Model"), 
+                              DeviceTypeObj,
+                              UA_NODEID_NUMERIC(0, UA_NS0ID_HASCOMPONENT),
+                              UA_QUALIFIEDNAME(2, "Model"),
+                              UA_NODEID_NUMERIC(0, UA_NS0ID_BASEDATAVARIABLETYPE), dtAttr, NULL, NULL);	
 
     // Device Manual - String 
+    UA_String DeviceManual = UA_String("Device Manual : Url");
+    UA_Variant_setScalar(&dtAttr.value, &DeviceManual, &UA_TYPES[UA_TYPES_STRING]);
+    UA_Server_addVariableNode(server, UA_NODEID_STRING(2, "Device Manual"), 
+                              DeviceTypeObj,
+                              UA_NODEID_NUMERIC(0, UA_NS0ID_HASCOMPONENT),
+                              UA_QUALIFIEDNAME(2, "DeviceManual"),
+                              UA_NODEID_NUMERIC(0, UA_NS0ID_BASEDATAVARIABLETYPE), dtAttr, NULL, NULL);	
 
     // Device Revision - String 
+    UA_String DeviceRevision = UA_String("Device Revision : v0.1");
+    UA_Variant_setScalar(&dtAttr.value, &DeviceRevision, &UA_TYPES[UA_TYPES_STRING]);
+    UA_Server_addVariableNode(server, UA_NODEID_STRING(2, "Device Revision"), 
+                              DeviceTypeObj,
+                              UA_NODEID_NUMERIC(0, UA_NS0ID_HASCOMPONENT),
+                              UA_QUALIFIEDNAME(2, "DeviceRevision"),
+                              UA_NODEID_NUMERIC(0, UA_NS0ID_BASEDATAVARIABLETYPE), dtAttr, NULL, NULL);	
 
     // Software Reversion - String 
+    UA_String SoftwareRevision = UA_String("v0.1");
+    UA_Variant_setScalar(&dtAttr.value, &SoftwareRevision, &UA_TYPES[UA_TYPES_STRING]);
+    UA_Server_addVariableNode(server, UA_NODEID_STRING(2, "Software Revision"), 
+                              DeviceTypeObj,
+                              UA_NODEID_NUMERIC(0, UA_NS0ID_HASCOMPONENT),
+                              UA_QUALIFIEDNAME(2, "Software Revision"),
+                              UA_NODEID_NUMERIC(0, UA_NS0ID_BASEDATAVARIABLETYPE), dtAttr, NULL, NULL);	
 
     // Hardware Revision - String 
+    UA_String HardwareRevision = UA_String("v0.1");
+    UA_Variant_setScalar(&dtAttr.value, &HardwareRevision, &UA_TYPES[UA_TYPES_STRING]);
+    UA_Server_addVariableNode(server, UA_NODEID_STRING(2, "Hardware Revision"), 
+                              DeviceTypeObj,
+                              UA_NODEID_NUMERIC(0, UA_NS0ID_HASCOMPONENT),
+                              UA_QUALIFIEDNAME(2, "HardwareRevision"),
+                              UA_NODEID_NUMERIC(0, UA_NS0ID_BASEDATAVARIABLETYPE), dtAttr, NULL, NULL);	
 
     // Device Class - String 
+    UA_String DeviceClass = UA_String("Class - Something");
+    UA_Variant_setScalar(&dtAttr.value, &DeviceClass, &UA_TYPES[UA_TYPES_STRING]);
+    UA_Server_addVariableNode(server, UA_NODEID_STRING(2, "Device Class"), 
+                              DeviceTypeObj,
+                              UA_NODEID_NUMERIC(0, UA_NS0ID_HASCOMPONENT),
+                              UA_QUALIFIEDNAME(2, "DeviceClass"),
+                              UA_NODEID_NUMERIC(0, UA_NS0ID_BASEDATAVARIABLETYPE), dtAttr, NULL, NULL);	
+
+
+
+    // Functional Group Variables - this contains Diagnostics and Configurationit seems, need to look into this more.. 
 
 
 
 
-    // Functional Group Variables - NetworkAddress, Identification, Diagnostics, Configuration, Control, Status 
-    // Need to find more info on this. 
 
-    // PowerlinkCnConnectionPointType - Page 38 
+    // --------------------------------- PowerlinkCnConnectionPointType - Page 38, only takeing Mandatory things --------------------------------
+    // Functional Group Diagnostics - Powerlink Cn Connection point type  
+    UA_Server_addObjectNode(server, UA_NODEID_NULL,
+                    PowerlinkCnConnectionPointType,
+                    UA_NODEID_NUMERIC(0, UA_NS0ID_ORGANIZES),
+                    UA_QUALIFIEDNAME(1, "Functional Group Diagnostics Type"), 
+                    UA_NODEID_NUMERIC(0, UA_NS0ID_BASEOBJECTTYPE),
+                    oAttr, NULL, &FunctionalGroupDiagnosticsType);
+    // DLL_CNCRCError_REC - n/a 
+    UA_Int32 DLL_CNCRCError_REC = 0;
+    UA_Variant_setScalar(&dtAttr.value, &DLL_CNCRCError_REC, &UA_TYPES[UA_TYPES_INT32]);
+    UA_Server_addVariableNode(server, UA_NODEID_STRING(2, "DLL_CNCRCError_REC"), 
+                              FunctionalGroupDiagnosticsType,
+                              UA_NODEID_NUMERIC(0, UA_NS0ID_HASCOMPONENT),
+                              UA_QUALIFIEDNAME(2, "DLL_CNCRCError_REC"),
+                              UA_NODEID_NUMERIC(0, UA_NS0ID_BASEDATAVARIABLETYPE), dtAttr, NULL, NULL);	
+    // DLL_CNLossOfSocTolerance_U32 - Uint32
+    UA_UInt32 DLL_CNLossOfSocTolerance_U32 = 0;
+    UA_Variant_setScalar(&dtAttr.value, &DLL_CNLossOfSocTolerance_U32, &UA_TYPES[UA_TYPES_UINT32]);
+    UA_Server_addVariableNode(server, UA_NODEID_STRING(2, "DLL_CNLossOfSocTolerance_U32"), 
+                              FunctionalGroupDiagnosticsType,
+                              UA_NODEID_NUMERIC(0, UA_NS0ID_HASCOMPONENT),
+                              UA_QUALIFIEDNAME(2, "DLL_CNLossOfSocTolerance_U32"),
+                              UA_NODEID_NUMERIC(0, UA_NS0ID_BASEDATAVARIABLETYPE), dtAttr, NULL, NULL);	
+    // DLL_CNLossSoC_REC - n/a 
+    UA_Int32 DLL_CNLossSoC_REC = 0;
+    UA_Variant_setScalar(&dtAttr.value, &DLL_CNLossSoC_REC , &UA_TYPES[UA_TYPES_INT32]);
+    UA_Server_addVariableNode(server, UA_NODEID_STRING(2, "DLL_CNLossSoC_REC"), 
+                              FunctionalGroupDiagnosticsType,
+                              UA_NODEID_NUMERIC(0, UA_NS0ID_HASCOMPONENT),
+                              UA_QUALIFIEDNAME(2, "DLL_CNLossSoC_REC"),
+                              UA_NODEID_NUMERIC(0, UA_NS0ID_BASEDATAVARIABLETYPE), dtAttr, NULL, NULL);	
+    // Functional Group Configuration - Powerlink Cn connection point type 
+    UA_Server_addObjectNode(server, UA_NODEID_NULL,
+                PowerlinkCnConnectionPointType,
+                UA_NODEID_NUMERIC(0, UA_NS0ID_ORGANIZES),
+                UA_QUALIFIEDNAME(1, "Functional Group Diagnostics Type"), 
+                UA_NODEID_NUMERIC(0, UA_NS0ID_BASEOBJECTTYPE),
+                oAttr, NULL, &FunctionalGroupDiagnosticsType);
+    // NMT_CNBasicEthernetTimeout_U32 - Uint32 
+    UA_UInt32 NMT_CNBasicEthernetTimeout_U32 = 0;
+    UA_Variant_setScalar(&dtAttr.value, &NMT_CNBasicEthernetTimeout_U32, &UA_TYPES[UA_TYPES_UINT32]);
+    UA_Server_addVariableNode(server, UA_NODEID_STRING(2, "NMT_CNBasicEthernetTimeout_U32"), 
+                              FunctionalGroupDiagnosticsType,
+                              UA_NODEID_NUMERIC(0, UA_NS0ID_HASCOMPONENT),
+                              UA_QUALIFIEDNAME(2, "NMT_CNBasicEthernetTimeout_U32"),
+                              UA_NODEID_NUMERIC(0, UA_NS0ID_BASEDATAVARIABLETYPE), dtAttr, NULL, NULL);	
 
-    // PowerlinkMnConnectionPointType - Page 40  
+
+    // ---------------------------------- PowerlinkMnConnectionPointType - Page 40  ---------------------------------
+    // Functional Group Diagnostics - Powerlink Mn Connection point type  
+    UA_Server_addObjectNode(server, UA_NODEID_NULL,
+                PowerlinkMnConnectionPointType,
+                UA_NODEID_NUMERIC(0, UA_NS0ID_ORGANIZES),
+                UA_QUALIFIEDNAME(1, "Functional Group Diagnostics Type"), 
+                UA_NODEID_NUMERIC(0, UA_NS0ID_BASEOBJECTTYPE),
+                oAttr, NULL, &FunctionalGroupDiagnosticsType);
+    // DLL_MNCNLossPResThrCnt_AU32 - Uint32 []
+    // DLL_MNCNLossPResThreshold_AU32 - Uint 32 []
+    // DLL_MNCRCError_REC - n/a 
+    // DLL_MNLossStatusResThrCnt_AU32 - Uint32 []
+    // DLL_MNLossStatusResThreshold_AU32 - Uint32 []
+    // NMT_MNNodeCurrState_AU8 - Powerlink, NMTState, Enumeration [] 
+    // NMT_RequestCmd_REC - n/a 
+
+    // Functional Group Configuration - Powerlink Mn Connection point type  
+    // DLL_MNCycleSuspendNumber_U32 - Uint32
+    // NMT_BootTime_REC - n/a 
+    // NMT_MNCNPResTimeout_AU32 - Uint32 []
+    // NMT_MNCycleTiming_REC - n/a 
+    // NMT_MNDeviceTypeIdList_AU32 - Uint32 []
+    // NMT_MNPReqPayloadLimitList_AU16 - Uint16 []
+    // NMT_StartUp_U32 - Uint32 
+
 
 
 }
