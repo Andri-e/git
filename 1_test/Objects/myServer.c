@@ -59,360 +59,165 @@
 
 #include <signal.h>
 
-static void
-manuallyDefinePump(UA_Server *server) {
-    UA_NodeId nodeId; /* get the nodeid assigned by the server */
-    UA_NodeId objId1;
-    UA_NodeId objId2;
-    UA_NodeId objId3;
 
-    // Node 1 
+static void powerlinkNode(UA_Server *server)
+{
+    // OPC UA 
+    UA_NodeId FolderType;
+    UA_NodeId FunctionGroupType;
+
+    // OPC UA DI 
+    UA_NodeId BaseObjectType;
+    UA_NodeId TopologyElementType;
+    UA_NodeId NetworkType;
+    UA_NodeId ProtocolType;
+    UA_NodeId DeviceType;
+    UA_NodeId ConnectionPointType;
+
+    // OPC UA - POWERLINK
+    UA_NodeId PowerlinkDeviceProfileType;
+    UA_NodeId PowerlinkDeviceType;
+    UA_NodeId PowerlinkConnectionPointType;
+    UA_NodeId PowerlinkProtocoltype;
+    UA_NodeId PowerlinkConnectionPointType;
+    UA_NodeId PowerlinkCnConnectionPointType;
+    UA_NodeId PowerlinkMnConnectionPointType;
+    UA_NodeId LogicalDeviceName;
+
     UA_ObjectAttributes oAttr = UA_ObjectAttributes_default;
-    oAttr.displayName = UA_LOCALIZEDTEXT("en-US", "Pump (Manual)");
+
+    
+    // Folder Type - OPC UA Part 5 
+    oAttr.displayName = UA_LOCALIZEDTEXT("en-US", "Folder Type - OPC UA Part 5");
     UA_Server_addObjectNode(server, UA_NODEID_NULL,
                             UA_NODEID_NUMERIC(0, UA_NS0ID_OBJECTSFOLDER),
                             UA_NODEID_NUMERIC(0, UA_NS0ID_ORGANIZES),
-                            UA_QUALIFIEDNAME(1, "Pump (Manual)"), UA_NODEID_NUMERIC(0, UA_NS0ID_BASEOBJECTTYPE),
-                            oAttr, NULL, &nodeId);
-
-
-    // Object 1 - Under Node 1 
-    UA_ObjectAttributes objAttr = UA_ObjectAttributes_default;
-    objAttr.displayName = UA_LOCALIZEDTEXT("en-US", "Pump object nodeasd");
-    UA_Server_addObjectNode(server, UA_NODEID_NULL,
-                            nodeId, 
-                            UA_NODEID_NUMERIC(0, UA_NS0ID_ORGANIZES),
-                            UA_QUALIFIEDNAME(1, "Pump object nodeasd"), 
+                            UA_QUALIFIEDNAME(1, "FolderType"), 
                             UA_NODEID_NUMERIC(0, UA_NS0ID_BASEOBJECTTYPE),
-                            objAttr, NULL, &objId1);
-
-    UA_VariableAttributes smnAttr = UA_VariableAttributes_default;
-    UA_String smanufacturerName = UA_STRING("Pump King Ltd.");
-    UA_Variant_setScalar(&smnAttr.value, &smanufacturerName, &UA_TYPES[UA_TYPES_STRING]);
-    smnAttr.displayName = UA_LOCALIZEDTEXT("en-US", "ManufacturerName");
-    UA_Server_addVariableNode(server, UA_NODEID_NULL, 
-                              objId1,
-                              UA_NODEID_NUMERIC(0, UA_NS0ID_HASCOMPONENT),
-                              UA_QUALIFIEDNAME(1, "ManufacturerName"),
-                              UA_NODEID_NUMERIC(0, UA_NS0ID_BASEDATAVARIABLETYPE), 
-                              smnAttr, NULL, NULL);
- 
-    // Object 2 - Under Node 1 
-    UA_ObjectAttributes obAttr = UA_ObjectAttributes_default;
-    obAttr.displayName = UA_LOCALIZEDTEXT("en-US", "Pump object node");
-    UA_Server_addObjectNode(server, UA_NODEID_NULL,
-                            nodeId, 
-                            UA_NODEID_NUMERIC(0, UA_NS0ID_ORGANIZES),
-                            UA_QUALIFIEDNAME(1, "Pump object node"), 
-                            UA_NODEID_NUMERIC(0, UA_NS0ID_BASEOBJECTTYPE),
-                            obAttr, NULL, &objId2);
-
-    UA_VariableAttributes mnAttr = UA_VariableAttributes_default;
-    UA_String manufacturerName = UA_STRING("Pump King Ltd.");
-    UA_Variant_setScalar(&mnAttr.value, &manufacturerName, &UA_TYPES[UA_TYPES_STRING]);
-    mnAttr.displayName = UA_LOCALIZEDTEXT("en-US", "ManufacturerName");
-    UA_Server_addVariableNode(server, UA_NODEID_NULL, 
-                              objId2,
-                              UA_NODEID_NUMERIC(0, UA_NS0ID_HASCOMPONENT),
-                              UA_QUALIFIEDNAME(1, "ManufacturerName"),
-                              UA_NODEID_NUMERIC(0, UA_NS0ID_BASEDATAVARIABLETYPE), 
-                              mnAttr, NULL, NULL);
-
-    UA_VariableAttributes modelAttr = UA_VariableAttributes_default;
-    UA_String modelName = UA_STRING("Mega Pump 3000");
-    UA_Variant_setScalar(&modelAttr.value, &modelName, &UA_TYPES[UA_TYPES_STRING]);
-    modelAttr.displayName = UA_LOCALIZEDTEXT("en-US", "ModelName");
-    UA_Server_addVariableNode(server, UA_NODEID_NULL, 
-                              objId2,
-                              UA_NODEID_NUMERIC(0, UA_NS0ID_HASCOMPONENT),
-                              UA_QUALIFIEDNAME(1, "ModelName"),
-                              UA_NODEID_NUMERIC(0, UA_NS0ID_BASEDATAVARIABLETYPE), 
-                              modelAttr, NULL, NULL);
-
-    UA_VariableAttributes statusAttr = UA_VariableAttributes_default;
-    UA_Boolean status = true;
-    UA_Variant_setScalar(&statusAttr.value, &status, &UA_TYPES[UA_TYPES_BOOLEAN]);
-    statusAttr.displayName = UA_LOCALIZEDTEXT("en-US", "Status");
-    UA_Server_addVariableNode(server, UA_NODEID_NULL, 
-                              objId2,
-                              UA_NODEID_NUMERIC(0, UA_NS0ID_HASCOMPONENT),
-                              UA_QUALIFIEDNAME(1, "Status"),
-                              UA_NODEID_NUMERIC(0, UA_NS0ID_BASEDATAVARIABLETYPE), 
-                              statusAttr, NULL, NULL);
-
-    UA_VariableAttributes rpmAttr = UA_VariableAttributes_default;
-    UA_Double rpm = 50.0;
-    UA_Variant_setScalar(&rpmAttr.value, &rpm, &UA_TYPES[UA_TYPES_DOUBLE]);
-    rpmAttr.displayName = UA_LOCALIZEDTEXT("en-US", "MotorRPM");
-    UA_Server_addVariableNode(server, UA_NODEID_NULL, 
-                              objId2,
-                              UA_NODEID_NUMERIC(0, UA_NS0ID_HASCOMPONENT),
-                              UA_QUALIFIEDNAME(1, "MotorRPMs"),
-                              UA_NODEID_NUMERIC(0, UA_NS0ID_BASEDATAVARIABLETYPE), 
-                              rpmAttr, NULL, NULL);
-
-    // Object 3 - Under Object 2 
-    UA_ObjectAttributes obAttrs = UA_ObjectAttributes_default;
-    obAttrs.displayName = UA_LOCALIZEDTEXT("en-US", "Pump object node 2");
-    UA_Server_addObjectNode(server, UA_NODEID_NULL,
-                            objId2, 
-                            UA_NODEID_NUMERIC(0, UA_NS0ID_ORGANIZES),
-                            UA_QUALIFIEDNAME(1, "Pump object node 2"), 
-                            UA_NODEID_NUMERIC(0, UA_NS0ID_BASEOBJECTTYPE),
-                            obAttrs, NULL, &objId3);
-
-
-
-    UA_VariableAttributes mnsAttr = UA_VariableAttributes_default;
-    UA_String manufacturerNames = UA_STRING("Pump King Ltd.");
-    UA_Variant_setScalar(&mnAttr.value, &manufacturerName, &UA_TYPES[UA_TYPES_STRING]);
-    mnsAttr.displayName = UA_LOCALIZEDTEXT("en-US", "ManufacturerNames");
-    UA_Server_addVariableNode(server, UA_NODEID_NULL, 
-                              objId3,
-                              UA_NODEID_NUMERIC(0, UA_NS0ID_HASCOMPONENT),
-                              UA_QUALIFIEDNAME(1, "ManufacturerNames"),
-                              UA_NODEID_NUMERIC(0, UA_NS0ID_BASEDATAVARIABLETYPE), 
-                              mnsAttr, NULL, NULL);
-
-    UA_VariableAttributes modelAttrs = UA_VariableAttributes_default;
-    UA_String modelNames = UA_STRING("Mega Pump 3000s");
-    UA_Variant_setScalar(&modelAttrs.value, &modelNames, &UA_TYPES[UA_TYPES_STRING]);
-    modelAttr.displayName = UA_LOCALIZEDTEXT("en-US", "ModelNames");
-    UA_Server_addVariableNode(server, UA_NODEID_NULL, 
-                              objId3,
-                              UA_NODEID_NUMERIC(0, UA_NS0ID_HASCOMPONENT),
-                              UA_QUALIFIEDNAME(1, "ModelName"),
-                              UA_NODEID_NUMERIC(0, UA_NS0ID_BASEDATAVARIABLETYPE), 
-                              modelAttrs, NULL, NULL);
-
-    UA_VariableAttributes statusAttrs = UA_VariableAttributes_default;
-    UA_Boolean statuss = true;
-    UA_Variant_setScalar(&statusAttrs.value, &statuss, &UA_TYPES[UA_TYPES_BOOLEAN]);
-    statusAttrs.displayName = UA_LOCALIZEDTEXT("en-US", "Statusss");
-    UA_Server_addVariableNode(server, UA_NODEID_NULL, 
-                              objId3,
-                              UA_NODEID_NUMERIC(0, UA_NS0ID_HASCOMPONENT),
-                              UA_QUALIFIEDNAME(1, "Statusss"),
-                              UA_NODEID_NUMERIC(0, UA_NS0ID_BASEDATAVARIABLETYPE), 
-                              statusAttrs, NULL, NULL);
-
-    UA_VariableAttributes rpmAttrs = UA_VariableAttributes_default;
-    UA_Double rpms = 50.0;
-    UA_Variant_setScalar(&rpmAttrs.value, &rpms, &UA_TYPES[UA_TYPES_DOUBLE]);
-    rpmAttrs.displayName = UA_LOCALIZEDTEXT("en-US", "MotorRPM");
-    UA_Server_addVariableNode(server, UA_NODEID_NULL, 
-                              objId3,
-                              UA_NODEID_NUMERIC(0, UA_NS0ID_HASCOMPONENT),
-                              UA_QUALIFIEDNAME(1, "MotorRPMs"),
-                              UA_NODEID_NUMERIC(0, UA_NS0ID_BASEDATAVARIABLETYPE), 
-                              rpmAttrs, NULL, NULL);
-
-
-
-
-}
-
-/**
- * Object types, type hierarchies and instantiation
- * ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
- * Building up each object manually requires us to write a lot of code.
- * Furthermore, there is no way for clients to detect that an object represents
- * a pump. (We might use naming conventions or similar to detect pumps. But
- * that's not exactly a clean solution.) Furthermore, we might have more devices
- * than just pumps. And we require all devices to share some common structure.
- * The solution is to define ObjectTypes in a hierarchy with inheritance
- * relations.
- *
- * .. graphviz::
- *
- *    digraph tree {
- *
- *    fixedsize=true;
- *    node [width=2, height=0, shape=box, fillcolor="#E5E5E5", concentrate=true]
- *
- *    node_root [label=< <I>ObjectTypeNode</I><BR/>Device >]
- *
- *    { rank=same
- *      point_1 [shape=point]
- *      node_1 [label=< <I>VariableNode</I><BR/>ManufacturerName<BR/>(mandatory) >] }
- *    node_root -> point_1 [arrowhead=none]
- *    point_1 -> node_1 [label="hasComponent"]
- *
- *    { rank=same
- *      point_2 [shape=point]
- *      node_2 [label=< <I>VariableNode</I><BR/>ModelName >] }
- *    point_1 -> point_2 [arrowhead=none]
- *    point_2 -> node_2 [label="hasComponent"]
- *
- *    {  rank=same
- *       point_3 [shape=point]
- *       node_3 [label=< <I>ObjectTypeNode</I><BR/>Pump >] }
- *    point_2 -> point_3 [arrowhead=none]
- *    point_3 -> node_3 [label="hasSubtype"]
- *
- *    {  rank=same
- *       point_4 [shape=point]
- *       node_4 [label=< <I>VariableNode</I><BR/>Status<BR/>(mandatory) >] }
- *    node_3 -> point_4 [arrowhead=none]
- *    point_4 -> node_4 [label="hasComponent"]
- *
- *    {  rank=same
- *       point_5 [shape=point]
- *       node_5 [label=< <I>VariableNode</I><BR/>MotorRPM >] }
- *    point_4 -> point_5 [arrowhead=none]
- *    point_5 -> node_5 [label="hasComponent"]
- *
- *    }
- *
- * Children that are marked mandatory are automatically instantiated together
- * with the parent object. This is indicated by a `hasModellingRule` reference
- * to an object that representes the `mandatory` modelling rule. */
-
-/* predefined identifier for later use */
-UA_NodeId pumpTypeId = {1, UA_NODEIDTYPE_NUMERIC, {1001}};
-
-static void
-defineObjectTypes(UA_Server *server) {
-    /* Define the object type for "Device" */
-    UA_NodeId deviceTypeId; /* get the nodeid assigned by the server */
-    UA_ObjectTypeAttributes dtAttr = UA_ObjectTypeAttributes_default;
-    dtAttr.displayName = UA_LOCALIZEDTEXT("en-US", "DeviceType");
-    UA_Server_addObjectTypeNode(server, UA_NODEID_NULL,
-                                UA_NODEID_NUMERIC(0, UA_NS0ID_BASEOBJECTTYPE),
-                                UA_NODEID_NUMERIC(0, UA_NS0ID_HASSUBTYPE),
-                                UA_QUALIFIEDNAME(1, "DeviceType"), dtAttr,
-                                NULL, &deviceTypeId);
-
-    UA_VariableAttributes mnAttr = UA_VariableAttributes_default;
-    mnAttr.displayName = UA_LOCALIZEDTEXT("en-US", "ManufacturerName");
-    UA_NodeId manufacturerNameId;
-    UA_Server_addVariableNode(server, UA_NODEID_NULL, deviceTypeId,
-                              UA_NODEID_NUMERIC(0, UA_NS0ID_HASCOMPONENT),
-                              UA_QUALIFIEDNAME(1, "ManufacturerName"),
-                              UA_NODEID_NUMERIC(0, UA_NS0ID_BASEDATAVARIABLETYPE), mnAttr, NULL, &manufacturerNameId);
-    /* Make the manufacturer name mandatory */
-    UA_Server_addReference(server, manufacturerNameId,
-                           UA_NODEID_NUMERIC(0, UA_NS0ID_HASMODELLINGRULE),
-                           UA_EXPANDEDNODEID_NUMERIC(0, UA_NS0ID_MODELLINGRULE_MANDATORY), true);
-
-
-    UA_VariableAttributes modelAttr = UA_VariableAttributes_default;
-    modelAttr.displayName = UA_LOCALIZEDTEXT("en-US", "ModelName");
-    UA_Server_addVariableNode(server, UA_NODEID_NULL, deviceTypeId,
-                              UA_NODEID_NUMERIC(0, UA_NS0ID_HASCOMPONENT),
-                              UA_QUALIFIEDNAME(1, "ModelName"),
-                              UA_NODEID_NUMERIC(0, UA_NS0ID_BASEDATAVARIABLETYPE), modelAttr, NULL, NULL);
-
-    /* Define the object type for "Pump" */
-    UA_ObjectTypeAttributes ptAttr = UA_ObjectTypeAttributes_default;
-    ptAttr.displayName = UA_LOCALIZEDTEXT("en-US", "PumpType");
-    UA_Server_addObjectTypeNode(server, pumpTypeId,
-                                deviceTypeId, UA_NODEID_NUMERIC(0, UA_NS0ID_HASSUBTYPE),
-                                UA_QUALIFIEDNAME(1, "PumpType"), ptAttr,
-                                NULL, NULL);
-
-    UA_VariableAttributes statusAttr = UA_VariableAttributes_default;
-    statusAttr.displayName = UA_LOCALIZEDTEXT("en-US", "Status");
-    statusAttr.valueRank = UA_VALUERANK_SCALAR;
-    UA_NodeId statusId;
-    UA_Server_addVariableNode(server, UA_NODEID_NULL, pumpTypeId,
-                              UA_NODEID_NUMERIC(0, UA_NS0ID_HASCOMPONENT),
-                              UA_QUALIFIEDNAME(1, "Status"),
-                              UA_NODEID_NUMERIC(0, UA_NS0ID_BASEDATAVARIABLETYPE), statusAttr, NULL, &statusId);
-    /* Make the status variable mandatory */
-    UA_Server_addReference(server, statusId,
-                           UA_NODEID_NUMERIC(0, UA_NS0ID_HASMODELLINGRULE),
-                           UA_EXPANDEDNODEID_NUMERIC(0, UA_NS0ID_MODELLINGRULE_MANDATORY), true);
-
-    UA_VariableAttributes rpmAttr = UA_VariableAttributes_default;
-    rpmAttr.displayName = UA_LOCALIZEDTEXT("en-US", "MotorRPM");
-    rpmAttr.valueRank = UA_VALUERANK_SCALAR;
-    UA_Server_addVariableNode(server, UA_NODEID_NULL, pumpTypeId,
-                              UA_NODEID_NUMERIC(0, UA_NS0ID_HASCOMPONENT),
-                              UA_QUALIFIEDNAME(1, "MotorRPMs"),
-                              UA_NODEID_NUMERIC(0, UA_NS0ID_BASEDATAVARIABLETYPE), rpmAttr, NULL, NULL);
-}
-
-/**
- * Now we add the derived ObjectType for the pump that inherits from the device
- * object type. The resulting object contains all mandatory child variables.
- * These are simply copied over from the object type. The object has a reference
- * of type ``hasTypeDefinition`` to the object type, so that clients can detect
- * the type-instance relation at runtime.
- */
-
-static void
-addPumpObjectInstance(UA_Server *server, char *name) {
-    UA_ObjectAttributes oAttr = UA_ObjectAttributes_default;
-    oAttr.displayName = UA_LOCALIZEDTEXT("en-US", name);
+                            oAttr, NULL, &FolderType);
+    // Base Object Type - OPC UA Part 5
+    oAttr.displayName = UA_LOCALIZEDTEXT("en-US", "Base Object Type - OPC UA Part 5");
     UA_Server_addObjectNode(server, UA_NODEID_NULL,
                             UA_NODEID_NUMERIC(0, UA_NS0ID_OBJECTSFOLDER),
                             UA_NODEID_NUMERIC(0, UA_NS0ID_ORGANIZES),
-                            UA_QUALIFIEDNAME(1, name),
-                            pumpTypeId, /* this refers to the object type
-                                           identifier */
-                            oAttr, NULL, NULL);
+                            UA_QUALIFIEDNAME(1, "BaseObjectType"), 
+                            UA_NODEID_NUMERIC(0, UA_NS0ID_BASEOBJECTTYPE),
+                            oAttr, NULL, &BaseObjectType);
+
+
+    // Function Group Type - OPC UA DI 
+    oAttr.displayName = UA_LOCALIZEDTEXT("en-US", "Function Group Type - OPC UA DI");
+    UA_Server_addObjectNode(server, UA_NODEID_NULL,
+                            FolderType,
+                            UA_NODEID_NUMERIC(0, UA_NS0ID_ORGANIZES),
+                            UA_QUALIFIEDNAME(1, "FunctionGroupType"), 
+                            UA_NODEID_NUMERIC(0, UA_NS0ID_BASEOBJECTTYPE),
+                            oAttr, NULL, &FunctionGroupType);
+    // Topology Element Type - OPC UA DI 
+    oAttr.displayName = UA_LOCALIZEDTEXT("en-US", "Topology Element Type - OPC UA DI");
+    UA_Server_addObjectNode(server, UA_NODEID_NULL,
+                            BaseObjectType,
+                            UA_NODEID_NUMERIC(0, UA_NS0ID_ORGANIZES),
+                            UA_QUALIFIEDNAME(1, "TopologyElementType"), 
+                            UA_NODEID_NUMERIC(0, UA_NS0ID_BASEOBJECTTYPE),
+                            oAttr, NULL, &TopologyElementType);
+    // Device Type - OPC UA DI
+    oAttr.displayName = UA_LOCALIZEDTEXT("en-US", "Device Type - OPC UA DI");
+    UA_Server_addObjectNode(server, UA_NODEID_NULL,
+                            TopologyElementType,
+                            UA_NODEID_NUMERIC(0, UA_NS0ID_ORGANIZES),
+                            UA_QUALIFIEDNAME(1, "DeviceType"), 
+                            UA_NODEID_NUMERIC(0, UA_NS0ID_BASEOBJECTTYPE),
+                            oAttr, NULL, &DeviceType);
+    // Connection Point Type - OPC UA DI
+    oAttr.displayName = UA_LOCALIZEDTEXT("en-US", "Connection Point Type - OPC UA DI");
+    UA_Server_addObjectNode(server, UA_NODEID_NULL,
+                            TopologyElementType,
+                            UA_NODEID_NUMERIC(0, UA_NS0ID_ORGANIZES),
+                            UA_QUALIFIEDNAME(1, "ConnectionPointType"), 
+                            UA_NODEID_NUMERIC(0, UA_NS0ID_BASEOBJECTTYPE),
+                            oAttr, NULL, &ConnectionPointType);
+    // Network Type - OPC UA DI 
+    oAttr.displayName = UA_LOCALIZEDTEXT("en-US", "Network Type - OPC UA DI");
+    UA_Server_addObjectNode(server, UA_NODEID_NULL,
+                            BaseObjectType,
+                            UA_NODEID_NUMERIC(0, UA_NS0ID_ORGANIZES),
+                            UA_QUALIFIEDNAME(1, "NetworkType"), 
+                            UA_NODEID_NUMERIC(0, UA_NS0ID_BASEOBJECTTYPE),
+                            oAttr, NULL, &NetworkType);
+    // Protocol Type - OPC UA DI
+    oAttr.displayName = UA_LOCALIZEDTEXT("en-US", "Protocol Type - OPC UA DI");
+    UA_Server_addObjectNode(server, UA_NODEID_NULL,
+                            BaseObjectType,
+                            UA_NODEID_NUMERIC(0, UA_NS0ID_ORGANIZES),
+                            UA_QUALIFIEDNAME(1, "ProcotolType"), 
+                            UA_NODEID_NUMERIC(0, UA_NS0ID_BASEOBJECTTYPE),
+                            oAttr, NULL, &ProtocolType);
+    // Device Type - OPC UA DI
+    oAttr.displayName = UA_LOCALIZEDTEXT("en-US", "Device Type - OPC UA DI");
+    UA_Server_addObjectNode(server, UA_NODEID_NULL,
+                            TopologyElementType,
+                            UA_NODEID_NUMERIC(0, UA_NS0ID_ORGANIZES),
+                            UA_QUALIFIEDNAME(1, "Pump (Manual)"), 
+                            UA_NODEID_NUMERIC(0, UA_NS0ID_BASEOBJECTTYPE),
+                            oAttr, NULL, &DeviceType);
+    
+
+    // Powerlink Device Profile Type - OPC UA POWERLINK
+    oAttr.displayName = UA_LOCALIZEDTEXT("en-US", "Powerlink Device Profile Type - OPC UA POWERLINK");
+    UA_Server_addObjectNode(server, UA_NODEID_NULL,
+                            TopologyElementType,
+                            UA_NODEID_NUMERIC(0, UA_NS0ID_ORGANIZES),
+                            UA_QUALIFIEDNAME(1, "PowerlinkDeviceProfileType"), 
+                            UA_NODEID_NUMERIC(0, UA_NS0ID_BASEOBJECTTYPE),
+                            oAttr, NULL, &PowerlinkConnectionPointType);
+    // Powerlink Device Type - OPC UA POWERLINK
+    oAttr.displayName = UA_LOCALIZEDTEXT("en-US", "Powerlink Device Type - OPC UA POWERLINK");
+    UA_Server_addObjectNode(server, UA_NODEID_NULL,
+                            DeviceType,
+                            UA_NODEID_NUMERIC(0, UA_NS0ID_ORGANIZES),
+                            UA_QUALIFIEDNAME(1, "PowerlinkDeviceType"), 
+                            UA_NODEID_NUMERIC(0, UA_NS0ID_BASEOBJECTTYPE),
+                            oAttr, NULL, &PowerlinkDeviceType);
+    // Powerlink Connection Point Type - OPC UA POWERLINK
+    oAttr.displayName = UA_LOCALIZEDTEXT("en-US", "Powerlink Connection Point Type - OPC UA POWERLINK");
+    UA_Server_addObjectNode(server, UA_NODEID_NULL,
+                            ConnectionPointType,
+                            UA_NODEID_NUMERIC(0, UA_NS0ID_ORGANIZES),
+                            UA_QUALIFIEDNAME(1, "PowerlinkConnectionPointType"), 
+                            UA_NODEID_NUMERIC(0, UA_NS0ID_BASEOBJECTTYPE),
+                            oAttr, NULL, &PowerlinkConnectionPointType);
+    // Powerlink Cn ConnectionPoint Type - OPC UA POWERLINK
+    oAttr.displayName = UA_LOCALIZEDTEXT("en-US", "Powerlink Cn Connection Point Type - OPC UA POWERLINK");
+    UA_Server_addObjectNode(server, UA_NODEID_NULL,
+                            PowerlinkConnectionPointType,
+                            UA_NODEID_NUMERIC(0, UA_NS0ID_ORGANIZES),
+                            UA_QUALIFIEDNAME(1, "PowerlinkCnConnectionPointType"), 
+                            UA_NODEID_NUMERIC(0, UA_NS0ID_BASEOBJECTTYPE),
+                            oAttr, NULL, &PowerlinkCnConnectionPointType);
+    // Powerlink Mn ConnectionPoint Type - OPC UA POWERLINK
+    oAttr.displayName = UA_LOCALIZEDTEXT("en-US", "Powerlink Mn Connection Point Type - OPC UA POWERLINK");
+    UA_Server_addObjectNode(server, UA_NODEID_NULL,
+                            PowerlinkConnectionPointType,
+                            UA_NODEID_NUMERIC(0, UA_NS0ID_ORGANIZES),
+                            UA_QUALIFIEDNAME(1, "PowerlinkMnConnectionPointType"), 
+                            UA_NODEID_NUMERIC(0, UA_NS0ID_BASEOBJECTTYPE),
+                            oAttr, NULL, &PowerlinkMnConnectionPointType);
+    // Powerlink Protocol Type - OPC UA POWERLINK
+    oAttr.displayName = UA_LOCALIZEDTEXT("en-US", "Powerlink Protocol type - OPC UA POWERLINK");
+    UA_Server_addObjectNode(server, UA_NODEID_NULL,
+                            ProtocolType,
+                            UA_NODEID_NUMERIC(0, UA_NS0ID_ORGANIZES),
+                            UA_QUALIFIEDNAME(1, "PowerlinkProtocolType"), 
+                            UA_NODEID_NUMERIC(0, UA_NS0ID_BASEOBJECTTYPE),
+                            oAttr, NULL, &PowerlinkProtocoltype);
+
+
 }
-
-/**
- * Often times, we want to run a constructor function on a new object. This is
- * especially useful when an object is instantiated at runtime (with the
- * AddNodes service) and the integration with an underlying process canot be
- * manually defined. In the following constructor example, we simply set the
- * pump status to on.
- */
-
-static UA_StatusCode
-pumpTypeConstructor(UA_Server *server,
-                    const UA_NodeId *sessionId, void *sessionContext,
-                    const UA_NodeId *typeId, void *typeContext,
-                    const UA_NodeId *nodeId, void **nodeContext) {
-    UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND, "New pump created");
-
-    /* Find the NodeId of the status child variable */
-    UA_RelativePathElement rpe;
-    UA_RelativePathElement_init(&rpe);
-    rpe.referenceTypeId = UA_NODEID_NUMERIC(0, UA_NS0ID_HASCOMPONENT);
-    rpe.isInverse = false;
-    rpe.includeSubtypes = false;
-    rpe.targetName = UA_QUALIFIEDNAME(1, "Status");
-
-    UA_BrowsePath bp;
-    UA_BrowsePath_init(&bp);
-    bp.startingNode = *nodeId;
-    bp.relativePath.elementsSize = 1;
-    bp.relativePath.elements = &rpe;
-
-    UA_BrowsePathResult bpr =
-        UA_Server_translateBrowsePathToNodeIds(server, &bp);
-    if(bpr.statusCode != UA_STATUSCODE_GOOD ||
-       bpr.targetsSize < 1)
-        return bpr.statusCode;
-
-    /* Set the status value */
-    UA_Boolean status = true;
-    UA_Variant value;
-    UA_Variant_setScalar(&value, &status, &UA_TYPES[UA_TYPES_BOOLEAN]);
-    UA_Server_writeValue(server, bpr.targets[0].targetId.nodeId, value);
-    UA_BrowsePathResult_clear(&bpr);
-
-    /* At this point we could replace the node context .. */
-
-    return UA_STATUSCODE_GOOD;
-}
-
-static void
-addPumpTypeConstructor(UA_Server *server) {
-    UA_NodeTypeLifecycle lifecycle;
-    lifecycle.constructor = pumpTypeConstructor;
-    lifecycle.destructor = NULL;
-    UA_Server_setNodeTypeLifecycle(server, pumpTypeId, lifecycle);
-}
-
-/** It follows the main server code, making use of the above definitions. */
 
 static volatile UA_Boolean running = true;
-static void stopHandler(int sign) {
+static void stopHandler(int sign) 
+{
     UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_SERVER, "received ctrl-c");
     running = false;
 }
@@ -424,13 +229,7 @@ int main(void) {
     UA_Server *server = UA_Server_new();
     UA_ServerConfig_setDefault(UA_Server_getConfig(server));
 
-    manuallyDefinePump(server);
-    defineObjectTypes(server);
-   // addPumpObjectInstance(server, "pump2");
-   // addPumpObjectInstance(server, "pump3");
-   // addPumpTypeConstructor(server);
-  //  addPumpObjectInstance(server, "pump4");
-   // addPumpObjectInstance(server, "pump5");
+    powerlinkNode(server);
 
     UA_StatusCode retval = UA_Server_run(server, &running);
 
