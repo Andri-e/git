@@ -83,9 +83,7 @@ static void powerlinkNode(UA_Server *server)
     UA_NodeId PowerlinkMnConnectionPointType;
     UA_NodeId LogicalDeviceName;
 
-    UA_ObjectAttributes oAttr = UA_ObjectAttributes_default;
-
-    
+    UA_ObjectAttributes oAttr = UA_ObjectAttributes_default;    
     // Folder Type - OPC UA Part 5 
     oAttr.displayName = UA_LOCALIZEDTEXT("en-US", "Folder Type - OPC UA Part 5");
     UA_Server_addObjectNode(server, UA_NODEID_NULL,
@@ -211,8 +209,29 @@ static void powerlinkNode(UA_Server *server)
                             UA_NODEID_NUMERIC(0, UA_NS0ID_BASEOBJECTTYPE),
                             oAttr, NULL, &PowerlinkProtocoltype);
 
+    // Variable setup 
+    UA_VariableAttributes varAttr = UA_VariableAttributes_default;
+    UA_String varName = UA_STRING("Default Name");
 
+    UA_Variant_setScalar(&varAttr.value, &varName, &UA_TYPES[UA_TYPES_STRING]);
+    varAttr.displayName = UA_LOCALIZEDTEXT("en-US", "Manufacturer");
+    UA_Server_addVariableNode(server, UA_NODEID_NULL, 
+                              PowerlinkDeviceType,
+                              UA_NODEID_NUMERIC(0, UA_NS0ID_HASCOMPONENT),
+                              UA_QUALIFIEDNAME(1, "Manufacturer_1"),
+                              UA_NODEID_NUMERIC(0, UA_NS0ID_BASEDATAVARIABLETYPE), varAttr, NULL, NULL);
+/*
+    UA_VariableAttributes tsAttr = UA_VariableAttributes_default;
+    UA_Variant_setScalar(&tsAttr.value, &timeStamp, &UA_TYPES[UA_TYPES_DATETIME]);
+    UA_Server_addVariableNode(server, UA_NODEID_STRING(2, "testTimeStamp"), 
+                            testObjectId,
+                              UA_NODEID_NUMERIC(0, UA_NS0ID_HASCOMPONENT),
+                              UA_QUALIFIEDNAME(2, "timeStamp"),
+                              UA_NODEID_NUMERIC(0, UA_NS0ID_BASEDATAVARIABLETYPE), tsAttr, NULL, NULL);	
+*/
 }
+
+
 
 static volatile UA_Boolean running = true;
 static void stopHandler(int sign) 
