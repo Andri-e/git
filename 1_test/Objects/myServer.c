@@ -68,6 +68,66 @@ defineObjectTypes(UA_Server *server) {
 }
 
 
+static void
+addPumpObjectInstance(UA_Server *server, char *name) {
+    UA_ObjectAttributes oAttr = UA_ObjectAttributes_default;
+    oAttr.displayName = UA_LOCALIZEDTEXT("en-US", name);
+    UA_Server_addObjectNode(server, UA_NODEID_NULL,
+                            UA_NODEID_NUMERIC(0, UA_NS0ID_OBJECTSFOLDER),
+                            UA_NODEID_NUMERIC(0, UA_NS0ID_ORGANIZES),
+                            UA_QUALIFIEDNAME(1, name),
+                            pumpTypeId, /* this refers to the object type
+                                           identifier */
+                            oAttr, NULL, NULL);
+}
+
+
+static UA_StatusCode
+pumpTypeConstructor(UA_Server *server,
+                    const UA_NodeId *sessionId, void *sessionContext,
+                    const UA_NodeId *typeId, void *typeContext,
+                    const UA_NodeId *nodeId, void **nodeContext) {
+    UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND, "New pump created");
+
+    /* Find the NodeId of the status child variable */
+    UA_RelativePathElement rpe;
+    UA_RelativePathElement_init(&rpe);
+    rpe.referenceTypeId = UA_NODEID_NUMERIC(0, UA_NS0ID_HASCOMPONENT);
+    rpe.isInverse = false;
+    rpe.includeSubtypes = false;
+    rpe.targetName = UA_QUALIFIEDNAME(1, "Status");
+
+    UA_BrowsePath bp;
+    UA_BrowsePath_init(&bp);
+    bp.startingNode = *nodeId;
+    bp.relativePath.elementsSize = 1;
+    bp.relativePath.elements = &rpe;
+
+    UA_BrowsePathResult bpr =
+        UA_Server_translateBrowsePathToNodeIds(server, &bp);
+    if(bpr.statusCode != UA_STATUSCODE_GOOD ||
+       bpr.targetsSize < 1)
+        return bpr.statusCode;
+
+    /* Set the status value */
+    UA_Boolean status = true;
+    UA_Variant value;
+    UA_Variant_setScalar(&value, &status, &UA_TYPES[UA_TYPES_BOOLEAN]);
+    UA_Server_writeValue(server, bpr.targets[0].targetId.nodeId, value);
+    UA_BrowsePathResult_clear(&bpr);
+
+    /* At this point we could replace the node context .. */
+
+    return UA_STATUSCODE_GOOD;
+}
+
+static void
+addPumpTypeConstructor(UA_Server *server) {
+    UA_NodeTypeLifecycle lifecycle;
+    lifecycle.constructor = pumpTypeConstructor;
+    lifecycle.destructor = NULL;
+    UA_Server_setNodeTypeLifecycle(server, pumpTypeId, lifecycle);
+}
 
 static volatile UA_Boolean running = true;
 static void stopHandler(int sign) {
@@ -82,13 +142,13 @@ int main(void) {
     UA_Server *server = UA_Server_new();
     UA_ServerConfig_setDefault(UA_Server_getConfig(server));
 
-    //manuallyDefinePump(server);
+    manuallyDefinePump(server);
     defineObjectTypes(server);
-   // addPumpObjectInstance(server, "pump2");
-   // addPumpObjectInstance(server, "pump3");
-  //  addPumpTypeConstructor(server);
-  //  addPumpObjectInstance(server, "pump4");
-  //  addPumpObjectInstance(server, "pump5");
+    addPumpObjectInstance(server, "pump2");
+    addPumpObjectInstance(server, "pump3");
+    addPumpTypeConstructor(server);
+    addPumpObjectInstance(server, "pump4");
+    addPumpObjectInstance(server, "pump5");
 
     UA_StatusCode retval = UA_Server_run(server, &running);
 
