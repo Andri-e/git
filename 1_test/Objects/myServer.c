@@ -71,6 +71,18 @@ manuallyDefinePump(UA_Server *server) {
                             oAttr, NULL, &pumpId);
 
 
+    UA_ObjectAttributes objAttr = UA_ObjectAttributes_default;
+    objAttr.displayName = UA_LOCALIZEDTEXT("en-US", "Pump object nodeasd");
+    UA_Server_addObjectNode(server, UA_NODEID_NULL,
+                            pumpId, 
+                            UA_NODEID_NUMERIC(0, UA_NS0ID_ORGANIZES),
+                            UA_QUALIFIEDNAME(1, "Pump object nodeasd"), 
+                            UA_NODEID_NUMERIC(0, UA_NS0ID_BASEOBJECTTYPE),
+                            objAttr, NULL, &pumpId);
+
+
+
+
     UA_VariableAttributes smnAttr = UA_VariableAttributes_default;
     UA_String smanufacturerName = UA_STRING("Pump King Ltd.");
     UA_Variant_setScalar(&smnAttr.value, &smanufacturerName, &UA_TYPES[UA_TYPES_STRING]);
