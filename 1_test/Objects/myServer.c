@@ -79,7 +79,6 @@ static void powerlinkNode(UA_Server *server)
     UA_NodeId PowerlinkDeviceType;
     UA_NodeId PowerlinkConnectionPointType;
     UA_NodeId PowerlinkProtocoltype;
-    UA_NodeId PowerlinkConnectionPointType;
     UA_NodeId PowerlinkCnConnectionPointType;
     UA_NodeId PowerlinkMnConnectionPointType;
     UA_NodeId LogicalDeviceName;
