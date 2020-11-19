@@ -2,10 +2,6 @@
 
 #include <signal.h>
 
-static void
-manuallyDefinePump(UA_Server *server) {
-  /* predefined identifier for later use */
-UA_NodeId pumpTypeId = {1, UA_NODEIDTYPE_NUMERIC, {1001}};
 
 static void
 defineObjectTypes(UA_Server *server) {
@@ -84,8 +80,8 @@ int main(void) {
     UA_Server *server = UA_Server_new();
     UA_ServerConfig_setDefault(UA_Server_getConfig(server));
 
-    manuallyDefinePump(server);
-    //defineObjectTypes(server);
+    //manuallyDefinePump(server);
+    defineObjectTypes(server);
    // addPumpObjectInstance(server, "pump2");
    // addPumpObjectInstance(server, "pump3");
   //  addPumpTypeConstructor(server);
