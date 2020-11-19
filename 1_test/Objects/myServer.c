@@ -328,7 +328,7 @@ static void powerlinkNode2(UA_Server *server)
     // ------------------------------ DeviceType Mapping - Pages 34 ----------------------------------------------
     // Serial number - String 
     UA_VariableAttributes dtAttr = UA_VariableAttributes_default;
-    UA_String SerialNumber = "ABC - 12345";
+    UA_String SerialNumber = UA_STRING("ABC - 12345");
     UA_Variant_setScalar(&dtAttr.value, &SerialNumber, &UA_TYPES[UA_TYPES_STRING]);
     UA_Server_addVariableNode(server, UA_NODEID_STRING(2, "Serial Number"), 
                               DeviceTypeObj,
@@ -345,7 +345,7 @@ static void powerlinkNode2(UA_Server *server)
                               UA_NODEID_NUMERIC(0, UA_NS0ID_BASEDATAVARIABLETYPE), dtAttr, NULL, NULL);	
 
     // Manufacturer - Localized Text 
-    UA_LocalizedText Manufacturer = Andri;
+    UA_LocalizedText Manufacturer = UA_STRING("Andri");
     UA_Variant_setScalar(&dtAttr.value, &Manufacturer, &UA_TYPES[UA_TYPES_LOCALIZEDTEXT]);
     UA_Server_addVariableNode(server, UA_NODEID_STRING(2, "Manufacturer"), 
                               DeviceTypeObj,
