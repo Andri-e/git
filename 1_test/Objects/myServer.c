@@ -70,14 +70,34 @@ manuallyDefinePump(UA_Server *server) {
                             UA_QUALIFIEDNAME(1, "Pump (Manual)"), UA_NODEID_NUMERIC(0, UA_NS0ID_BASEOBJECTTYPE),
                             oAttr, NULL, &pumpId);
 
+    // -------------------------------
+
+    UA_ObjectAttributes obAttr = UA_ObjectAttributes_default;
+    obAttr.displayName = UA_LOCALIZEDTEXT("en-US", "Pump object node");
+    UA_Server_addObjectNode(server, UA_NODEID_NULL,
+                            pumpId, 
+                            UA_NODEID_NUMERIC(0, UA_NS0ID_ORGANIZES),
+                            UA_QUALIFIEDNAME(1, "Pump object node"), 
+                            UA_NODEID_NUMERIC(0, UA_NS0ID_BASEOBJECTTYPE),
+                            obAttr, NULL, &pumpId);
+
+
+
+
+    // ----------------------------------
+
+
+
     UA_VariableAttributes mnAttr = UA_VariableAttributes_default;
     UA_String manufacturerName = UA_STRING("Pump King Ltd.");
     UA_Variant_setScalar(&mnAttr.value, &manufacturerName, &UA_TYPES[UA_TYPES_STRING]);
     mnAttr.displayName = UA_LOCALIZEDTEXT("en-US", "ManufacturerName");
-    UA_Server_addVariableNode(server, UA_NODEID_NULL, pumpId,
+    UA_Server_addVariableNode(server, UA_NODEID_NULL, 
+                              pumpId,
                               UA_NODEID_NUMERIC(0, UA_NS0ID_HASCOMPONENT),
                               UA_QUALIFIEDNAME(1, "ManufacturerName"),
-                              UA_NODEID_NUMERIC(0, UA_NS0ID_BASEDATAVARIABLETYPE), mnAttr, NULL, NULL);
+                              UA_NODEID_NUMERIC(0, UA_NS0ID_BASEDATAVARIABLETYPE), 
+                              mnAttr, NULL, NULL);
 
     UA_VariableAttributes modelAttr = UA_VariableAttributes_default;
     UA_String modelName = UA_STRING("Mega Pump 3000");
