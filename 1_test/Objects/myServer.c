@@ -126,14 +126,14 @@ manuallyDefinePump(UA_Server *server) {
 
 // -------------------------------------------
 
-    UA_ObjectAttributes obAttr = UA_ObjectAttributes_default;
-    obAttr.displayName = UA_LOCALIZEDTEXT("en-US", "Pump object node 2");
+    UA_ObjectAttributes obAttrs = UA_ObjectAttributes_default;
+    obAttrs.displayName = UA_LOCALIZEDTEXT("en-US", "Pump object node 2");
     UA_Server_addObjectNode(server, UA_NODEID_NULL,
                             pumpId, 
                             UA_NODEID_NUMERIC(0, UA_NS0ID_ORGANIZES),
                             UA_QUALIFIEDNAME(1, "Pump object node 2"), 
                             UA_NODEID_NUMERIC(0, UA_NS0ID_BASEOBJECTTYPE),
-                            obAttr, NULL, &pumpId);
+                            obAttrs, NULL, &pumpId);
     // ----------------------------------
 
 
