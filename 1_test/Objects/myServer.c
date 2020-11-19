@@ -263,12 +263,12 @@ int main(void) {
     UA_ServerConfig_setDefault(UA_Server_getConfig(server));
 
     manuallyDefinePump(server);
-    defineObjectTypes(server);
-    addPumpObjectInstance(server, "pump2");
-    addPumpObjectInstance(server, "pump3");
-    addPumpTypeConstructor(server);
-    addPumpObjectInstance(server, "pump4");
-    addPumpObjectInstance(server, "pump5");
+    //defineObjectTypes(server);
+   // addPumpObjectInstance(server, "pump2");
+   // addPumpObjectInstance(server, "pump3");
+  //  addPumpTypeConstructor(server);
+  //  addPumpObjectInstance(server, "pump4");
+  //  addPumpObjectInstance(server, "pump5");
 
     UA_StatusCode retval = UA_Server_run(server, &running);
 
