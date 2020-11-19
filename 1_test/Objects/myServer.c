@@ -486,7 +486,7 @@ static void powerlinkNode2(UA_Server *server)
     UA_Server_addObjectNode(server, UA_NODEID_NULL,
                 PowerlinkMnConnectionPointType,
                 UA_NODEID_NUMERIC(0, UA_NS0ID_ORGANIZES),
-                UA_QUALIFIEDNAME(1, "Functional Group Diagnostics Type"), 
+                UA_QUALIFIEDNAME(1, "Functional Group Diagnostics Type - Not finished "), 
                 UA_NODEID_NUMERIC(0, UA_NS0ID_BASEOBJECTTYPE),
                 oAttr, NULL, &FunctionalGroupDiagnosticsType);
     // DLL_MNCNLossPResThrCnt_AU32 - Uint32 []
