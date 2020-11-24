@@ -333,18 +333,15 @@ static void powerlinkNode2(UA_Server *server)
 
 
     // Variable nodes 
-
     UA_VariableAttributes dtAttr = UA_VariableAttributes_default;
-    dtAttr.minimumSamplingInterval = 100;                            // Optionally, a vendor-specific minimum sampling interval is provided             
-    dtAttr.accessLevel = 1;                                          // The access level for Variables used for type definitions is vendor-specific, for all other Variables defined in this part, the access level shall allow a current read; other settings are vendor specific.
-    dtAttr.userAccessLevel = 1;                                      // The value for the UserAccessLevel Attribute is vendor-specific. It is assumed that all Variables can be accessed by at least one user.             
-   //UA_DataValue drasl = 1;
-    UA_Variant v; 
-    UA_Int32 i = 30;
-    UA_Variant_setScalar(&v, &i, &UA_TYPES[UA_TYPES_INT32]);
-    dtAttr.value = v;                                          // For Variables used as InstanceDeclarations, the value is vendor-specific; otherwise it shall represent the value described in the text.
-    dtAttr.arrayDimensionsSize = 0;                                  // If the ValueRank does not identify an array of a specific dimension (i.e. ValueRank <= 0) the ArrayDimensions can either be set to null or the Attribute is missing. This behaviour is vendor-specific.      
-
+    dtAttr.minimumSamplingInterval = 100;                                   // Optionally, a vendor-specific minimum sampling interval is provided             
+    dtAttr.accessLevel = 1;                                                 // The access level for Variables used for type definitions is vendor-specific, for all other Variables defined in this part, the access level shall allow a current read; other settings are vendor specific.
+    dtAttr.userAccessLevel = 1;                                             // The value for the UserAccessLevel Attribute is vendor-specific. It is assumed that all Variables can be accessed by at least one user.             
+    UA_Variant variant; 
+    UA_Int32 integer = 1;
+    UA_Variant_setScalar(&variant, &integer, &UA_TYPES[UA_TYPES_INT32]);    // Set the variant to a scalar value that already resides in memory. The value takes on the lifecycle of the variant and is deleted with it.
+    dtAttr.value = v;                                                       // For Variables used as InstanceDeclarations, the value is vendor-specific; otherwise it shall represent the value described in the text.
+    dtAttr.arrayDimensionsSize = 0;                                         // If the ValueRank does not identify an array of a specific dimension (i.e. ValueRank <= 0) the ArrayDimensions can either be set to null or the Attribute is missing. This behaviour is vendor-specific.      
 
     // ------------------------------ DeviceType Mapping - Pages 34 ----------------------------------------------
     // Serial number - String 
@@ -534,7 +531,7 @@ static void powerlinkNode2(UA_Server *server)
                               UA_NODEID_NUMERIC(0, UA_NS0ID_BASEDATAVARIABLETYPE), dtAttr, NULL, NULL);	
     // DLL_MNCRCError_REC - n/a 
     UA_UInt32 DLL_MNCRCError_REC = 0;
-    UA_Variant_setScalar(&dtAttr.value, &DLL_MNCRCError_REC, &UA_TYPES[UA_TYPES_UINT32]);
+    UA_Variant_setScalar(&dtAttr.value, &DLL_MNCRCError_REC, &UA_TYPES[UA_TYPES_INT32]);
     dtAttr.displayName = UA_LOCALIZEDTEXT("en-US", "DLL_MNCRCError_REC");
     dtAttr.arrayDimensionsSize = 0;
     UA_Server_addVariableNode(server, UA_NODEID_NULL, 
@@ -563,8 +560,8 @@ static void powerlinkNode2(UA_Server *server)
                               UA_QUALIFIEDNAME(2, "DLL_MNLossStatusResThreshold_AU32"),
                               UA_NODEID_NUMERIC(0, UA_NS0ID_BASEDATAVARIABLETYPE), dtAttr, NULL, NULL);	
     // NMT_MNNodeCurrState_AU8 - Powerlink, NMTState, Enumeration [] 
-    UA_UInt32 NMT_MNNodeCurrState_AU8 = 0;
-    UA_Variant_setScalar(&dtAttr.value, &NMT_MNNodeCurrState_AU8, &UA_TYPES[UA_TYPES_UINT32]);
+    EnumValueType NMT_MNNodeCurrState_AU8 = 0;
+    UA_Variant_setScalar(&dtAttr.value, &NMT_MNNodeCurrState_AU8, &UA_TYPES[EnumValueType]);
     dtAttr.displayName = UA_LOCALIZEDTEXT("en-US", "NMT_MNNodeCurrState_AU8");
     dtAttr.arrayDimensionsSize = 0;
     UA_Server_addVariableNode(server, UA_NODEID_NULL, 
