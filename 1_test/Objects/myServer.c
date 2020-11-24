@@ -314,7 +314,7 @@ static void powerlinkNode2(UA_Server *server)
                             UA_NODEID_NUMERIC(0, UA_NS0ID_BASEOBJECTTYPE),
                             oAttr, NULL, &FunctionalGroupType);
     // Powerlink Controlled node, Powerlink Cn Connection Point Type
-    oAttr.displayName = UA_LOCALIZEDTEXT("en-US", "Cn onnection Point Type");
+    oAttr.displayName = UA_LOCALIZEDTEXT("en-US", "Cn Connection Point Type");
     UA_Server_addObjectNode(server, UA_NODEID_NULL,
                             PowerlinkDeviceType,
                             UA_NODEID_NUMERIC(0, UA_NS0ID_ORGANIZES),
@@ -440,13 +440,12 @@ static void powerlinkNode2(UA_Server *server)
 
 
 
-
     // --------------------------------- PowerlinkCnConnectionPointType - Page 38, only takeing Mandatory things --------------------------------
     // Functional Group Diagnostics - Powerlink Cn Connection point type  
     UA_Server_addObjectNode(server, UA_NODEID_NULL,
                     PowerlinkCnConnectionPointType,
                     UA_NODEID_NUMERIC(0, UA_NS0ID_ORGANIZES),
-                    UA_QUALIFIEDNAME(1, "Functional Group Diagnostics Type"), 
+                    UA_QUALIFIEDNAME(1, "asdasdas   Functional Group Diagnostics Type"), 
                     UA_NODEID_NUMERIC(0, UA_NS0ID_BASEOBJECTTYPE),
                     oAttr, NULL, &FunctionalGroupDiagnosticsType);
     // DLL_CNCRCError_REC - n/a 
