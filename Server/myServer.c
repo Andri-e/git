@@ -6,12 +6,7 @@
 
 // mySettings.h
 #include "./Include/mySettings.h"
-// myEvent.h 
-#include "./Include/myEvent.h"
-// myNodes.h 
-#include "./Include/myNodes.h"
-// specNodes.h
-#include "./Include/specNodes.h"
+
 
 // Want to add 
         // Security 

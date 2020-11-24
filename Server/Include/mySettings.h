@@ -1,5 +1,12 @@
 #include "mySettings.c"
 
+// myEvent.h 
+#include "./Include/myEvent.h"
+// myNodes.h 
+#include "./Include/myNodes.h"
+// specNodes.h
+#include "./Include/specNodes.h"
+
 static volatile UA_Boolean running = true;			// Server state
 
 // Stop handler to watch for ctrl + c 
