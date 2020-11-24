@@ -4,7 +4,7 @@
 // Event thing a asdasdasdasd
 static UA_NodeId eventType;
 
-static UA_StatusCode addNewEventType(UA_Server *server) 
+UA_StatusCode addNewEventType(UA_Server *server) 
 {
     UA_ObjectTypeAttributes attr = UA_ObjectTypeAttributes_default;
     attr.displayName = UA_LOCALIZEDTEXT("en-US", "SimpleEventType");
@@ -26,7 +26,7 @@ static UA_StatusCode addNewEventType(UA_Server *server)
  * automatically by the server. In this example, we will be setting the fields 'Message' and 'Severity' in addition
  * to `Time` which is needed to make the example UaExpert compliant.
  */
-static UA_StatusCode setUpEvent(UA_Server *server, UA_NodeId *outId) 
+UA_StatusCode setUpEvent(UA_Server *server, UA_NodeId *outId) 
 {
     UA_StatusCode retval = UA_Server_createEvent(server, eventType, outId);
     if (retval != UA_STATUSCODE_GOOD) 
@@ -63,7 +63,7 @@ static UA_StatusCode setUpEvent(UA_Server *server, UA_NodeId *outId)
  * a node which emits the event - in this case the server node. We can use ``UA_Server_triggerEvent`` to trigger our
  * event onto said node. Passing ``NULL`` as the second-last argument means we will not receive the `EventId`.
  * The last boolean argument states whether the node should be deleted. */
-static UA_StatusCode generateEventMethodCallback(UA_Server *server,
+UA_StatusCode generateEventMethodCallback(UA_Server *server,
                          const UA_NodeId *sessionId, void *sessionHandle,
                          const UA_NodeId *methodId, void *methodContext,
                          const UA_NodeId *objectId, void *objectContext,
@@ -98,7 +98,7 @@ static UA_StatusCode generateEventMethodCallback(UA_Server *server,
  * This method node will be added to a basic server setup.
  */
 
-static void addGenerateEventMethod(UA_Server *server)
+void addGenerateEventMethod(UA_Server *server)
 {
     UA_MethodAttributes generateAttr = UA_MethodAttributes_default;
     generateAttr.description = UA_LOCALIZEDTEXT("en-US","Generate an event.");

@@ -7,7 +7,7 @@ UA_Float systemp = 0;
 UA_Double sysidle = 0;
 
 // Setting up the object node and its variables  asdasdasdasd
-static void nodeSetup(UA_Server *server)
+void nodeSetup(UA_Server *server)
 {
  //Add a new namespace to the server
     UA_Int16 ns_1 = UA_Server_addNamespace(server, "Namespace_1");
@@ -79,7 +79,7 @@ static void nodeSetup(UA_Server *server)
 
 
 // Time Stamp callback 
-static void beforeReadTime(UA_Server *server,
+void beforeReadTime(UA_Server *server,
                const UA_NodeId *sessionId, void *sessionContext,
                const UA_NodeId *nodeid, void *nodeContext,
                const UA_NumericRange *range, const UA_DataValue *data) 
@@ -90,7 +90,7 @@ static void beforeReadTime(UA_Server *server,
     UA_Server_writeValue(server, UA_NODEID_STRING(2, "testTimeStamp"), value);
 }
 
-static void addValueCallbackToCurrentTimeVariable(UA_Server *server) {
+void addValueCallbackToCurrentTimeVariable(UA_Server *server) {
     UA_ValueCallback callback ;
     callback.onRead = beforeReadTime;
     callback.onWrite = NULL;
@@ -98,7 +98,7 @@ static void addValueCallbackToCurrentTimeVariable(UA_Server *server) {
 }
 
 // CPU Temperature Callback 
-static void beforeReadTemperature(UA_Server *server,
+void beforeReadTemperature(UA_Server *server,
                const UA_NodeId *sessionId, void *sessionContext,
                const UA_NodeId *nodeid, void *nodeContext,
                const UA_NumericRange *range, const UA_DataValue *data) 
@@ -119,7 +119,7 @@ static void beforeReadTemperature(UA_Server *server,
     UA_Server_writeValue(server, UA_NODEID_STRING(2, "testSysTemp"), value);
 }
 
-static void addValueCallbackToCurrentTemerature(UA_Server *server) {
+void addValueCallbackToCurrentTemerature(UA_Server *server) {
     UA_ValueCallback callback ;
     callback.onRead = beforeReadTemperature;
     callback.onWrite = NULL;
@@ -129,7 +129,7 @@ static void addValueCallbackToCurrentTemerature(UA_Server *server) {
 
 
 // CPU Not idle Callback  - https://rosettacode.org/wiki/Linux_CPU_utilization - https://www.kgoettler.com/post/proc-stat/ for math n stuff 
-static void beforeReadIdle(UA_Server *server,
+void beforeReadIdle(UA_Server *server,
                const UA_NodeId *sessionId, void *sessionContext,
                const UA_NodeId *nodeid, void *nodeContext,
                const UA_NumericRange *range, const UA_DataValue *data) 
@@ -170,7 +170,7 @@ static void beforeReadIdle(UA_Server *server,
     UA_Server_writeValue(server, UA_NODEID_STRING(2, "testSysIdle"), value);
 }
 
-static void addValueCallbackToCurrentIdle(UA_Server *server) {
+void addValueCallbackToCurrentIdle(UA_Server *server) {
     UA_ValueCallback callback ;
     callback.onRead = beforeReadIdle;
     callback.onWrite = NULL;

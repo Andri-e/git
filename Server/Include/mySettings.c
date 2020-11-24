@@ -2,7 +2,7 @@
 #include "mySettings.h"
 
 // Argument check, is Host name and Port number default? 
-static void checkArguments(UA_Server *server, int argc, char * argv[] )
+void checkArguments(UA_Server *server, int argc, char * argv[] )
 {
 	//Check for Arguments, host name and port number
     if(argc > 2)

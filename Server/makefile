@@ -6,7 +6,7 @@ myServer:
 	gcc -c ./Include/specNodes.c 
 	gcc -c myServer.c 
 	
-	gcc -o myServer myServer.c ./Include/myEvent.c ./Include/myNodes.c ./Include/mySettings.c ./Include/open62541.c ./Include/specNodes.c 
+	gcc -o Mainfile func_1.o func_2.o func_3.o func_4.o func_5.o Mainfile.o
 	
 
 	

@@ -1,7 +1,7 @@
 #include "open62541.h"
 #include "specNodes.h"
 
-static void powerlinkNode(UA_Server *server)
+void powerlinkNode(UA_Server *server)
 {
     UA_UInt16 UA_THREADSAFE UA_Server_addNamespace(server, Custom_Namespace);
 
