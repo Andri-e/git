@@ -517,8 +517,6 @@ static void powerlinkNode2(UA_Server *server)
                               UA_NODEID_NUMERIC(0, UA_NS0ID_HASCOMPONENT),
                               UA_QUALIFIEDNAME(2, "DLL_MNCNLossPResThrCnt_AU32"),
                               UA_NODEID_NUMERIC(0, UA_NS0ID_BASEDATAVARIABLETYPE), dtAttr, NULL, NULL);	
-
-
     // DLL_MNCNLossPResThreshold_AU32 - Uint 32 []
     UA_UInt32 DLL_MNCNLossPResThreshold_AU32 = 0;
     UA_Variant_setScalar(&dtAttr.value, &DLL_MNCNLossPResThreshold_AU32, &UA_TYPES[UA_TYPES_UINT32]);
@@ -530,7 +528,7 @@ static void powerlinkNode2(UA_Server *server)
                               UA_QUALIFIEDNAME(2, "DLL_MNCNLossPResThreshold_AU32"),
                               UA_NODEID_NUMERIC(0, UA_NS0ID_BASEDATAVARIABLETYPE), dtAttr, NULL, NULL);	
     // DLL_MNCRCError_REC - n/a 
-    UA_UInt32 DLL_MNCRCError_REC = 0;
+    UA_Int32 DLL_MNCRCError_REC = 0;
     UA_Variant_setScalar(&dtAttr.value, &DLL_MNCRCError_REC, &UA_TYPES[UA_TYPES_INT32]);
     dtAttr.displayName = UA_LOCALIZEDTEXT("en-US", "DLL_MNCRCError_REC");
     dtAttr.arrayDimensionsSize = 0;
@@ -572,9 +570,11 @@ static void powerlinkNode2(UA_Server *server)
                               UA_NODEID_NUMERIC(0, UA_NS0ID_HASCOMPONENT),
                               UA_QUALIFIEDNAME(2, "NMT_MNNodeCurrState_AU8"),
                               UA_NODEID_NUMERIC(0, UA_NS0ID_BASEDATAVARIABLETYPE), dtAttr, NULL, NULL);	
+
+
     // NMT_RequestCmd_REC - n/a 
-    UA_UInt32 NMT_RequestCmd_REC = 0;
-    UA_Variant_setScalar(&dtAttr.value, &NMT_RequestCmd_REC, &UA_TYPES[UA_TYPES_UINT32]);
+    UA_Int32 NMT_RequestCmd_REC = 0;
+    UA_Variant_setScalar(&dtAttr.value, &NMT_RequestCmd_REC, &UA_TYPES[UA_TYPES_INT32]);
     dtAttr.displayName = UA_LOCALIZEDTEXT("en-US", "NMT_RequestCmd_REC");
     dtAttr.arrayDimensionsSize = 0;
     UA_Server_addVariableNode(server, UA_NODEID_NULL, 
@@ -596,8 +596,8 @@ static void powerlinkNode2(UA_Server *server)
                               UA_QUALIFIEDNAME(2, "DLL_MNCycleSuspendNumber_U32"),
                               UA_NODEID_NUMERIC(0, UA_NS0ID_BASEDATAVARIABLETYPE), dtAttr, NULL, NULL);	
     // NMT_BootTime_REC - n/a 
-    UA_UInt32 NMT_BootTime_REC = 0;
-    UA_Variant_setScalar(&dtAttr.value, &NMT_BootTime_REC, &UA_TYPES[UA_TYPES_UINT32]);
+    UA_Int32 NMT_BootTime_REC = 0;
+    UA_Variant_setScalar(&dtAttr.value, &NMT_BootTime_REC, &UA_TYPES[UA_TYPES_INT32]);
     dtAttr.displayName = UA_LOCALIZEDTEXT("en-US", "NMT_BootTime_REC");
     dtAttr.arrayDimensionsSize = 0;
     UA_Server_addVariableNode(server, UA_NODEID_NULL, 
@@ -616,8 +616,8 @@ static void powerlinkNode2(UA_Server *server)
                               UA_QUALIFIEDNAME(2, "NMT_MNCNPResTimeout_AU32"),
                               UA_NODEID_NUMERIC(0, UA_NS0ID_BASEDATAVARIABLETYPE), dtAttr, NULL, NULL);	
     // NMT_MNCycleTiming_REC - n/a 
-    UA_UInt32 NMT_MNCycleTiming_REC = 0;
-    UA_Variant_setScalar(&dtAttr.value, &NMT_MNCycleTiming_REC, &UA_TYPES[UA_TYPES_UINT32]);
+    UA_Int32 NMT_MNCycleTiming_REC = 0;
+    UA_Variant_setScalar(&dtAttr.value, &NMT_MNCycleTiming_REC, &UA_TYPES[UA_TYPES_INT32]);
     dtAttr.displayName = UA_LOCALIZEDTEXT("en-US", "NMT_MNCycleTiming_REC");
     dtAttr.arrayDimensionsSize = 0;
     UA_Server_addVariableNode(server, UA_NODEID_NULL, 
@@ -636,8 +636,8 @@ static void powerlinkNode2(UA_Server *server)
                               UA_QUALIFIEDNAME(2, "NMT_MNDeviceTypeIdList_AU32"),
                               UA_NODEID_NUMERIC(0, UA_NS0ID_BASEDATAVARIABLETYPE), dtAttr, NULL, NULL);	
     // NMT_MNPReqPayloadLimitList_AU16 - Uint16 []
-    UA_UInt32 NMT_MNPReqPayloadLimitList_AU16 = 0;
-    UA_Variant_setScalar(&dtAttr.value, &NMT_MNPReqPayloadLimitList_AU16, &UA_TYPES[UA_TYPES_UINT32]);
+    UA_UInt16 NMT_MNPReqPayloadLimitList_AU16 = 0;
+    UA_Variant_setScalar(&dtAttr.value, &NMT_MNPReqPayloadLimitList_AU16, &UA_TYPES[UA_TYPES_UINT16]);
     dtAttr.displayName = UA_LOCALIZEDTEXT("en-US", "NMT_MNPReqPayloadLimitList_AU16");
     dtAttr.arrayDimensionsSize = 0;
     UA_Server_addVariableNode(server, UA_NODEID_NULL, 
