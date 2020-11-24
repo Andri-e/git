@@ -339,8 +339,10 @@ static void powerlinkNode2(UA_Server *server)
     dtAttr.accessLevel = 1;                                          // The access level for Variables used for type definitions is vendor-specific, for all other Variables defined in this part, the access level shall allow a current read; other settings are vendor specific.
     dtAttr.userAccessLevel = 1;                                      // The value for the UserAccessLevel Attribute is vendor-specific. It is assumed that all Variables can be accessed by at least one user.             
    //UA_DataValue drasl = 1;
-   UA_Variant drasl_2 = 1;
-    dtAttr.value = drasl_2;                                          // For Variables used as InstanceDeclarations, the value is vendor-specific; otherwise it shall represent the value described in the text.
+    UA_Variant v; 
+    UA_int32 i = 30;
+    UA_Variant_setScalar(&v, &i, &UA_TYPES[UA_TYPES_INT32]);
+    dtAttr.value = v;                                          // For Variables used as InstanceDeclarations, the value is vendor-specific; otherwise it shall represent the value described in the text.
     dtAttr.arrayDimensionsSize = 0;                                  // If the ValueRank does not identify an array of a specific dimension (i.e. ValueRank <= 0) the ArrayDimensions can either be set to null or the Attribute is missing. This behaviour is vendor-specific.      
 
 
