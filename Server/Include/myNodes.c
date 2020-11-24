@@ -6,7 +6,7 @@ UA_DateTime timeStamp = 0;
 UA_Float systemp = 0; 
 UA_Double sysidle = 0;
 
-// Setting up the object node and its variables 
+// Setting up the object node and its variables  asdasdasdasd
 static void nodeSetup(UA_Server *server)
 {
  //Add a new namespace to the server
