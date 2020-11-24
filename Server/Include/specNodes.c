@@ -19,7 +19,7 @@ static void powerlinkNode(UA_Server *server)
 
     UA_ObjectAttributes oAttr = UA_ObjectAttributes_default;    
     // Device Type node 
-    oAttr.displayName = UA_LOCALIZEDTEXT("en-US", "Device Type");
+    oAttr.displayName = UA_LOCALIZEDTEXT("en-US", "Device Type - POWERLINK");
     UA_Server_addObjectNode(server, UA_NODEID_NULL,
                             UA_NODEID_NUMERIC(0, UA_NS0ID_OBJECTSFOLDER),
                             UA_NODEID_NUMERIC(0, UA_NS0ID_ORGANIZES),
