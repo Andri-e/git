@@ -1,4 +1,5 @@
 #include "mySettings.h"
+#include "open62541.h"
 
 static volatile UA_Boolean running = true;			// Server state
 

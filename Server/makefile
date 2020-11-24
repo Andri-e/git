@@ -1,9 +1,9 @@
 myServer: 
 	gcc -c ./Include/myEvent.c 
-	gcc -c myNodes.c
-	gcc -c mySettings.c
-	gcc -c open62541.c 
-	gcc -c specNodes.c 
+	gcc -c ./Include/myNodes.c
+	gcc -c ./Include/mySettings.c
+	gcc -c ./Include/open62541.c 
+	gcc -c ./Include/specNodes.c 
 	
 	gcc -c myServer.c 
 	
