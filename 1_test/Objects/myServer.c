@@ -340,7 +340,7 @@ static void powerlinkNode2(UA_Server *server)
     UA_Variant variant; 
     UA_Int32 integer = 1;
     UA_Variant_setScalar(&variant, &integer, &UA_TYPES[UA_TYPES_INT32]);    // Set the variant to a scalar value that already resides in memory. The value takes on the lifecycle of the variant and is deleted with it.
-    dtAttr.value = v;                                                       // For Variables used as InstanceDeclarations, the value is vendor-specific; otherwise it shall represent the value described in the text.
+    dtAttr.value = variant;                                                 // For Variables used as InstanceDeclarations, the value is vendor-specific; otherwise it shall represent the value described in the text.
     dtAttr.arrayDimensionsSize = 0;                                         // If the ValueRank does not identify an array of a specific dimension (i.e. ValueRank <= 0) the ArrayDimensions can either be set to null or the Attribute is missing. This behaviour is vendor-specific.      
 
     // ------------------------------ DeviceType Mapping - Pages 34 ----------------------------------------------
@@ -562,8 +562,8 @@ static void powerlinkNode2(UA_Server *server)
     // NMT_MNNodeCurrState_AU8 - Powerlink, NMTState, Enumeration [] 
     UA_EnumValueType NMT_MNNodeCurrState_AU8;
     NMT_MNNodeCurrState_AU8.value = 1; 
-    NMT_MNNodeCurrState_AU8.displayName = "asd";
-    NMT_MNNodeCurrState_AU8.description = "asdasd";
+    NMT_MNNodeCurrState_AU8.displayName = asd;
+    NMT_MNNodeCurrState_AU8.description = asdasd;
     UA_Variant_setScalar(&dtAttr.value, &NMT_MNNodeCurrState_AU8, &UA_TYPES[UA_EnumValueType]);
     dtAttr.displayName = UA_LOCALIZEDTEXT("en-US", "NMT_MNNodeCurrState_AU8");
     dtAttr.arrayDimensionsSize = 0;
