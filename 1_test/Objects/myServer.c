@@ -275,13 +275,14 @@ static void powerlinkNode2(UA_Server *server)
     UA_NodeId DeviceTypeObj;
     UA_NodeId FunctionalGroupType;
     UA_NodeId PowerlinkCnConnectionPointType;
-    UA_NodeId PowerlinkMnConnectionPointType;
+    UA_NodeId PowerlinkMnConnectionPointType;   
     UA_NodeId FunctionalGroupDiagnosticsType; 
     UA_NodeId FunctionalGroupConfigurationType; 
 
 
     UA_ObjectAttributes oAttr = UA_ObjectAttributes_default;    
-    oAttr.minimumSamplingInterval = 100;                            // Optionally, a vendor-specific minimum sampling interval is provided             
+    UA_Double minSampling = 100;
+    oAttr.minimumSamplingInterval = minSampling;                            // Optionally, a vendor-specific minimum sampling interval is provided             
    // oAttr.accessLevel = 1;                                          // The access level for Variables used for type definitions is vendor-specific, for all other Variables defined in this part, the access level shall allow a current read; other settings are vendor specific.
  //   oAttr.userAccessLevel = 1;                                      // The value for the UserAccessLevel Attribute is vendor-specific. It is assumed that all Variables can be accessed by at least one user.             
   //  oAttr.value = 0;                                                // For Variables used as InstanceDeclarations, the value is vendor-specific; otherwise it shall represent the value described in the text.
