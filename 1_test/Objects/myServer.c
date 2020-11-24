@@ -135,7 +135,7 @@ static void powerlinkNode(UA_Server *server)
                             oAttr, NULL, &FunctionalGroupConfigurationType);
 //-------------
     // Powerlink Managing Node, Powerlink Mn Connection point type
-    oAttr.displayName = UA_LOCALIZEDTEXT("en-US", "Mn Connection Point Type");
+    oAttr.displayName = UA_LOCALIZEDTEXT("en-US", "asdasd   Mn Connection Point Type");
     UA_Server_addObjectNode(server, UA_NODEID_NULL,
                             PowerlinkDeviceType,
                             UA_NODEID_NUMERIC(0, UA_NS0ID_ORGANIZES),
