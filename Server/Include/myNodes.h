@@ -1,6 +1,5 @@
-//#include "myNodes.c"
-
-
+#ifndef MYNODES_H
+#define MYNODES_H
 
 // Setting up the object node and its variables 
 static void nodeSetup(UA_Server *server); 
@@ -30,3 +29,5 @@ static void beforeReadIdle(UA_Server *server,
 
 
 static void addValueCallbackToCurrentIdle(UA_Server *server);
+
+#endif

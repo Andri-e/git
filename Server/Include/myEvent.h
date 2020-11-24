@@ -1,4 +1,5 @@
-//#include "myEvent.c"
+#ifndef MYEVENT_H
+#define MYEVENT_H
 
 // Event thing asdasdasdasd
 static UA_StatusCode addNewEventType(UA_Server *server);
@@ -38,3 +39,5 @@ static UA_StatusCode generateEventMethodCallback(UA_Server *server,
  */
 
 static void addGenerateEventMethod(UA_Server *server);
+
+#endif
