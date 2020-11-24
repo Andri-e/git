@@ -676,7 +676,7 @@ int main(void) {
     UA_Server *server = UA_Server_new();
     UA_ServerConfig_setDefault(UA_Server_getConfig(server));
 
-    powerlinkNode(server);
+   // powerlinkNode(server);
     powerlinkNode2(server);
 
     UA_StatusCode retval = UA_Server_run(server, &running);
