@@ -1,5 +1,7 @@
 //#include "myNodes.c"
 
+
+
 // Setting up the object node and its variables 
 static void nodeSetup(UA_Server *server); 
 
