@@ -1,3 +1,5 @@
+#include "myNodes.h"
+
 UA_Double variable = 20.0;						
 UA_DateTime timeStamp = 0;	
 UA_Float systemp = 0; 

@@ -1,3 +1,5 @@
+#include "myEvent.h"
+
 // Event thing a asdasdasdasd
 static UA_NodeId eventType;
 

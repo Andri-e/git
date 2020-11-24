@@ -1,12 +1,14 @@
-myServer: ../Open62541/open62541.o myServer.o
-	gcc ../Open62541/open62541.o myServer.o -o myServer
-
-../Open62541/open62541.o: ../Open62541/open62541.c
-	gcc -c -std=c99 ../Open62541/open62541.c -o ../Open62541/open62541.o
+myServer: 
+	gcc -c myEvents.c 
+	gcc -c myNodes.c
+	gcc -c mySettings.c
+	gcc -c open62541.c 
+	gcc -c specNodes.c 
 	
-myServer.o: myServer.c 
 	gcc -c myServer.c 
-
+	
+	gcc myEvents.o myNodes.o mySettings.o open62541.o specNodes.o myServer.o -o myServer
+	
 clean: 
 	rm *.o myServer
 

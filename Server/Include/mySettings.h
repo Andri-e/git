@@ -1,4 +1,4 @@
-#include "mySettings.c"
+//#include "mySettings.c"
 
 // Stop handler to watch for ctrl + c 
 static void stopHandler(int sig);
