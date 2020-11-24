@@ -6,7 +6,12 @@
 
 // mySettings.h
 #include "./Include/mySettings.h"
-
+// myEvent.h 
+#include "./Include/myEvent.h"
+// myNodes.h 
+#include "./Include/myNodes.h"
+// specNodes.h
+#include "./Include/specNodes.h"
 
 // Want to add 
         // Security 
@@ -17,10 +22,27 @@
 // myServer main 
 int main(int argc, char * argv[])
 {
-    // Creating a new server 
+	// Setting up the signals for the stop signal (ctrl + c)
+    signal(SIGINT, stopHandler);
+
+	// Creating a new server 
     UA_Server *server = UA_Server_new();
 
-    setupServer(server);
+	// Check for Arguments, host name and port number
+	checkArguments(server, argc, argv);
+
+	// Setup the nodes used 
+	nodeSetup(server);
+    powerlinkNode(server);
+	
+	// Add callback for updating the variables 
+	addValueCallbackToCurrentTimeVariable(server);
+	addValueCallbackToCurrentTemerature(server);
+	addValueCallbackToCurrentIdle(server);
+
+    // Add a event to trigger a response 
+    addNewEventType(server);
+    addGenerateEventMethod(server);
 	
 	// Server start up 
     UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND, "Starting server...");

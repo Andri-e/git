@@ -34,29 +34,3 @@ static void checkArguments(UA_Server *server, int argc, char * argv[] )
     }
 }
 
-static void setupServer(UA_Server *server)
-{
-
-	// Setting up the signals for the stop signal (ctrl + c)
-    signal(SIGINT, stopHandler);
-
-	// Creating a new server 
-    //UA_Server *server = UA_Server_new();
-
-	// Check for Arguments, host name and port number
-	checkArguments(server, argc, argv);
-
-	// Setup the nodes used 
-	nodeSetup(server);
-    powerlinkNode(server);
-	
-	// Add callback for updating the variables 
-	addValueCallbackToCurrentTimeVariable(server);
-	addValueCallbackToCurrentTemerature(server);
-	addValueCallbackToCurrentIdle(server);
-
-    // Add a event to trigger a response 
-    addNewEventType(server);
-    addGenerateEventMethod(server);
-
-}
