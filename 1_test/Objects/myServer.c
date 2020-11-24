@@ -71,9 +71,11 @@ static void powerlinkNode(UA_Server *server)
     UA_NodeId DeviceTypeObj;
     UA_NodeId FunctionalGroupType;
     UA_NodeId PowerlinkCnConnectionPointType;
+    UA_NodeId CnFunctionalGroupDiagnosticsType; 
+    UA_NodeId CnFunctionalGroupConfigurationType; 
     UA_NodeId PowerlinkMnConnectionPointType;   
-    UA_NodeId FunctionalGroupDiagnosticsType; 
-    UA_NodeId FunctionalGroupConfigurationType; 
+    UA_NodeId MnFunctionalGroupDiagnosticsType; 
+    UA_NodeId MnFunctionalGroupConfigurationType; 
 
 
     UA_ObjectAttributes oAttr = UA_ObjectAttributes_default;    
@@ -122,17 +124,17 @@ static void powerlinkNode(UA_Server *server)
     UA_Server_addObjectNode(server, UA_NODEID_NULL,
                             PowerlinkCnConnectionPointType,
                             UA_NODEID_NUMERIC(0, UA_NS0ID_ORGANIZES),
-                            UA_QUALIFIEDNAME(1, "FunctionalGroupDiagnosticsType"), 
+                            UA_QUALIFIEDNAME(1, "CnFunctionalGroupDiagnosticsType"), 
                             UA_NODEID_NUMERIC(0, UA_NS0ID_BASEOBJECTTYPE),
-                            oAttr, NULL, &FunctionalGroupDiagnosticsType);
+                            oAttr, NULL, &CnFunctionalGroupDiagnosticsType);
 
     oAttr.displayName = UA_LOCALIZEDTEXT("en-US", "Cn FunctionalGroupConfigurationType");
     UA_Server_addObjectNode(server, UA_NODEID_NULL,
                             PowerlinkCnConnectionPointType,
                             UA_NODEID_NUMERIC(0, UA_NS0ID_ORGANIZES),
-                            UA_QUALIFIEDNAME(1, "FunctionalGroupConfigurationType"), 
+                            UA_QUALIFIEDNAME(1, "CnFunctionalGroupConfigurationType"), 
                             UA_NODEID_NUMERIC(0, UA_NS0ID_BASEOBJECTTYPE),
-                            oAttr, NULL, &FunctionalGroupConfigurationType);
+                            oAttr, NULL, &CnFunctionalGroupConfigurationType);
 //-------------
     // Powerlink Managing Node, Powerlink Mn Connection point type
     oAttr.displayName = UA_LOCALIZEDTEXT("en-US", "Mn Connection Point Type");
@@ -142,6 +144,25 @@ static void powerlinkNode(UA_Server *server)
                             UA_QUALIFIEDNAME(1, "Mn ConnectionPointType"), 
                             UA_NODEID_NUMERIC(0, UA_NS0ID_BASEOBJECTTYPE),
                             oAttr, NULL, &PowerlinkMnConnectionPointType);
+
+
+//-----------
+    oAttr.displayName = UA_LOCALIZEDTEXT("en-US", "Mn FunctionalGroupDiagnosticsType");
+    UA_Server_addObjectNode(server, UA_NODEID_NULL,
+                            PowerlinkMnConnectionPointType,
+                            UA_NODEID_NUMERIC(0, UA_NS0ID_ORGANIZES),
+                            UA_QUALIFIEDNAME(1, "MnFunctionalGroupDiagnosticsType"), 
+                            UA_NODEID_NUMERIC(0, UA_NS0ID_BASEOBJECTTYPE),
+                            oAttr, NULL, &MnFunctionalGroupDiagnosticsType);
+
+    oAttr.displayName = UA_LOCALIZEDTEXT("en-US", "Mn FunctionalGroupConfigurationType");
+    UA_Server_addObjectNode(server, UA_NODEID_NULL,
+                            PowerlinkMnConnectionPointType,
+                            UA_NODEID_NUMERIC(0, UA_NS0ID_ORGANIZES),
+                            UA_QUALIFIEDNAME(1, "MnFunctionalGroupConfigurationType"), 
+                            UA_NODEID_NUMERIC(0, UA_NS0ID_BASEOBJECTTYPE),
+                            oAttr, NULL, &MnFunctionalGroupConfigurationType);
+//-------------
 
 
 
@@ -288,7 +309,7 @@ static void powerlinkNode(UA_Server *server)
                               UA_QUALIFIEDNAME(2, "DLL_CNLossSoC_REC"),
                               UA_NODEID_NUMERIC(0, UA_NS0ID_BASEDATAVARIABLETYPE), dtAttr, NULL, NULL);	
 
-                              
+
     // Functional Group Configuration - Powerlink Cn connection point type 
     UA_Server_addObjectNode(server, UA_NODEID_NULL,
                 PowerlinkCnConnectionPointType,
