@@ -7,7 +7,7 @@ myServer:
 	
 	gcc -c myServer.c 
 	
-	gcc myEvents.o myNodes.o mySettings.o open62541.o specNodes.o myServer.o -o myServer
+	gcc myEvent.o myNodes.o mySettings.o open62541.o specNodes.o myServer.o -o myServer
 	
 clean: 
 	rm *.o myServer
