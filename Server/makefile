@@ -1,5 +1,5 @@
 myServer: 
-	gcc -c myEvents.c 
+	gcc -c ./Include/myEvents.c 
 	gcc -c myNodes.c
 	gcc -c mySettings.c
 	gcc -c open62541.c 
