@@ -570,8 +570,6 @@ static void powerlinkNode2(UA_Server *server)
                               UA_NODEID_NUMERIC(0, UA_NS0ID_HASCOMPONENT),
                               UA_QUALIFIEDNAME(2, "NMT_MNNodeCurrState_AU8"),
                               UA_NODEID_NUMERIC(0, UA_NS0ID_BASEDATAVARIABLETYPE), dtAttr, NULL, NULL);	
-
-
     // NMT_RequestCmd_REC - n/a 
     UA_Int32 NMT_RequestCmd_REC = 0;
     UA_Variant_setScalar(&dtAttr.value, &NMT_RequestCmd_REC, &UA_TYPES[UA_TYPES_INT32]);
@@ -585,13 +583,19 @@ static void powerlinkNode2(UA_Server *server)
 
 
     // Functional Group Configuration - Powerlink Mn Connection point type  
+    UA_Server_addObjectNode(server, UA_NODEID_NULL,
+                PowerlinkMnConnectionPointType,
+                UA_NODEID_NUMERIC(0, UA_NS0ID_ORGANIZES),
+                UA_QUALIFIEDNAME(1, "Functional Group Diagnostics Type - Not finished "), 
+                UA_NODEID_NUMERIC(0, UA_NS0ID_BASEOBJECTTYPE),
+                oAttr, NULL, &FunctionalGroupConfigurationType);
     // DLL_MNCycleSuspendNumber_U32 - Uint32
     UA_UInt32 DLL_MNCycleSuspendNumber_U32 = 0;
     UA_Variant_setScalar(&dtAttr.value, &DLL_MNCycleSuspendNumber_U32, &UA_TYPES[UA_TYPES_UINT32]);
     dtAttr.displayName = UA_LOCALIZEDTEXT("en-US", "DLL_MNCycleSuspendNumber_U32");
     dtAttr.arrayDimensionsSize = 0;
     UA_Server_addVariableNode(server, UA_NODEID_NULL, 
-                              FunctionalGroupDiagnosticsType,
+                              FunctionalGroupConfigurationType,
                               UA_NODEID_NUMERIC(0, UA_NS0ID_HASCOMPONENT),
                               UA_QUALIFIEDNAME(2, "DLL_MNCycleSuspendNumber_U32"),
                               UA_NODEID_NUMERIC(0, UA_NS0ID_BASEDATAVARIABLETYPE), dtAttr, NULL, NULL);	
@@ -601,7 +605,7 @@ static void powerlinkNode2(UA_Server *server)
     dtAttr.displayName = UA_LOCALIZEDTEXT("en-US", "NMT_BootTime_REC");
     dtAttr.arrayDimensionsSize = 0;
     UA_Server_addVariableNode(server, UA_NODEID_NULL, 
-                              FunctionalGroupDiagnosticsType,
+                              FunctionalGroupConfigurationType,
                               UA_NODEID_NUMERIC(0, UA_NS0ID_HASCOMPONENT),
                               UA_QUALIFIEDNAME(2, "NMT_BootTime_REC"),
                               UA_NODEID_NUMERIC(0, UA_NS0ID_BASEDATAVARIABLETYPE), dtAttr, NULL, NULL);	
@@ -611,7 +615,7 @@ static void powerlinkNode2(UA_Server *server)
     dtAttr.displayName = UA_LOCALIZEDTEXT("en-US", "NMT_MNCNPResTimeout_AU32");
     dtAttr.arrayDimensionsSize = 0;
     UA_Server_addVariableNode(server, UA_NODEID_NULL, 
-                              FunctionalGroupDiagnosticsType,
+                              FunctionalGroupConfigurationType,
                               UA_NODEID_NUMERIC(0, UA_NS0ID_HASCOMPONENT),
                               UA_QUALIFIEDNAME(2, "NMT_MNCNPResTimeout_AU32"),
                               UA_NODEID_NUMERIC(0, UA_NS0ID_BASEDATAVARIABLETYPE), dtAttr, NULL, NULL);	
@@ -621,7 +625,7 @@ static void powerlinkNode2(UA_Server *server)
     dtAttr.displayName = UA_LOCALIZEDTEXT("en-US", "NMT_MNCycleTiming_REC");
     dtAttr.arrayDimensionsSize = 0;
     UA_Server_addVariableNode(server, UA_NODEID_NULL, 
-                              FunctionalGroupDiagnosticsType,
+                              FunctionalGroupConfigurationType,
                               UA_NODEID_NUMERIC(0, UA_NS0ID_HASCOMPONENT),
                               UA_QUALIFIEDNAME(2, "NMT_MNCycleTiming_REC"),
                               UA_NODEID_NUMERIC(0, UA_NS0ID_BASEDATAVARIABLETYPE), dtAttr, NULL, NULL);	
@@ -631,7 +635,7 @@ static void powerlinkNode2(UA_Server *server)
     dtAttr.displayName = UA_LOCALIZEDTEXT("en-US", "NMT_MNDeviceTypeIdList_AU32");
     dtAttr.arrayDimensionsSize = 0;
     UA_Server_addVariableNode(server, UA_NODEID_NULL, 
-                              FunctionalGroupDiagnosticsType,
+                              FunctionalGroupConfigurationType,
                               UA_NODEID_NUMERIC(0, UA_NS0ID_HASCOMPONENT),
                               UA_QUALIFIEDNAME(2, "NMT_MNDeviceTypeIdList_AU32"),
                               UA_NODEID_NUMERIC(0, UA_NS0ID_BASEDATAVARIABLETYPE), dtAttr, NULL, NULL);	
@@ -641,7 +645,7 @@ static void powerlinkNode2(UA_Server *server)
     dtAttr.displayName = UA_LOCALIZEDTEXT("en-US", "NMT_MNPReqPayloadLimitList_AU16");
     dtAttr.arrayDimensionsSize = 0;
     UA_Server_addVariableNode(server, UA_NODEID_NULL, 
-                              FunctionalGroupDiagnosticsType,
+                              FunctionalGroupConfigurationType,
                               UA_NODEID_NUMERIC(0, UA_NS0ID_HASCOMPONENT),
                               UA_QUALIFIEDNAME(2, "NMT_MNPReqPayloadLimitList_AU16"),
                               UA_NODEID_NUMERIC(0, UA_NS0ID_BASEDATAVARIABLETYPE), dtAttr, NULL, NULL);	
@@ -651,7 +655,7 @@ static void powerlinkNode2(UA_Server *server)
     dtAttr.displayName = UA_LOCALIZEDTEXT("en-US", "NMT_StartUp_U32");
     dtAttr.arrayDimensionsSize = 0;
     UA_Server_addVariableNode(server, UA_NODEID_NULL, 
-                              FunctionalGroupDiagnosticsType,
+                              FunctionalGroupConfigurationType,
                               UA_NODEID_NUMERIC(0, UA_NS0ID_HASCOMPONENT),
                               UA_QUALIFIEDNAME(2, "NMT_StartUp_U32"),
                               UA_NODEID_NUMERIC(0, UA_NS0ID_BASEDATAVARIABLETYPE), dtAttr, NULL, NULL);	
