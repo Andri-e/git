@@ -277,7 +277,7 @@ static void powerlinkNode(UA_Server *server)
                               UA_NODEID_NUMERIC(0, UA_NS0ID_BASEDATAVARIABLETYPE), dtAttr, NULL, NULL);	
     // Identification - NMT_DeviceType_U32
     UA_UInt32 Identification = 0;
-    UA_Variant_setScalar(&dtAttr.value, &asd, &UA_TYPES[UA_TYPES_UINT32]);
+    UA_Variant_setScalar(&dtAttr.value, &Identification, &UA_TYPES[UA_TYPES_UINT32]);
     dtAttr.displayName = UA_LOCALIZEDTEXT("en-US", "Identification");
     UA_Server_addVariableNode(server, UA_NODEID_NULL, 
                               FunctionalGroupType,
