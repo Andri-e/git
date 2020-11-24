@@ -1,6 +1,4 @@
-
-
-// Event thing 
+// Event thing a asdasdasdasd
 static UA_NodeId eventType;
 
 static UA_StatusCode addNewEventType(UA_Server *server) 

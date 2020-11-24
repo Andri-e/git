@@ -1,6 +1,6 @@
-#include "event.c"
+#include "myEvent.c"
 
-// Event thing 
+// Event thing asdasdasdasd
 static UA_StatusCode addNewEventType(UA_Server *server);
 
 /**
