@@ -135,7 +135,7 @@ static void powerlinkNode(UA_Server *server)
                             oAttr, NULL, &FunctionalGroupConfigurationType);
 //-------------
     // Powerlink Managing Node, Powerlink Mn Connection point type
-    oAttr.displayName = UA_LOCALIZEDTEXT("en-US", "asdasd   Mn Connection Point Type");
+    oAttr.displayName = UA_LOCALIZEDTEXT("en-US", "Mn Connection Point Type");
     UA_Server_addObjectNode(server, UA_NODEID_NULL,
                             PowerlinkDeviceType,
                             UA_NODEID_NUMERIC(0, UA_NS0ID_ORGANIZES),
@@ -287,6 +287,8 @@ static void powerlinkNode(UA_Server *server)
                               UA_NODEID_NUMERIC(0, UA_NS0ID_HASCOMPONENT),
                               UA_QUALIFIEDNAME(2, "DLL_CNLossSoC_REC"),
                               UA_NODEID_NUMERIC(0, UA_NS0ID_BASEDATAVARIABLETYPE), dtAttr, NULL, NULL);	
+
+                              
     // Functional Group Configuration - Powerlink Cn connection point type 
     UA_Server_addObjectNode(server, UA_NODEID_NULL,
                 PowerlinkCnConnectionPointType,
@@ -312,12 +314,7 @@ static void powerlinkNode(UA_Server *server)
 
     // ---------------------------------- PowerlinkMnConnectionPointType - Page 40  ---------------------------------
     // Functional Group Diagnostics - Powerlink Mn Connection point type  
-    UA_Server_addObjectNode(server, UA_NODEID_NULL,
-                PowerlinkMnConnectionPointType,
-                UA_NODEID_NUMERIC(0, UA_NS0ID_ORGANIZES),
-                UA_QUALIFIEDNAME(1, "Functional Group Diagnostics Type - Not finished "), 
-                UA_NODEID_NUMERIC(0, UA_NS0ID_BASEOBJECTTYPE),
-                oAttr, NULL, &FunctionalGroupDiagnosticsType);
+
     // DLL_MNCNLossPResThrCnt_AU32 - Uint32 []
     UA_UInt32 DLL_MNCNLossPResThrCnt_AU32_U32 = 0;
     UA_Variant_setScalar(&dtAttr.value, &DLL_MNCNLossPResThrCnt_AU32_U32, &UA_TYPES[UA_TYPES_UINT32]);
