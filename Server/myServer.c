@@ -22,28 +22,10 @@
 // myServer main 
 int main(int argc, char * argv[])
 {
-	// Setting up the signals for the stop signal (ctrl + c)
-    signal(SIGINT, stopHandler);
-   // signal(SIGTERM, stopHandler);
-
-
-	// Creating a new server 
+    // Creating a new server 
     UA_Server *server = UA_Server_new();
 
-	// Check for Arguments, host name and port number
-	checkArguments(server, argc, argv);
-
-	// Setup the nodes used 
-	nodeSetup(server);
-	
-	// Add callback for updating the variables 
-	addValueCallbackToCurrentTimeVariable(server);
-	addValueCallbackToCurrentTemerature(server);
-	addValueCallbackToCurrentIdle(server);
-
-    // Add a event to trigger a response 
-    addNewEventType(server);
-    addGenerateEventMethod(server);
+    setupServer(server);
 	
 	// Server start up 
     UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND, "Starting server...");

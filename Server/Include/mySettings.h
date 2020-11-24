@@ -7,3 +7,6 @@ static void stopHandler(int sig);
 
 // Argument check, is Host name and Port number default? 
 static void checkArguments(UA_Server *server, int argc, char * argv[]);
+
+// Settings for the server and server setup 
+static void setupServer(UA_Server *server);
