@@ -1,4 +1,4 @@
-#include "Event.c"
+#include "event.c"
 
 // Event thing 
 static UA_StatusCode addNewEventType(UA_Server *server);
