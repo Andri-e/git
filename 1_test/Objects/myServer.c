@@ -436,18 +436,23 @@ static void powerlinkNode2(UA_Server *server)
 
 
     // Functional Group Variables - this contains Diagnostics and Configurationit seems, need to look into this more.. 
-
-
-
-
-    // --------------------------------- PowerlinkCnConnectionPointType - Page 38, only takeing Mandatory things --------------------------------
-    // Functional Group Diagnostics - Powerlink Cn Connection point type  
     UA_Server_addObjectNode(server, UA_NODEID_NULL,
                     PowerlinkCnConnectionPointType,
                     UA_NODEID_NUMERIC(0, UA_NS0ID_ORGANIZES),
                     UA_QUALIFIEDNAME(1, "asdasdas   Functional Group Diagnostics Type"), 
                     UA_NODEID_NUMERIC(0, UA_NS0ID_BASEOBJECTTYPE),
                     oAttr, NULL, &FunctionalGroupDiagnosticsType);
+
+
+
+    // --------------------------------- PowerlinkCnConnectionPointType - Page 38, only takeing Mandatory things --------------------------------
+    // Functional Group Diagnostics - Powerlink Cn Connection point type  
+ /*   UA_Server_addObjectNode(server, UA_NODEID_NULL,
+                    PowerlinkCnConnectionPointType,
+                    UA_NODEID_NUMERIC(0, UA_NS0ID_ORGANIZES),
+                    UA_QUALIFIEDNAME(1, "asdasdas   Functional Group Diagnostics Type"), 
+                    UA_NODEID_NUMERIC(0, UA_NS0ID_BASEOBJECTTYPE),
+                    oAttr, NULL, &FunctionalGroupDiagnosticsType);*/
     // DLL_CNCRCError_REC - n/a 
     UA_Int32 DLL_CNCRCError_REC = 0;
     UA_Variant_setScalar(&dtAttr.value, &DLL_CNCRCError_REC, &UA_TYPES[UA_TYPES_INT32]);
