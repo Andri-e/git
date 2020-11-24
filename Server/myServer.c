@@ -32,7 +32,7 @@ int main(int argc, char * argv[])
 	checkArguments(server, argc, argv);
 
 	// Setup the nodes used 
-	//nodeSetup(server);
+	// nodeSetup(server);
     powerlinkNode(server);
 	
 	// Add callback for updating the variables 

@@ -1,7 +1,7 @@
 #include "mySettings.c"
 
 
-static volatile UA_Boolean running = true;			// Server state
+// static volatile UA_Boolean running = true;			// Server state
 
 // Stop handler to watch for ctrl + c 
 static void stopHandler(int sig);
