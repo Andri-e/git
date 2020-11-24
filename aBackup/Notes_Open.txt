@@ -1,0 +1,117 @@
+
+
+UA_UInt16 UA_THREADSAFE UA_Server_addNamespace(UA_Server *server, const char* name);
+
+
+
+
+
+static UA_INLINE UA_THREADSAFE UA_StatusCode
+UA_Server_addObjectNode(UA_Server *server, const UA_NodeId requestedNewNodeId,
+                        const UA_NodeId parentNodeId,
+                        const UA_NodeId referenceTypeId,
+                        const UA_QualifiedName browseName,
+                        const UA_NodeId typeDefinition,
+                        const UA_ObjectAttributes attr,											// Subtype? 
+                        void *nodeContext,
+						UA_NodeId *outNewNodeId) 
+						
+						
+						{
+    return __UA_Server_addNode(server, UA_NODECLASS_OBJECT, &requestedNewNodeId,
+                               &parentNodeId, &referenceTypeId, browseName,
+                               &typeDefinition, (const UA_NodeAttributes*)&attr,
+                               &UA_TYPES[UA_TYPES_OBJECTATTRIBUTES],
+                               nodeContext, outNewNodeId);
+}
+
+
+
+
+static UA_INLINE UA_THREADSAFE UA_StatusCode
+UA_Server_addVariableNode(UA_Server *server, const UA_NodeId requestedNewNodeId,
+                          const UA_NodeId parentNodeId,
+                          const UA_NodeId referenceTypeId,
+                          const UA_QualifiedName browseName,
+                          const UA_NodeId typeDefinition,
+                          const UA_VariableAttributes attr,
+                          void *nodeContext, 
+						  UA_NodeId *outNewNodeId) 
+						  
+						  
+						  {
+    return __UA_Server_addNode(server, UA_NODECLASS_VARIABLE, &requestedNewNodeId,
+                               &parentNodeId, &referenceTypeId, browseName,
+                               &typeDefinition, (const UA_NodeAttributes*)&attr,
+                               &UA_TYPES[UA_TYPES_VARIABLEATTRIBUTES],
+                               nodeContext, outNewNodeId);
+}
+
+static UA_INLINE UA_THREADSAFE UA_StatusCode
+UA_Server_addReferenceTypeNode(UA_Server *server,
+                               const UA_NodeId requestedNewNodeId,
+                               const UA_NodeId parentNodeId,
+                               const UA_NodeId referenceTypeId,
+                               const UA_QualifiedName browseName,
+                               const UA_ReferenceTypeAttributes attr,
+                               void *nodeContext, UA_NodeId *outNewNodeId) {
+    return __UA_Server_addNode(server, UA_NODECLASS_REFERENCETYPE,
+                               &requestedNewNodeId, &parentNodeId, &referenceTypeId,
+                               browseName, &UA_NODEID_NULL,
+                               (const UA_NodeAttributes*)&attr,
+                               &UA_TYPES[UA_TYPES_REFERENCETYPEATTRIBUTES],
+                               nodeContext, outNewNodeId);
+}
+UA_StatusCode UA_EXPORT UA_THREADSAFE
+UA_Server_addReference(UA_Server *server, const UA_NodeId sourceId,
+                       const UA_NodeId refTypeId,
+                       const UA_ExpandedNodeId targetId, UA_Boolean isForward);
+					   
+					   
+					   
+**
+ * NodeIds
+ * ^^^^^^^
+ * An OPC UA information model is made up of nodes and references between nodes.
+ * Every node has a unique :ref:`nodeid`. NodeIds refer to a namespace with an
+ * additional identifier value that can be an integer, a string, a guid or a
+ * bytestring. */
+
+static void
+variables_nodeids(void) {
+    UA_NodeId id1 = UA_NODEID_NUMERIC(1, 1234);
+    id1.namespaceIndex = 3;
+
+    UA_NodeId id2 = UA_NODEID_STRING(1, "testid"); /* the string is static */
+    UA_Boolean eq = UA_NodeId_equal(&id1, &id2);
+    if(eq)
+        return;
+
+    UA_NodeId id3;
+    UA_NodeId_copy(&id2, &id3);
+    UA_NodeId_clear(&id3);
+
+    UA_NodeId id4 = UA_NODEID_STRING_ALLOC(1, "testid"); /* the string is copied
+                                                            to the heap */
+    UA_NodeId_clear(&id4);
+}
+
+
+
+
+typedef struct {
+    UA_UInt32 specifiedAttributes;
+    UA_LocalizedText displayName;
+    UA_LocalizedText description;
+    UA_UInt32 writeMask;
+    UA_UInt32 userWriteMask;
+    UA_Variant value;
+    UA_NodeId dataType;
+    UA_Int32 valueRank;
+    size_t arrayDimensionsSize;
+    UA_UInt32 *arrayDimensions;
+    UA_Byte accessLevel;
+    UA_Byte userAccessLevel;
+    UA_Double minimumSamplingInterval;
+    UA_Boolean historizing;
+} UA_VariableAttributes;

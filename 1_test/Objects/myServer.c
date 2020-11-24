@@ -265,6 +265,9 @@ static void powerlinkNode(UA_Server *server)
 
 static void powerlinkNode2(UA_Server *server)
 {
+
+    UA_UInt16 UA_THREADSAFE UA_Server_addNamespace(server, );
+
     
     // OPC UA - POWERLINK
     UA_NodeId DeviceType;
@@ -490,6 +493,15 @@ static void powerlinkNode2(UA_Server *server)
                 UA_NODEID_NUMERIC(0, UA_NS0ID_BASEOBJECTTYPE),
                 oAttr, NULL, &FunctionalGroupDiagnosticsType);
     // DLL_MNCNLossPResThrCnt_AU32 - Uint32 []
+    UA_UInt32 DLL_MNCNLossPResThrCnt_AU32_U32 = 0;
+    UA_Variant_setScalar(&dtAttr.value, &DLL_MNCNLossPResThrCnt_AU32, &UA_TYPES[UA_TYPES_UINT32]);
+    dtAttr.displayName = UA_LOCALIZEDTEXT("en-US", "DLL_MNCNLossPResThrCnt_AU32");
+    dtAttr.arrayDimensionsSize = 0;
+    UA_Server_addVariableNode(server, UA_NODEID_NULL, 
+                              FunctionalGroupDiagnosticsType,
+                              UA_NODEID_NUMERIC(0, UA_NS0ID_HASCOMPONENT),
+                              UA_QUALIFIEDNAME(2, "DLL_MNCNLossPResThrCnt_AU32"),
+                              UA_NODEID_NUMERIC(0, UA_NS0ID_BASEDATAVARIABLETYPE), dtAttr, NULL, NULL);	
     // DLL_MNCNLossPResThreshold_AU32 - Uint 32 []
     // DLL_MNCRCError_REC - n/a 
     // DLL_MNLossStatusResThrCnt_AU32 - Uint32 []
