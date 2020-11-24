@@ -4,10 +4,11 @@ myServer:
 	gcc -c ./Include/mySettings.c
 	gcc -c ./Include/open62541.c 
 	gcc -c ./Include/specNodes.c 
-	
 	gcc -c myServer.c 
 	
-	gcc myEvent.o myNodes.o mySettings.o open62541.o specNodes.o myServer.o -o myServer
+	gcc -o myServer myServer.c ./Include/myEvent.c ./Include/myNodes.c ./Include/mySettings.c ./Include/open62541.c ./Include/specNodes.c 
+	
+
 	
 clean: 
 	rm *.o myServer
