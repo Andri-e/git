@@ -3,6 +3,17 @@
 #include <signal.h>
 #include <stdlib.h>
 
+
+// Event.h 
+#include "./Include/Event.h"
+// Nodes.h 
+// LiveData.h
+
+// Want to add 
+        // Security 
+        // Pub/sub? 
+        // Conditions? 
+
 static volatile UA_Boolean running = true;			// Server state
 
 UA_Double variable = 20.0;						
