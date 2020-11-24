@@ -1,15 +1,6 @@
 #include "open62541.h"
 #include "mySettings.h"
 
-static volatile UA_Boolean running = true;			// Server state
-
-// Stop handler to watch for ctrl + c 
-static void stopHandler(int sig)
-{
-    UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND, "received ctrl-c");
-    running = false;
-}
-
 // Argument check, is Host name and Port number default? 
 static void checkArguments(UA_Server *server, int argc, char * argv[] )
 {
