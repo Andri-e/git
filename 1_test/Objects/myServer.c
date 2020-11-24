@@ -111,6 +111,7 @@ static void powerlinkNode(UA_Server *server)
                             UA_QUALIFIEDNAME(1, "Functional Group Type"), 
                             UA_NODEID_NUMERIC(0, UA_NS0ID_BASEOBJECTTYPE),
                             oAttr, NULL, &FunctionalGroupType);
+
     // Powerlink Controlled node, Powerlink Cn Connection Point Type
     oAttr.displayName = UA_LOCALIZEDTEXT("en-US", "Cn Connection Point Type");
     UA_Server_addObjectNode(server, UA_NODEID_NULL,
@@ -119,7 +120,6 @@ static void powerlinkNode(UA_Server *server)
                             UA_QUALIFIEDNAME(1, "PowerlinkCnConnectionPointType"), 
                             UA_NODEID_NUMERIC(0, UA_NS0ID_BASEOBJECTTYPE),
                             oAttr, NULL, &PowerlinkCnConnectionPointType);
-//-----------
     oAttr.displayName = UA_LOCALIZEDTEXT("en-US", "Cn FunctionalGroupDiagnosticsType");
     UA_Server_addObjectNode(server, UA_NODEID_NULL,
                             PowerlinkCnConnectionPointType,
@@ -135,7 +135,7 @@ static void powerlinkNode(UA_Server *server)
                             UA_QUALIFIEDNAME(1, "CnFunctionalGroupConfigurationType"), 
                             UA_NODEID_NUMERIC(0, UA_NS0ID_BASEOBJECTTYPE),
                             oAttr, NULL, &CnFunctionalGroupConfigurationType);
-//-------------
+
     // Powerlink Managing Node, Powerlink Mn Connection point type
     oAttr.displayName = UA_LOCALIZEDTEXT("en-US", "Mn Connection Point Type");
     UA_Server_addObjectNode(server, UA_NODEID_NULL,
@@ -144,9 +144,6 @@ static void powerlinkNode(UA_Server *server)
                             UA_QUALIFIEDNAME(1, "Mn ConnectionPointType"), 
                             UA_NODEID_NUMERIC(0, UA_NS0ID_BASEOBJECTTYPE),
                             oAttr, NULL, &PowerlinkMnConnectionPointType);
-
-
-//-----------
     oAttr.displayName = UA_LOCALIZEDTEXT("en-US", "Mn FunctionalGroupDiagnosticsType");
     UA_Server_addObjectNode(server, UA_NODEID_NULL,
                             PowerlinkMnConnectionPointType,
@@ -162,7 +159,6 @@ static void powerlinkNode(UA_Server *server)
                             UA_QUALIFIEDNAME(1, "MnFunctionalGroupConfigurationType"), 
                             UA_NODEID_NUMERIC(0, UA_NS0ID_BASEOBJECTTYPE),
                             oAttr, NULL, &MnFunctionalGroupConfigurationType);
-//-------------
 
 
 
@@ -269,15 +265,61 @@ static void powerlinkNode(UA_Server *server)
 
 
 
-    // Functional Group Variables - this contains Diagnostics and Configurationit seems, need to look into this more.. 
-    /*
-    UA_Server_addObjectNode(server, UA_NODEID_NULL,
-                    PowerlinkCnConnectionPointType,
-                    UA_NODEID_NUMERIC(0, UA_NS0ID_ORGANIZES),
-                    UA_QUALIFIEDNAME(1, "asdasdas   Functional Group Diagnostics Type"), 
-                    UA_NODEID_NUMERIC(0, UA_NS0ID_BASEOBJECTTYPE),
-                    oAttr, NULL, &FunctionalGroupDiagnosticsType);
-    */
+    // Functional Group Variables - The companion Spec does not go that deep into this or define it so not much to be done.. hmm 
+    // NetworkAddress - ParameterIdentifier
+    UA_UInt32 NetworkAddress = 0;
+    UA_Variant_setScalar(&dtAttr.value, &NetworkAddress, &UA_TYPES[UA_TYPES_UINT32]);
+    dtAttr.displayName = UA_LOCALIZEDTEXT("en-US", "NetworkAddress");
+    UA_Server_addVariableNode(server, UA_NODEID_NULL, 
+                              FunctionalGroupType,
+                              UA_NODEID_NUMERIC(0, UA_NS0ID_HASCOMPONENT),
+                              UA_QUALIFIEDNAME(2, "NetworkAddress"),
+                              UA_NODEID_NUMERIC(0, UA_NS0ID_BASEDATAVARIABLETYPE), dtAttr, NULL, NULL);	
+    // Identification - NMT_DeviceType_U32
+    UA_UInt32 Identification = 0;
+    UA_Variant_setScalar(&dtAttr.value, &asd, &UA_TYPES[UA_TYPES_UINT32]);
+    dtAttr.displayName = UA_LOCALIZEDTEXT("en-US", "Identification");
+    UA_Server_addVariableNode(server, UA_NODEID_NULL, 
+                              FunctionalGroupType,
+                              UA_NODEID_NUMERIC(0, UA_NS0ID_HASCOMPONENT),
+                              UA_QUALIFIEDNAME(2, "NMT_DeviceType_U32"),
+                              UA_NODEID_NUMERIC(0, UA_NS0ID_BASEDATAVARIABLETYPE), dtAttr, NULL, NULL);	
+    // Diagnotics - DIA_ERRStatistics_REC 
+    UA_UInt32 Diagnotics = 0;
+    UA_Variant_setScalar(&dtAttr.value, &Diagnotics, &UA_TYPES[UA_TYPES_UINT32]);
+    dtAttr.displayName = UA_LOCALIZEDTEXT("en-US", "Diagnotics");
+    UA_Server_addVariableNode(server, UA_NODEID_NULL, 
+                              FunctionalGroupType,
+                              UA_NODEID_NUMERIC(0, UA_NS0ID_HASCOMPONENT),
+                              UA_QUALIFIEDNAME(2, "DIA_ERRStatistics_REC "),
+                              UA_NODEID_NUMERIC(0, UA_NS0ID_BASEDATAVARIABLETYPE), dtAttr, NULL, NULL);	
+    // Configuration - CFM_ExpConfDataList_AU32
+    UA_UInt32 Configuration = 0;
+    UA_Variant_setScalar(&dtAttr.value, &Configuration, &UA_TYPES[UA_TYPES_UINT32]);
+    dtAttr.displayName = UA_LOCALIZEDTEXT("en-US", "Configuration");
+    UA_Server_addVariableNode(server, UA_NODEID_NULL, 
+                              FunctionalGroupType,
+                              UA_NODEID_NUMERIC(0, UA_NS0ID_HASCOMPONENT),
+                              UA_QUALIFIEDNAME(2, "CFM_ExpConfDataList_AU32"),
+                              UA_NODEID_NUMERIC(0, UA_NS0ID_BASEDATAVARIABLETYPE), dtAttr, NULL, NULL);	
+    // Control - INP_ProcessImage_REC
+    UA_UInt32 Control = 0;
+    UA_Variant_setScalar(&dtAttr.value, &Control, &UA_TYPES[UA_TYPES_UINT32]);
+    dtAttr.displayName = UA_LOCALIZEDTEXT("en-US", "Control");
+    UA_Server_addVariableNode(server, UA_NODEID_NULL, 
+                              FunctionalGroupType,
+                              UA_NODEID_NUMERIC(0, UA_NS0ID_HASCOMPONENT),
+                              UA_QUALIFIEDNAME(2, "INP_ProcessImage_REC"),
+                              UA_NODEID_NUMERIC(0, UA_NS0ID_BASEDATAVARIABLETYPE), dtAttr, NULL, NULL);	
+    // Status - ParameterIdentifier 
+    UA_UInt32 Status = 0;
+    UA_Variant_setScalar(&dtAttr.value, &Status, &UA_TYPES[UA_TYPES_UINT32]);
+    dtAttr.displayName = UA_LOCALIZEDTEXT("en-US", "Status");
+    UA_Server_addVariableNode(server, UA_NODEID_NULL, 
+                              FunctionalGroupType,
+                              UA_NODEID_NUMERIC(0, UA_NS0ID_HASCOMPONENT),
+                              UA_QUALIFIEDNAME(2, "ParameterIdentifier"),
+                              UA_NODEID_NUMERIC(0, UA_NS0ID_BASEDATAVARIABLETYPE), dtAttr, NULL, NULL);	
 
 
     // --------------------------------- PowerlinkCnConnectionPointType - Page 38, only takeing Mandatory things --------------------------------
