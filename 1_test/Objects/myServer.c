@@ -266,7 +266,7 @@ static void powerlinkNode(UA_Server *server)
 static void powerlinkNode2(UA_Server *server)
 {
 
-    UA_UInt16 UA_THREADSAFE UA_Server_addNamespace(server, "Custom Namespace" );
+    UA_UInt16 UA_THREADSAFE UA_Server_addNamespace(server, Custom_Namespace);
 
     
     // OPC UA - POWERLINK
