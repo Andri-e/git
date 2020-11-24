@@ -560,8 +560,11 @@ static void powerlinkNode2(UA_Server *server)
                               UA_QUALIFIEDNAME(2, "DLL_MNLossStatusResThreshold_AU32"),
                               UA_NODEID_NUMERIC(0, UA_NS0ID_BASEDATAVARIABLETYPE), dtAttr, NULL, NULL);	
     // NMT_MNNodeCurrState_AU8 - Powerlink, NMTState, Enumeration [] 
-    EnumValueType NMT_MNNodeCurrState_AU8 = 0;
-    UA_Variant_setScalar(&dtAttr.value, &NMT_MNNodeCurrState_AU8, &UA_TYPES[EnumValueType]);
+    UA_EnumValueType NMT_MNNodeCurrState_AU8;
+    NMT_MNNodeCurrState_AU8.value = 1; 
+    NMT_MNNodeCurrState_AU8.displayName = asd;
+    NMT_MNNodeCurrState_AU8.description = asdasd;
+    UA_Variant_setScalar(&dtAttr.value, &NMT_MNNodeCurrState_AU8, &UA_TYPES[UA_EnumValueType]);
     dtAttr.displayName = UA_LOCALIZEDTEXT("en-US", "NMT_MNNodeCurrState_AU8");
     dtAttr.arrayDimensionsSize = 0;
     UA_Server_addVariableNode(server, UA_NODEID_NULL, 
