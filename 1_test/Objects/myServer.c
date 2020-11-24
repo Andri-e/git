@@ -59,211 +59,7 @@
 
 #include <signal.h>
 
-
 static void powerlinkNode(UA_Server *server)
-{
-    // OPC UA 
-    UA_NodeId FolderType;
-    UA_NodeId FunctionGroupType;
-
-    // OPC UA DI 
-    UA_NodeId BaseObjectType;
-    UA_NodeId TopologyElementType;
-    UA_NodeId NetworkType;
-    UA_NodeId ProtocolType;
-    UA_NodeId DeviceType;
-    UA_NodeId ConnectionPointType;
-
-    // OPC UA - POWERLINK
-    UA_NodeId PowerlinkDeviceProfileType;
-    UA_NodeId PowerlinkDeviceType;
-    UA_NodeId PowerlinkConnectionPointType;
-    UA_NodeId PowerlinkProtocoltype;
-    UA_NodeId PowerlinkCnConnectionPointType;
-    UA_NodeId PowerlinkMnConnectionPointType;
-    UA_NodeId LogicalDeviceName;
-
-    UA_ObjectAttributes oAttr = UA_ObjectAttributes_default;    
-    // Folder Type - OPC UA Part 5 
-    oAttr.displayName = UA_LOCALIZEDTEXT("en-US", "Folder Type - OPC UA Part 5");
-    UA_Server_addObjectNode(server, UA_NODEID_NULL,
-                            UA_NODEID_NUMERIC(0, UA_NS0ID_OBJECTSFOLDER),
-                            UA_NODEID_NUMERIC(0, UA_NS0ID_ORGANIZES),
-                            UA_QUALIFIEDNAME(1, "FolderType"), 
-                            UA_NODEID_NUMERIC(0, UA_NS0ID_BASEOBJECTTYPE),
-                            oAttr, NULL, &FolderType);
-    // Base Object Type - OPC UA Part 5
-    oAttr.displayName = UA_LOCALIZEDTEXT("en-US", "Base Object Type - OPC UA Part 5");
-    UA_Server_addObjectNode(server, UA_NODEID_NULL,
-                            UA_NODEID_NUMERIC(0, UA_NS0ID_OBJECTSFOLDER),
-                            UA_NODEID_NUMERIC(0, UA_NS0ID_ORGANIZES),
-                            UA_QUALIFIEDNAME(1, "BaseObjectType"), 
-                            UA_NODEID_NUMERIC(0, UA_NS0ID_BASEOBJECTTYPE),
-                            oAttr, NULL, &BaseObjectType);
-
-
-    // Function Group Type - OPC UA DI 
-    oAttr.displayName = UA_LOCALIZEDTEXT("en-US", "Function Group Type - OPC UA DI");
-    UA_Server_addObjectNode(server, UA_NODEID_NULL,
-                            FolderType,
-                            UA_NODEID_NUMERIC(0, UA_NS0ID_ORGANIZES),
-                            UA_QUALIFIEDNAME(1, "FunctionGroupType"), 
-                            UA_NODEID_NUMERIC(0, UA_NS0ID_BASEOBJECTTYPE),
-                            oAttr, NULL, &FunctionGroupType);
-    // Topology Element Type - OPC UA DI 
-    oAttr.displayName = UA_LOCALIZEDTEXT("en-US", "Topology Element Type - OPC UA DI");
-    UA_Server_addObjectNode(server, UA_NODEID_NULL,
-                            BaseObjectType,
-                            UA_NODEID_NUMERIC(0, UA_NS0ID_ORGANIZES),
-                            UA_QUALIFIEDNAME(1, "TopologyElementType"), 
-                            UA_NODEID_NUMERIC(0, UA_NS0ID_BASEOBJECTTYPE),
-                            oAttr, NULL, &TopologyElementType);
-    // Device Type - OPC UA DI
-    oAttr.displayName = UA_LOCALIZEDTEXT("en-US", "Device Type - OPC UA DI");
-    UA_Server_addObjectNode(server, UA_NODEID_NULL,
-                            TopologyElementType,
-                            UA_NODEID_NUMERIC(0, UA_NS0ID_ORGANIZES),
-                            UA_QUALIFIEDNAME(1, "DeviceType"), 
-                            UA_NODEID_NUMERIC(0, UA_NS0ID_BASEOBJECTTYPE),
-                            oAttr, NULL, &DeviceType);
-    // Connection Point Type - OPC UA DI
-    oAttr.displayName = UA_LOCALIZEDTEXT("en-US", "Connection Point Type - OPC UA DI");
-    UA_Server_addObjectNode(server, UA_NODEID_NULL,
-                            TopologyElementType,
-                            UA_NODEID_NUMERIC(0, UA_NS0ID_ORGANIZES),
-                            UA_QUALIFIEDNAME(1, "ConnectionPointType"), 
-                            UA_NODEID_NUMERIC(0, UA_NS0ID_BASEOBJECTTYPE),
-                            oAttr, NULL, &ConnectionPointType);
-    // Network Type - OPC UA DI 
-    oAttr.displayName = UA_LOCALIZEDTEXT("en-US", "Network Type - OPC UA DI");
-    UA_Server_addObjectNode(server, UA_NODEID_NULL,
-                            BaseObjectType,
-                            UA_NODEID_NUMERIC(0, UA_NS0ID_ORGANIZES),
-                            UA_QUALIFIEDNAME(1, "NetworkType"), 
-                            UA_NODEID_NUMERIC(0, UA_NS0ID_BASEOBJECTTYPE),
-                            oAttr, NULL, &NetworkType);
-    // Protocol Type - OPC UA DI
-    oAttr.displayName = UA_LOCALIZEDTEXT("en-US", "Protocol Type - OPC UA DI");
-    UA_Server_addObjectNode(server, UA_NODEID_NULL,
-                            BaseObjectType,
-                            UA_NODEID_NUMERIC(0, UA_NS0ID_ORGANIZES),
-                            UA_QUALIFIEDNAME(1, "ProcotolType"), 
-                            UA_NODEID_NUMERIC(0, UA_NS0ID_BASEOBJECTTYPE),
-                            oAttr, NULL, &ProtocolType);
-    // Device Type - OPC UA DI
-    oAttr.displayName = UA_LOCALIZEDTEXT("en-US", "Device Type - OPC UA DI");
-    UA_Server_addObjectNode(server, UA_NODEID_NULL,
-                            TopologyElementType,
-                            UA_NODEID_NUMERIC(0, UA_NS0ID_ORGANIZES),
-                            UA_QUALIFIEDNAME(1, "Pump (Manual)"), 
-                            UA_NODEID_NUMERIC(0, UA_NS0ID_BASEOBJECTTYPE),
-                            oAttr, NULL, &DeviceType);
-    
-
-    // Powerlink Device Profile Type - OPC UA POWERLINK
-    oAttr.displayName = UA_LOCALIZEDTEXT("en-US", "Powerlink Device Profile Type - OPC UA POWERLINK");
-    UA_Server_addObjectNode(server, UA_NODEID_NULL,
-                            TopologyElementType,
-                            UA_NODEID_NUMERIC(0, UA_NS0ID_ORGANIZES),
-                            UA_QUALIFIEDNAME(1, "PowerlinkDeviceProfileType"), 
-                            UA_NODEID_NUMERIC(0, UA_NS0ID_BASEOBJECTTYPE),
-                            oAttr, NULL, &PowerlinkConnectionPointType);
-    // Powerlink Device Type - OPC UA POWERLINK
-    oAttr.displayName = UA_LOCALIZEDTEXT("en-US", "Powerlink Device Type - OPC UA POWERLINK");
-    UA_Server_addObjectNode(server, UA_NODEID_NULL,
-                            DeviceType,
-                            UA_NODEID_NUMERIC(0, UA_NS0ID_ORGANIZES),
-                            UA_QUALIFIEDNAME(1, "PowerlinkDeviceType"), 
-                            UA_NODEID_NUMERIC(0, UA_NS0ID_BASEOBJECTTYPE),
-                            oAttr, NULL, &PowerlinkDeviceType);
-    // Powerlink Connection Point Type - OPC UA POWERLINK
-    oAttr.displayName = UA_LOCALIZEDTEXT("en-US", "Powerlink Connection Point Type - OPC UA POWERLINK");
-    UA_Server_addObjectNode(server, UA_NODEID_NULL,
-                            ConnectionPointType,
-                            UA_NODEID_NUMERIC(0, UA_NS0ID_ORGANIZES),
-                            UA_QUALIFIEDNAME(1, "PowerlinkConnectionPointType"), 
-                            UA_NODEID_NUMERIC(0, UA_NS0ID_BASEOBJECTTYPE),
-                            oAttr, NULL, &PowerlinkConnectionPointType);
-    // Powerlink Cn ConnectionPoint Type - OPC UA POWERLINK
-    oAttr.displayName = UA_LOCALIZEDTEXT("en-US", "Powerlink Cn Connection Point Type - OPC UA POWERLINK");
-    UA_Server_addObjectNode(server, UA_NODEID_NULL,
-                            PowerlinkConnectionPointType,
-                            UA_NODEID_NUMERIC(0, UA_NS0ID_ORGANIZES),
-                            UA_QUALIFIEDNAME(1, "PowerlinkCnConnectionPointType"), 
-                            UA_NODEID_NUMERIC(0, UA_NS0ID_BASEOBJECTTYPE),
-                            oAttr, NULL, &PowerlinkCnConnectionPointType);
-    // Powerlink Mn ConnectionPoint Type - OPC UA POWERLINK
-    oAttr.displayName = UA_LOCALIZEDTEXT("en-US", "Powerlink Mn Connection Point Type - OPC UA POWERLINK");
-    UA_Server_addObjectNode(server, UA_NODEID_NULL,
-                            PowerlinkConnectionPointType,
-                            UA_NODEID_NUMERIC(0, UA_NS0ID_ORGANIZES),
-                            UA_QUALIFIEDNAME(1, "PowerlinkMnConnectionPointType"), 
-                            UA_NODEID_NUMERIC(0, UA_NS0ID_BASEOBJECTTYPE),
-                            oAttr, NULL, &PowerlinkMnConnectionPointType);
-    // Powerlink Protocol Type - OPC UA POWERLINK
-    oAttr.displayName = UA_LOCALIZEDTEXT("en-US", "Powerlink Protocol type - OPC UA POWERLINK");
-    UA_Server_addObjectNode(server, UA_NODEID_NULL,
-                            ProtocolType,
-                            UA_NODEID_NUMERIC(0, UA_NS0ID_ORGANIZES),
-                            UA_QUALIFIEDNAME(1, "PowerlinkProtocolType"), 
-                            UA_NODEID_NUMERIC(0, UA_NS0ID_BASEOBJECTTYPE),
-                            oAttr, NULL, &PowerlinkProtocoltype);
-
-    // Variable setup 
-    UA_VariableAttributes varAttr = UA_VariableAttributes_default;
-    
-    // Powerlink Device Type - Manufacturer
-    UA_String manName = UA_STRING("The Name of the Manufacturer");
-    UA_Variant_setScalar(&varAttr.value, &manName, &UA_TYPES[UA_TYPES_STRING]);
-    varAttr.displayName = UA_LOCALIZEDTEXT("en-US", "Manufacturer");
-    UA_Server_addVariableNode(server, UA_NODEID_NULL, 
-                              PowerlinkDeviceType,
-                              UA_NODEID_NUMERIC(0, UA_NS0ID_HASCOMPONENT),
-                              UA_QUALIFIEDNAME(1, "Manufacturer"),
-                              UA_NODEID_NUMERIC(0, UA_NS0ID_BASEDATAVARIABLETYPE), varAttr, NULL, NULL);
-    // Powerlink Device Type - Model
-    UA_String modName = UA_STRING("Model");
-    UA_Variant_setScalar(&varAttr.value, &modName, &UA_TYPES[UA_TYPES_STRING]);
-    varAttr.displayName = UA_LOCALIZEDTEXT("en-US", "Model");
-    UA_Server_addVariableNode(server, UA_NODEID_NULL, 
-                              PowerlinkDeviceType,
-                              UA_NODEID_NUMERIC(0, UA_NS0ID_HASCOMPONENT),
-                              UA_QUALIFIEDNAME(1, "Model"),
-                              UA_NODEID_NUMERIC(0, UA_NS0ID_BASEDATAVARIABLETYPE), varAttr, NULL, NULL);
-
-    // Functional Group Type - Identification 
-    UA_String idName = UA_STRING("Indentifacation");
-    UA_Variant_setScalar(&varAttr.value, &idName, &UA_TYPES[UA_TYPES_STRING]);
-    varAttr.displayName = UA_LOCALIZEDTEXT("en-US", "Identification");
-    UA_Server_addVariableNode(server, UA_NODEID_NULL, 
-                              FunctionGroupType,
-                              UA_NODEID_NUMERIC(0, UA_NS0ID_HASCOMPONENT),
-                              UA_QUALIFIEDNAME(1, "Identification"),
-                              UA_NODEID_NUMERIC(0, UA_NS0ID_BASEDATAVARIABLETYPE), varAttr, NULL, NULL);
-    // Powerlink Cn Connection Point Type 
-    UA_String conName = UA_STRING("ControlledNode");
-    UA_Variant_setScalar(&varAttr.value, &modName, &UA_TYPES[UA_TYPES_STRING]);
-    varAttr.displayName = UA_LOCALIZEDTEXT("en-US", "ControlledNode");
-    UA_Server_addVariableNode(server, UA_NODEID_NULL, 
-                              PowerlinkDeviceType,
-                              UA_NODEID_NUMERIC(0, UA_NS0ID_HASCOMPONENT),
-                              UA_QUALIFIEDNAME(1, "ControlledNode"),
-                              UA_NODEID_NUMERIC(0, UA_NS0ID_BASEDATAVARIABLETYPE), varAttr, NULL, NULL);
-
-    // Hmmm not sure if this is the correct thing.. 
-
-/*
-    UA_VariableAttributes tsAttr = UA_VariableAttributes_default;
-    UA_Variant_setScalar(&tsAttr.value, &timeStamp, &UA_TYPES[UA_TYPES_DATETIME]);
-    UA_Server_addVariableNode(server, UA_NODEID_STRING(2, "testTimeStamp"), 
-                            testObjectId,
-                              UA_NODEID_NUMERIC(0, UA_NS0ID_HASCOMPONENT),
-                              UA_QUALIFIEDNAME(2, "timeStamp"),
-                              UA_NODEID_NUMERIC(0, UA_NS0ID_BASEDATAVARIABLETYPE), tsAttr, NULL, NULL);	
-*/
-}
-
-static void powerlinkNode2(UA_Server *server)
 {
 
     UA_UInt16 UA_THREADSAFE UA_Server_addNamespace(server, Custom_Namespace);
@@ -337,10 +133,6 @@ static void powerlinkNode2(UA_Server *server)
                             UA_QUALIFIEDNAME(1, "FunctionalGroupConfigurationType"), 
                             UA_NODEID_NUMERIC(0, UA_NS0ID_BASEOBJECTTYPE),
                             oAttr, NULL, &FunctionalGroupConfigurationType);
-
-
-
-
 //-------------
     // Powerlink Managing Node, Powerlink Mn Connection point type
     oAttr.displayName = UA_LOCALIZEDTEXT("en-US", "Mn Connection Point Type");
@@ -467,13 +259,7 @@ static void powerlinkNode2(UA_Server *server)
 
 
     // --------------------------------- PowerlinkCnConnectionPointType - Page 38, only takeing Mandatory things --------------------------------
-    // Functional Group Diagnostics - Powerlink Cn Connection point type  
-    UA_Server_addObjectNode(server, UA_NODEID_NULL,
-                    PowerlinkCnConnectionPointType,
-                    UA_NODEID_NUMERIC(0, UA_NS0ID_ORGANIZES),
-                    UA_QUALIFIEDNAME(1, "asdasdas   Functional Group Diagnostics Type"), 
-                    UA_NODEID_NUMERIC(0, UA_NS0ID_BASEOBJECTTYPE),
-                    oAttr, NULL, &FunctionalGroupDiagnosticsType);
+    // Functional Group Diagnostics - Powerlink Cn Connection point type   - FunctionalGroupDiagnosticsType
     // DLL_CNCRCError_REC - n/a 
     UA_Int32 DLL_CNCRCError_REC = 0;
     UA_Variant_setScalar(&dtAttr.value, &DLL_CNCRCError_REC, &UA_TYPES[UA_TYPES_INT32]);
@@ -702,8 +488,7 @@ int main(void) {
     UA_Server *server = UA_Server_new();
     UA_ServerConfig_setDefault(UA_Server_getConfig(server));
 
-   // powerlinkNode(server);
-    powerlinkNode2(server);
+    powerlinkNode(server);
 
     UA_StatusCode retval = UA_Server_run(server, &running);
 
