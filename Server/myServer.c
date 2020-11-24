@@ -10,8 +10,7 @@
 #include "./Include/myNodes.h"
 // specNodes.h
 #include "./Include/specNodes.h"
-// LiveData.h
-//#include "./Include/liveData.h"
+
 // Want to add 
         // Security 
         // Pub/sub? 
