@@ -1,3 +1,5 @@
+#include "mySettings.h"
+
 static volatile UA_Boolean running = true;			// Server state
 
 // Stop handler to watch for ctrl + c 
