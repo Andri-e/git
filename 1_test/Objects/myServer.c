@@ -281,6 +281,13 @@ static void powerlinkNode2(UA_Server *server)
 
 
     UA_ObjectAttributes oAttr = UA_ObjectAttributes_default;    
+    oAttr.minimumSamplingInterval = 100;                            // Optionally, a vendor-specific minimum sampling interval is provided             
+    oAttr.accessLevel = 1;                                          // The access level for Variables used for type definitions is vendor-specific, for all other Variables defined in this part, the access level shall allow a current read; other settings are vendor specific.
+    oAttr.userAccessLevel = 1;                                      // The value for the UserAccessLevel Attribute is vendor-specific. It is assumed that all Variables can be accessed by at least one user.             
+    oAttr.value = 0;                                                // For Variables used as InstanceDeclarations, the value is vendor-specific; otherwise it shall represent the value described in the text.
+    oAttr.arrayDimensionsSize = 0;                                  // If the ValueRank does not identify an array of a specific dimension (i.e. ValueRank <= 0) the ArrayDimensions can either be set to null or the Attribute is missing. This behaviour is vendor-specific.      
+
+
     // Device Type node 
     oAttr.displayName = UA_LOCALIZEDTEXT("en-US", "Device Type");
     UA_Server_addObjectNode(server, UA_NODEID_NULL,
@@ -464,8 +471,6 @@ static void powerlinkNode2(UA_Server *server)
                               UA_NODEID_NUMERIC(0, UA_NS0ID_HASCOMPONENT),
                               UA_QUALIFIEDNAME(2, "DLL_CNLossSoC_REC"),
                               UA_NODEID_NUMERIC(0, UA_NS0ID_BASEDATAVARIABLETYPE), dtAttr, NULL, NULL);	
-
-
     // Functional Group Configuration - Powerlink Cn connection point type 
     UA_Server_addObjectNode(server, UA_NODEID_NULL,
                 PowerlinkCnConnectionPointType,
@@ -482,6 +487,11 @@ static void powerlinkNode2(UA_Server *server)
                               UA_NODEID_NUMERIC(0, UA_NS0ID_HASCOMPONENT),
                               UA_QUALIFIEDNAME(2, "NMT_CNBasicEthernetTimeout_U32"),
                               UA_NODEID_NUMERIC(0, UA_NS0ID_BASEDATAVARIABLETYPE), dtAttr, NULL, NULL);	
+
+
+
+
+
 
 
     // ---------------------------------- PowerlinkMnConnectionPointType - Page 40  ---------------------------------
@@ -502,24 +512,141 @@ static void powerlinkNode2(UA_Server *server)
                               UA_NODEID_NUMERIC(0, UA_NS0ID_HASCOMPONENT),
                               UA_QUALIFIEDNAME(2, "DLL_MNCNLossPResThrCnt_AU32"),
                               UA_NODEID_NUMERIC(0, UA_NS0ID_BASEDATAVARIABLETYPE), dtAttr, NULL, NULL);	
+
+
     // DLL_MNCNLossPResThreshold_AU32 - Uint 32 []
+    UA_UInt32 DLL_MNCNLossPResThreshold_AU32 = 0;
+    UA_Variant_setScalar(&dtAttr.value, &DLL_MNCNLossPResThreshold_AU32, &UA_TYPES[UA_TYPES_UINT32]);
+    dtAttr.displayName = UA_LOCALIZEDTEXT("en-US", "DLL_MNCNLossPResThreshold_AU32");
+    dtAttr.arrayDimensionsSize = 0;
+    UA_Server_addVariableNode(server, UA_NODEID_NULL, 
+                              FunctionalGroupDiagnosticsType,
+                              UA_NODEID_NUMERIC(0, UA_NS0ID_HASCOMPONENT),
+                              UA_QUALIFIEDNAME(2, "DLL_MNCNLossPResThreshold_AU32"),
+                              UA_NODEID_NUMERIC(0, UA_NS0ID_BASEDATAVARIABLETYPE), dtAttr, NULL, NULL);	
     // DLL_MNCRCError_REC - n/a 
+    UA_UInt32 DLL_MNCRCError_REC = 0;
+    UA_Variant_setScalar(&dtAttr.value, &DLL_MNCRCError_REC, &UA_TYPES[UA_TYPES_UINT32]);
+    dtAttr.displayName = UA_LOCALIZEDTEXT("en-US", "DLL_MNCRCError_REC");
+    dtAttr.arrayDimensionsSize = 0;
+    UA_Server_addVariableNode(server, UA_NODEID_NULL, 
+                              FunctionalGroupDiagnosticsType,
+                              UA_NODEID_NUMERIC(0, UA_NS0ID_HASCOMPONENT),
+                              UA_QUALIFIEDNAME(2, "DLL_MNCRCError_REC"),
+                              UA_NODEID_NUMERIC(0, UA_NS0ID_BASEDATAVARIABLETYPE), dtAttr, NULL, NULL);	
     // DLL_MNLossStatusResThrCnt_AU32 - Uint32 []
+    UA_UInt32 DLL_MNLossStatusResThrCnt_AU32 = 0;
+    UA_Variant_setScalar(&dtAttr.value, &DLL_MNLossStatusResThrCnt_AU32, &UA_TYPES[UA_TYPES_UINT32]);
+    dtAttr.displayName = UA_LOCALIZEDTEXT("en-US", "DLL_MNLossStatusResThrCnt_AU32");
+    dtAttr.arrayDimensionsSize = 0;
+    UA_Server_addVariableNode(server, UA_NODEID_NULL, 
+                              FunctionalGroupDiagnosticsType,
+                              UA_NODEID_NUMERIC(0, UA_NS0ID_HASCOMPONENT),
+                              UA_QUALIFIEDNAME(2, "DLL_MNLossStatusResThrCnt_AU32"),
+                              UA_NODEID_NUMERIC(0, UA_NS0ID_BASEDATAVARIABLETYPE), dtAttr, NULL, NULL);	
     // DLL_MNLossStatusResThreshold_AU32 - Uint32 []
+    UA_UInt32 DLL_MNLossStatusResThreshold_AU32 = 0;
+    UA_Variant_setScalar(&dtAttr.value, &DLL_MNLossStatusResThreshold_AU32, &UA_TYPES[UA_TYPES_UINT32]);
+    dtAttr.displayName = UA_LOCALIZEDTEXT("en-US", "DLL_MNLossStatusResThreshold_AU32");
+    dtAttr.arrayDimensionsSize = 0;
+    UA_Server_addVariableNode(server, UA_NODEID_NULL, 
+                              FunctionalGroupDiagnosticsType,
+                              UA_NODEID_NUMERIC(0, UA_NS0ID_HASCOMPONENT),
+                              UA_QUALIFIEDNAME(2, "DLL_MNLossStatusResThreshold_AU32"),
+                              UA_NODEID_NUMERIC(0, UA_NS0ID_BASEDATAVARIABLETYPE), dtAttr, NULL, NULL);	
     // NMT_MNNodeCurrState_AU8 - Powerlink, NMTState, Enumeration [] 
+    UA_UInt32 NMT_MNNodeCurrState_AU8 = 0;
+    UA_Variant_setScalar(&dtAttr.value, &NMT_MNNodeCurrState_AU8, &UA_TYPES[UA_TYPES_UINT32]);
+    dtAttr.displayName = UA_LOCALIZEDTEXT("en-US", "NMT_MNNodeCurrState_AU8");
+    dtAttr.arrayDimensionsSize = 0;
+    UA_Server_addVariableNode(server, UA_NODEID_NULL, 
+                              FunctionalGroupDiagnosticsType,
+                              UA_NODEID_NUMERIC(0, UA_NS0ID_HASCOMPONENT),
+                              UA_QUALIFIEDNAME(2, "NMT_MNNodeCurrState_AU8"),
+                              UA_NODEID_NUMERIC(0, UA_NS0ID_BASEDATAVARIABLETYPE), dtAttr, NULL, NULL);	
     // NMT_RequestCmd_REC - n/a 
+    UA_UInt32 NMT_RequestCmd_REC = 0;
+    UA_Variant_setScalar(&dtAttr.value, &NMT_RequestCmd_REC, &UA_TYPES[UA_TYPES_UINT32]);
+    dtAttr.displayName = UA_LOCALIZEDTEXT("en-US", "NMT_RequestCmd_REC");
+    dtAttr.arrayDimensionsSize = 0;
+    UA_Server_addVariableNode(server, UA_NODEID_NULL, 
+                              FunctionalGroupDiagnosticsType,
+                              UA_NODEID_NUMERIC(0, UA_NS0ID_HASCOMPONENT),
+                              UA_QUALIFIEDNAME(2, "NMT_RequestCmd_REC"),
+                              UA_NODEID_NUMERIC(0, UA_NS0ID_BASEDATAVARIABLETYPE), dtAttr, NULL, NULL);	
+
 
     // Functional Group Configuration - Powerlink Mn Connection point type  
     // DLL_MNCycleSuspendNumber_U32 - Uint32
+    UA_UInt32 DLL_MNCycleSuspendNumber_U32 = 0;
+    UA_Variant_setScalar(&dtAttr.value, &DLL_MNCycleSuspendNumber_U32, &UA_TYPES[UA_TYPES_UINT32]);
+    dtAttr.displayName = UA_LOCALIZEDTEXT("en-US", "DLL_MNCycleSuspendNumber_U32");
+    dtAttr.arrayDimensionsSize = 0;
+    UA_Server_addVariableNode(server, UA_NODEID_NULL, 
+                              FunctionalGroupDiagnosticsType,
+                              UA_NODEID_NUMERIC(0, UA_NS0ID_HASCOMPONENT),
+                              UA_QUALIFIEDNAME(2, "DLL_MNCycleSuspendNumber_U32"),
+                              UA_NODEID_NUMERIC(0, UA_NS0ID_BASEDATAVARIABLETYPE), dtAttr, NULL, NULL);	
     // NMT_BootTime_REC - n/a 
+    UA_UInt32 NMT_BootTime_REC = 0;
+    UA_Variant_setScalar(&dtAttr.value, &NMT_BootTime_REC, &UA_TYPES[UA_TYPES_UINT32]);
+    dtAttr.displayName = UA_LOCALIZEDTEXT("en-US", "NMT_BootTime_REC");
+    dtAttr.arrayDimensionsSize = 0;
+    UA_Server_addVariableNode(server, UA_NODEID_NULL, 
+                              FunctionalGroupDiagnosticsType,
+                              UA_NODEID_NUMERIC(0, UA_NS0ID_HASCOMPONENT),
+                              UA_QUALIFIEDNAME(2, "NMT_BootTime_REC"),
+                              UA_NODEID_NUMERIC(0, UA_NS0ID_BASEDATAVARIABLETYPE), dtAttr, NULL, NULL);	
     // NMT_MNCNPResTimeout_AU32 - Uint32 []
+    UA_UInt32 NMT_MNCNPResTimeout_AU32 = 0;
+    UA_Variant_setScalar(&dtAttr.value, &NMT_MNCNPResTimeout_AU32, &UA_TYPES[UA_TYPES_UINT32]);
+    dtAttr.displayName = UA_LOCALIZEDTEXT("en-US", "NMT_MNCNPResTimeout_AU32");
+    dtAttr.arrayDimensionsSize = 0;
+    UA_Server_addVariableNode(server, UA_NODEID_NULL, 
+                              FunctionalGroupDiagnosticsType,
+                              UA_NODEID_NUMERIC(0, UA_NS0ID_HASCOMPONENT),
+                              UA_QUALIFIEDNAME(2, "NMT_MNCNPResTimeout_AU32"),
+                              UA_NODEID_NUMERIC(0, UA_NS0ID_BASEDATAVARIABLETYPE), dtAttr, NULL, NULL);	
     // NMT_MNCycleTiming_REC - n/a 
+    UA_UInt32 NMT_MNCycleTiming_REC = 0;
+    UA_Variant_setScalar(&dtAttr.value, &NMT_MNCycleTiming_REC, &UA_TYPES[UA_TYPES_UINT32]);
+    dtAttr.displayName = UA_LOCALIZEDTEXT("en-US", "NMT_MNCycleTiming_REC");
+    dtAttr.arrayDimensionsSize = 0;
+    UA_Server_addVariableNode(server, UA_NODEID_NULL, 
+                              FunctionalGroupDiagnosticsType,
+                              UA_NODEID_NUMERIC(0, UA_NS0ID_HASCOMPONENT),
+                              UA_QUALIFIEDNAME(2, "NMT_MNCycleTiming_REC"),
+                              UA_NODEID_NUMERIC(0, UA_NS0ID_BASEDATAVARIABLETYPE), dtAttr, NULL, NULL);	
     // NMT_MNDeviceTypeIdList_AU32 - Uint32 []
+    UA_UInt32 NMT_MNDeviceTypeIdList_AU32 = 0;
+    UA_Variant_setScalar(&dtAttr.value, &NMT_MNDeviceTypeIdList_AU32, &UA_TYPES[UA_TYPES_UINT32]);
+    dtAttr.displayName = UA_LOCALIZEDTEXT("en-US", "NMT_MNDeviceTypeIdList_AU32");
+    dtAttr.arrayDimensionsSize = 0;
+    UA_Server_addVariableNode(server, UA_NODEID_NULL, 
+                              FunctionalGroupDiagnosticsType,
+                              UA_NODEID_NUMERIC(0, UA_NS0ID_HASCOMPONENT),
+                              UA_QUALIFIEDNAME(2, "NMT_MNDeviceTypeIdList_AU32"),
+                              UA_NODEID_NUMERIC(0, UA_NS0ID_BASEDATAVARIABLETYPE), dtAttr, NULL, NULL);	
     // NMT_MNPReqPayloadLimitList_AU16 - Uint16 []
+    UA_UInt32 NMT_MNPReqPayloadLimitList_AU16 = 0;
+    UA_Variant_setScalar(&dtAttr.value, &NMT_MNPReqPayloadLimitList_AU16, &UA_TYPES[UA_TYPES_UINT32]);
+    dtAttr.displayName = UA_LOCALIZEDTEXT("en-US", "NMT_MNPReqPayloadLimitList_AU16");
+    dtAttr.arrayDimensionsSize = 0;
+    UA_Server_addVariableNode(server, UA_NODEID_NULL, 
+                              FunctionalGroupDiagnosticsType,
+                              UA_NODEID_NUMERIC(0, UA_NS0ID_HASCOMPONENT),
+                              UA_QUALIFIEDNAME(2, "NMT_MNPReqPayloadLimitList_AU16"),
+                              UA_NODEID_NUMERIC(0, UA_NS0ID_BASEDATAVARIABLETYPE), dtAttr, NULL, NULL);	
     // NMT_StartUp_U32 - Uint32 
-
-
-
+    UA_UInt32 NMT_StartUp_U32 = 0;
+    UA_Variant_setScalar(&dtAttr.value, &NMT_StartUp_U32, &UA_TYPES[UA_TYPES_UINT32]);
+    dtAttr.displayName = UA_LOCALIZEDTEXT("en-US", "NMT_StartUp_U32");
+    dtAttr.arrayDimensionsSize = 0;
+    UA_Server_addVariableNode(server, UA_NODEID_NULL, 
+                              FunctionalGroupDiagnosticsType,
+                              UA_NODEID_NUMERIC(0, UA_NS0ID_HASCOMPONENT),
+                              UA_QUALIFIEDNAME(2, "NMT_StartUp_U32"),
+                              UA_NODEID_NUMERIC(0, UA_NS0ID_BASEDATAVARIABLETYPE), dtAttr, NULL, NULL);	
 }
 
 
