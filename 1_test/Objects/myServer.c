@@ -266,7 +266,7 @@ static void powerlinkNode(UA_Server *server)
 static void powerlinkNode2(UA_Server *server)
 {
 
-    UA_UInt16 UA_THREADSAFE UA_Server_addNamespace(server, );
+    UA_UInt16 UA_THREADSAFE UA_Server_addNamespace(server, "Custom Namespace" );
 
     
     // OPC UA - POWERLINK
@@ -494,7 +494,7 @@ static void powerlinkNode2(UA_Server *server)
                 oAttr, NULL, &FunctionalGroupDiagnosticsType);
     // DLL_MNCNLossPResThrCnt_AU32 - Uint32 []
     UA_UInt32 DLL_MNCNLossPResThrCnt_AU32_U32 = 0;
-    UA_Variant_setScalar(&dtAttr.value, &DLL_MNCNLossPResThrCnt_AU32, &UA_TYPES[UA_TYPES_UINT32]);
+    UA_Variant_setScalar(&dtAttr.value, &DLL_MNCNLossPResThrCnt_AU32_U32, &UA_TYPES[UA_TYPES_UINT32]);
     dtAttr.displayName = UA_LOCALIZEDTEXT("en-US", "DLL_MNCNLossPResThrCnt_AU32");
     dtAttr.arrayDimensionsSize = 0;
     UA_Server_addVariableNode(server, UA_NODEID_NULL, 
