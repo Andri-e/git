@@ -12,13 +12,22 @@
 
  # Tell make that `funcXX.o` depends on the `Includes/funcXX.h`
  # such that it rebuilds the former if the latter changes
- func_%.o: Includes/func_%.h
+ myEvent.o: Includes/myEvent.h
+ 
+ myNodes.o: Includes/myNodes.h 
+ 
+ mySettings.o: Includes/mySettings.h 
+ 
+ open62541.o: Includes/open62541.h 
+ 
+ specNodes.o: Includes/specNodes.h 
 
+ 
  # Tell make that `Mainfile.o` depends on all `Includes/funcXX.h`
  # files such that it rebuilds the former if any of the latter
  # changes
- Mainfile.o: $(wildcard Includes/func_*.h)
+ myServer.o: $(wildcard Includes/*.h)
 
  # Tell make how to build the executable from the object files
- Mainfile: $(OBJS)
+ myServer: $(OBJS)
      $(CC) $(CFLAGS) $(LDFLAGS) -o $@ $^ $(LDLIBS)
