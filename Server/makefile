@@ -8,8 +8,7 @@
  # Static pattern rule to tell make how to build an
  # object file from its source file
  $(OBJS): %.o: Src/%.c
- 
- $(CC) $(CFLAGS) -c -o $@ $<
+	$(CC) $(CFLAGS) -c -o $@ $<
 
  # Tell make that `funcXX.o` depends on the `Includes/funcXX.h`
  # such that it rebuilds the former if the latter changes
