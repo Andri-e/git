@@ -33,3 +33,9 @@ myServer.o: $(wildcard Includes/*.h)
 # Tell make how to build the executable from the object files
 myServer: $(OBJS)
 	$(CC) $(CFLAGS) $(LDFLAGS) -o $@ $^ $(LDLIBS)
+	
+clean: 
+	rm *.o myServer
+
+run: 
+	./myServer
