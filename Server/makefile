@@ -1,17 +1,24 @@
-myServer: 
-	gcc -c ./Include/myEvent.c 
-	gcc -c ./Include/myNodes.c
-	gcc -c ./Include/mySettings.c
-	gcc -c ./Include/open62541.c 
-	gcc -c ./Include/specNodes.c 
-	gcc -c myServer.c 
-	
-	gcc -o myServer myEvent.o myNodes.o mySettings.o open62541.o specNodes.o myServer.o
-	
+# Tell the compiler about the headers directory
+ CFLAGS += -I./Includes
+ # Find all C source files
+ SRCS := $(wildcard Src/*.c)
+ # Compute object file names from source file names
+ OBJS := $(patsubst Src/%.c,%.o,$(SRCS))
 
-	
-clean: 
-	rm *.o myServer
+ # Static pattern rule to tell make how to build an
+ # object file from its source file
+ $(OBJS): %.o: Src/%.c
+     $(CC) $(CFLAGS) -c -o $@ $<
 
-run: 
-	./myServer
+ # Tell make that `funcXX.o` depends on the `Includes/funcXX.h`
+ # such that it rebuilds the former if the latter changes
+ func_%.o: Includes/func_%.h
+
+ # Tell make that `Mainfile.o` depends on all `Includes/funcXX.h`
+ # files such that it rebuilds the former if any of the latter
+ # changes
+ Mainfile.o: $(wildcard Includes/func_*.h)
+
+ # Tell make how to build the executable from the object files
+ Mainfile: $(OBJS)
+     $(CC) $(CFLAGS) $(LDFLAGS) -o $@ $^ $(LDLIBS)
