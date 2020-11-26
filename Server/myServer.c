@@ -21,13 +21,13 @@
 // ---- 
 
 
-static UA_StatusCode
-helloWorldMethodCallback(UA_Server *server,
+UA_StatusCode helloWorldMethodCallback(UA_Server *server,
                          const UA_NodeId *sessionId, void *sessionHandle,
                          const UA_NodeId *methodId, void *methodContext,
                          const UA_NodeId *objectId, void *objectContext,
                          size_t inputSize, const UA_Variant *input,
-                         size_t outputSize, UA_Variant *output) {
+                         size_t outputSize, UA_Variant *output) 
+{
     UA_String *inputStr = (UA_String*)input->data;
     UA_String tmp = UA_STRING_ALLOC("Hello ");
     if(inputStr->length > 0) {
@@ -41,8 +41,8 @@ helloWorldMethodCallback(UA_Server *server,
     return UA_STATUSCODE_GOOD;
 }
 
-static void
-addHellWorldMethod(UA_Server *server) {
+void addHellWorldMethod(UA_Server *server) 
+{
     UA_Argument inputArgument;
     UA_Argument_init(&inputArgument);
     inputArgument.description = UA_LOCALIZEDTEXT("en-US", "A String");
@@ -58,7 +58,7 @@ addHellWorldMethod(UA_Server *server) {
     outputArgument.valueRank = UA_VALUERANK_SCALAR;
 
     UA_MethodAttributes helloAttr = UA_MethodAttributes_default;
-    helloAttr.description = UA_LOCALIZEDTEXT("en-US","Say `Hello World`");
+    helloAttr.description = UA_LOCALIZEDTEXT("en-US","Select : \t1 for xx \n\t2 for xy ");
     helloAttr.displayName = UA_LOCALIZEDTEXT("en-US","Hello World");
     helloAttr.executable = true;
     helloAttr.userExecutable = true;
