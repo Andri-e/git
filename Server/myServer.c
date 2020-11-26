@@ -101,21 +101,21 @@ IncInt32ArrayMethodCallback(UA_Server *server,
                             const UA_NodeId *methodId, void *methodContext,
                             const UA_NodeId *objectId, void *objectContext,
                             size_t inputSize, const UA_Variant *input,
-                            size_t outputSize, UA_Variant *output) {
+                            size_t outputSize, UA_Variant *output) 
+{
     UA_Int32 *inputArray = (UA_Int32*)input[0].data;
-    UA_Int32 delta = *(UA_Int32*)input[1].data;
+    //UA_Int32 delta = *(UA_Int32*)input[1].data;
 
     /* Copy the input array */
-    UA_StatusCode retval = UA_Variant_setArrayCopy(output, inputArray, 5,
-                                                   &UA_TYPES[UA_TYPES_INT32]);
+    UA_StatusCode retval = UA_Variant_setArrayCopy(output, inputArray, 5, &UA_TYPES[UA_TYPES_INT32]);
     if(retval != UA_STATUSCODE_GOOD)
         return retval;
-
-    /* Increate the elements */
+/*
+    // Increate the elements 
     UA_Int32 *outputArray = (UA_Int32*)output->data;
     for(size_t i = 0; i < input->arrayLength; i++)
         outputArray[i] = inputArray[i] + delta;
-
+*/
     return UA_STATUSCODE_GOOD;
 }
 
