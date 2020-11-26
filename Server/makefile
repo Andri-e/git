@@ -1,5 +1,5 @@
-myServer: myServer.o myEvent.o myNodes.o mySettings.o open62541.o
-	gcc myServer.o myEvent.o myNodes.o mySettings.o open62541.o -o myServer
+myServer: myServer.o myEvent.o myNodes.o mySettings.o open62541.o specNodes.o
+	gcc myServer.o myEvent.o myNodes.o mySettings.o open62541.o specNodes.o -o myServer
 
 myServer.o: myServer.c	
 	gcc -c myServer.c 
