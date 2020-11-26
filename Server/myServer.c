@@ -113,8 +113,8 @@ void addMethod(UA_Server *server)
 {
     UA_Argument inputArgumentTest;
     UA_Argument_init(&inputArgumentTest);
-    inputArgumentTest.description = UA_LOCALIZEDTEXT("asden-US", "asdA String");
-    inputArgumentTest.name = UA_STRING("asdMyInput");
+    inputArgumentTest.description = UA_LOCALIZEDTEXT("asden-US", "Int32");
+    inputArgumentTest.name = UA_STRING("My Input");
     inputArgumentTest.dataType = UA_TYPES[UA_TYPES_INT32].typeId;
     inputArgumentTest.valueRank = UA_VALUERANK_SCALAR;
 
@@ -122,29 +122,24 @@ void addMethod(UA_Server *server)
     // One output argument 
     UA_Argument outputArgumentTest;
     UA_Argument_init(&outputArgumentTest);
-    outputArgumentTest.description = UA_LOCALIZEDTEXT("en-US", "asdint32[5] array");
-    outputArgumentTest.name = UA_STRING("asdeach entry is incremented by the delta");
+    outputArgumentTest.description = UA_LOCALIZEDTEXT("en-US", "int32");
+    outputArgumentTest.name = UA_STRING("My Output");
     outputArgumentTest.dataType = UA_TYPES[UA_TYPES_INT32].typeId;
     outputArgumentTest.valueRank = UA_VALUERANK_SCALAR;
-   // UA_UInt32 pOutputDimension = 5;
-   // outputArgumentTest.arrayDimensionsSize = 1;
-  //  outputArgument.arrayDimensions = &pOutputDimension;
-
 
     // Add the method node 
     UA_MethodAttributes incAttrTest = UA_MethodAttributes_default;
-    incAttrTest.description = UA_LOCALIZEDTEXT("en-US", "asdIncInt32ArrayValues");
-    incAttrTest.displayName = UA_LOCALIZEDTEXT("en-US", "asdIncInt32ArrayValues");
+    incAttrTest.description = UA_LOCALIZEDTEXT("en-US", "Method Node");
+    incAttrTest.displayName = UA_LOCALIZEDTEXT("en-US", "Method Node");
     incAttrTest.executable = true;
     incAttrTest.userExecutable = true;
-    UA_Server_addMethodNode(server, UA_NODEID_STRING(1, "asdIncInt32ArrayValues"),
+    UA_Server_addMethodNode(server, UA_NODEID_STRING(1, "Method Node"),
                             UA_NODEID_NUMERIC(0, UA_NS0ID_OBJECTSFOLDER),
                             UA_NODEID_NUMERIC(0, UA_NS0ID_HASCOMPONENT),
-                            UA_QUALIFIEDNAME(1, "asdIncInt32ArrayValues"),
+                            UA_QUALIFIEDNAME(1, "MethodNode"),
                             incAttrTest, &MethodCallBack,
                             1, &inputArgumentTest, 1, &outputArgumentTest,
                             NULL, NULL);
-
 }
 
 
