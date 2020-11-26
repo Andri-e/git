@@ -141,7 +141,7 @@ void addMethod(UA_Server *server)
                             UA_NODEID_NUMERIC(0, UA_NS0ID_HASCOMPONENT),
                             UA_QUALIFIEDNAME(1, "IncInt32ArrayValues"),
                             incAttr, &MethodCallBack,
-                            2, inputArguments, 1, &outputArgument,
+                            2, inputArgumentTest, 1, &outputArgument,
                             NULL, NULL);
 }
 
