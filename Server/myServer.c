@@ -112,7 +112,7 @@ UA_StatusCode MethodCallBack(UA_Server *server,
 void addMethod(UA_Server *server) 
 {
     /* Two input arguments */
-    UA_Argument inputArgument;
+    UA_Argument inputArguments;
     UA_Argument_init(&inputArguments);
     inputArguments.description = UA_LOCALIZEDTEXT("en-US", "int32[5] array");
     inputArguments.name = UA_STRING("int32 array");
