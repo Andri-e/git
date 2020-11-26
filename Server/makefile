@@ -37,5 +37,6 @@ myServer: $(OBJS)
 clean: 
 	rm *.o myServer
 
+# Might have to do chmod 777 -R yourDir to make the run file run
 run: 
 	./myServer
