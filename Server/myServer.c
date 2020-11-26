@@ -43,12 +43,16 @@ UA_StatusCode helloWorldMethodCallback(UA_Server *server,
     }
 
 
-    printf("\nasdasd\n");
-    printf("%x", tmp->data);
 
 
 
     UA_Variant_setScalarCopy(output, &tmp, &UA_TYPES[UA_TYPES_STRING]);
+
+
+   printf("\t Output: %x\n", output->data);
+
+
+
     UA_String_clear(&tmp);
     UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_SERVER, "Hello World was called");
     return UA_STATUSCODE_GOOD;
