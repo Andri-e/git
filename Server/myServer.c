@@ -146,7 +146,7 @@ void addHellWorldMethod2(UA_Server *server)
 
     UA_MethodAttributes helloAttr = UA_MethodAttributes_default;
     helloAttr.description = UA_LOCALIZEDTEXT("en-US","Select : \t1 for xx \n\t2 for xy\n\t3 for yx\n\t4 for ... ");
-    helloAttr.displayName = UA_LOCALIZEDTEXT("en-US","Hello World");
+    helloAttr.displayName = UA_LOCALIZEDTEXT("en-US","Hello World 2 ");
     helloAttr.executable = true;
     helloAttr.userExecutable = true;
     UA_Server_addMethodNode(server, UA_NODEID_NUMERIC(1,62541),
