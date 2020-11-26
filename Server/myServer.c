@@ -120,7 +120,8 @@ IncInt32ArrayMethodCallback(UA_Server *server,
 }
 
 static void
-addIncInt32ArrayMethod(UA_Server *server) {
+addIncInt32ArrayMethod(UA_Server *server) 
+{
     /* Two input arguments */
     UA_Argument inputArguments[2];
     UA_Argument_init(&inputArguments[0]);
@@ -131,12 +132,14 @@ addIncInt32ArrayMethod(UA_Server *server) {
     UA_UInt32 pInputDimension = 5;
     inputArguments[0].arrayDimensionsSize = 1;
     inputArguments[0].arrayDimensions = &pInputDimension;
-
+    
+/*
     UA_Argument_init(&inputArguments[1]);
     inputArguments[1].description = UA_LOCALIZEDTEXT("en-US", "int32 delta");
     inputArguments[1].name = UA_STRING("int32 delta");
     inputArguments[1].dataType = UA_TYPES[UA_TYPES_INT32].typeId;
     inputArguments[1].valueRank = UA_VALUERANK_SCALAR;
+*/
 
     /* One output argument */
     UA_Argument outputArgument;
