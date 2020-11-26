@@ -40,7 +40,7 @@ UA_StatusCode helloWorldMethodCallback(UA_Server *server,
 
 
 
-    //printf("%s", tmp.length, tmp.data);
+    printf("%p", tmp);
 
 
 
