@@ -1,5 +1,5 @@
 #include "open62541.h"
-#include "mySettings.h"
+#include "../Includes/mySettings.h"
 
 // Argument check, is Host name and Port number default? 
 void checkArguments(UA_Server *server, int argc, char * argv[] )

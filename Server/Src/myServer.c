@@ -3,10 +3,10 @@
 #include <signal.h>
 #include <stdlib.h>
 
-#include "./Include/mySettings.h"
-#include "./Include/myEvent.h"
-#include "./Include/myNodes.h"
-#include "./Include/specNodes.h"
+#include "../Include/mySettings.h"
+#include "../Include/myEvent.h"
+#include "../Include/myNodes.h"
+#include "../Include/specNodes.h"
 
 // Want to add 
         // Security 

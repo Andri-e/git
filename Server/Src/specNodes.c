@@ -1,5 +1,5 @@
 #include "open62541.h"
-#include "specNodes.h"
+#include "../Includes/specNodes.h"
 
 void powerlinkNode(UA_Server *server)
 {
