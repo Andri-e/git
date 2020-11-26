@@ -18,8 +18,6 @@
         // Pub/sub? 
         // Conditions? 
 
-// ---- 
-
 
 UA_StatusCode helloWorldMethodCallback(UA_Server *server,
                          const UA_NodeId *sessionId, void *sessionHandle,
@@ -49,8 +47,10 @@ UA_StatusCode helloWorldMethodCallback(UA_Server *server,
     UA_Variant_setScalarCopy(output, &tmp, &UA_TYPES[UA_TYPES_STRING]);
 
 
-    UA_String value = *(UA_String*) output->data;
-    printf("\tOutput: %x\n", value);
+    //UA_String value = *(UA_String*) output->data;
+    //printf("\tOutput: %x\n", value);
+
+    printf("\tOutput: %s\n", output);
 
 
 
@@ -87,169 +87,6 @@ void addHellWorldMethod(UA_Server *server)
                             helloAttr, &helloWorldMethodCallback,
                             1, &inputArgument, 1, &outputArgument, NULL, NULL);
 }
-
-//--------------
-
-// drasl 
-UA_StatusCode MethodCallBack(UA_Server *server,
-                            const UA_NodeId *sessionId, void *sessionContext,
-                            const UA_NodeId *methodId, void *methodContext,
-                            const UA_NodeId *objectId, void *objectContext,
-                            size_t inputSize, const UA_Variant *input,
-                            size_t outputSize, UA_Variant *output) 
-{
-    //UA_Int32 *inputArray = (UA_Int32*)input[0].data;
-  //  UA_String *inputStr = (UA_String*)input->data;
-    UA_Int32 *inputData = (UA_Int32*)input->data;
-
-    /* Copy the input array */
-    UA_StatusCode retval = UA_Variant_setScalarCopy(output, input, &UA_TYPES[UA_TYPES_INT32]);
-
-    UA_Int32 value = *(UA_Int32*) output->data;
-    printf("\tOutput: %x\n", value);
-
-
-
-    if(retval != UA_STATUSCODE_GOOD)
-    {
-        printf("\n not good?");
-        return retval;
-    }
-
-   // UA_Variant_setScalarCopy(output, &inputData, &UA_TYPES[UA_TYPES_STRING]);
-
-
-  //  UA_Int32 value = *(UA_Int32*) output->data;
- //   printf("\tOutput: %x\n", value);
-
-    return UA_STATUSCODE_GOOD;
-}
-
-void addMethod(UA_Server *server) 
-{
-    UA_Argument inputArgumentTest;
-    UA_Argument_init(&inputArgumentTest);
-    inputArgumentTest.description = UA_LOCALIZEDTEXT("asden-US", "Int32");
-    inputArgumentTest.name = UA_STRING("My Input");
-    inputArgumentTest.dataType = UA_TYPES[UA_TYPES_INT32].typeId;
-    inputArgumentTest.valueRank = UA_VALUERANK_SCALAR;
-
-
-    // One output argument 
-    UA_Argument outputArgumentTest;
-    UA_Argument_init(&outputArgumentTest);
-    outputArgumentTest.description = UA_LOCALIZEDTEXT("en-US", "int32");
-    outputArgumentTest.name = UA_STRING("My Output");
-    outputArgumentTest.dataType = UA_TYPES[UA_TYPES_INT32].typeId;
-    outputArgumentTest.valueRank = UA_VALUERANK_SCALAR;
-
-    // Add the method node 
-    UA_MethodAttributes incAttrTest = UA_MethodAttributes_default;
-    incAttrTest.description = UA_LOCALIZEDTEXT("en-US", "Method Node");
-    incAttrTest.displayName = UA_LOCALIZEDTEXT("en-US", "Method Node");
-    incAttrTest.executable = true;
-    incAttrTest.userExecutable = true;
-    UA_Server_addMethodNode(server, UA_NODEID_STRING(1, "Method Node"),
-                            UA_NODEID_NUMERIC(0, UA_NS0ID_OBJECTSFOLDER),
-                            UA_NODEID_NUMERIC(0, UA_NS0ID_HASCOMPONENT),
-                            UA_QUALIFIEDNAME(1, "MethodNode"),
-                            incAttrTest, &MethodCallBack,
-                            1, &inputArgumentTest, 1, &outputArgumentTest,
-                            NULL, NULL);
-}
-
-
-
-
-//-----------
-
-
-
-
-
-
-
-
-
-static UA_StatusCode
-IncInt32ArrayMethodCallback(UA_Server *server,
-                            const UA_NodeId *sessionId, void *sessionContext,
-                            const UA_NodeId *methodId, void *methodContext,
-                            const UA_NodeId *objectId, void *objectContext,
-                            size_t inputSize, const UA_Variant *input,
-                            size_t outputSize, UA_Variant *output) 
-{
-    UA_Int32 *inputArray = (UA_Int32*)input[0].data;
-    //UA_Int32 delta = *(UA_Int32*)input[1].data;
-
-    /* Copy the input array */
-    UA_StatusCode retval = UA_Variant_setArrayCopy(output, inputArray, 5, &UA_TYPES[UA_TYPES_INT32]);
-    if(retval != UA_STATUSCODE_GOOD)
-        return retval;
-/*
-    // Increate the elements 
-    UA_Int32 *outputArray = (UA_Int32*)output->data;
-    for(size_t i = 0; i < input->arrayLength; i++)
-        outputArray[i] = inputArray[i] + delta;
-*/
-    return UA_STATUSCODE_GOOD;
-}
-
-static void
-addIncInt32ArrayMethod(UA_Server *server) 
-{
-    /* Two input arguments */
-    UA_Argument inputArguments[3];
-    UA_Argument_init(&inputArguments[0]);
-    inputArguments[0].description = UA_LOCALIZEDTEXT("en-US", "int32[5] array");
-    inputArguments[0].name = UA_STRING("int32 array");
-    inputArguments[0].dataType = UA_TYPES[UA_TYPES_INT32].typeId;
-    inputArguments[0].valueRank = UA_VALUERANK_ONE_DIMENSION;
-    UA_UInt32 pInputDimension = 5;
-    inputArguments[0].arrayDimensionsSize = 1;
-    inputArguments[0].arrayDimensions = &pInputDimension;
-
-/*
-    UA_Argument_init(&inputArguments[1]);
-    inputArguments[1].description = UA_LOCALIZEDTEXT("en-US", "int32 delta");
-    inputArguments[1].name = UA_STRING("int32 delta");
-    inputArguments[1].dataType = UA_TYPES[UA_TYPES_INT32].typeId;
-    inputArguments[1].valueRank = UA_VALUERANK_SCALAR;
-*/
-
-    /* One output argument */
-    UA_Argument outputArgument;
-    UA_Argument_init(&outputArgument);
-    outputArgument.description = UA_LOCALIZEDTEXT("en-US", "int32[5] array");
-    outputArgument.name = UA_STRING("each entry is incremented by the delta");
-    outputArgument.dataType = UA_TYPES[UA_TYPES_INT32].typeId;
-    outputArgument.valueRank = UA_VALUERANK_ONE_DIMENSION;
-    UA_UInt32 pOutputDimension = 5;
-    outputArgument.arrayDimensionsSize = 1;
-    outputArgument.arrayDimensions = &pOutputDimension;
-
-    /* Add the method node */
-    UA_MethodAttributes incAttr = UA_MethodAttributes_default;
-    incAttr.description = UA_LOCALIZEDTEXT("en-US", "IncInt32ArrayValues");
-    incAttr.displayName = UA_LOCALIZEDTEXT("en-US", "IncInt32ArrayValues");
-    incAttr.executable = true;
-    incAttr.userExecutable = true;
-    UA_Server_addMethodNode(server, UA_NODEID_STRING(1, "IncInt32ArrayValues"),
-                            UA_NODEID_NUMERIC(0, UA_NS0ID_OBJECTSFOLDER),
-                            UA_NODEID_NUMERIC(0, UA_NS0ID_HASCOMPONENT),
-                            UA_QUALIFIEDNAME(1, "IncInt32ArrayValues"),
-                            incAttr, &IncInt32ArrayMethodCallback,
-                            2, inputArguments, 1, &outputArgument,
-                            NULL, NULL);
-}
-
-
-
-// ---- 
-
-
-
-
 
 static volatile UA_Boolean running = true;			// Server state
 
@@ -290,9 +127,6 @@ int main(int argc, char * argv[])
 // -- 
 
     addHellWorldMethod(server);
-    addIncInt32ArrayMethod(server);
-    addMethod(server);
-
 // -- 
 
 
