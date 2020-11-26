@@ -30,11 +30,13 @@ UA_StatusCode helloWorldMethodCallback(UA_Server *server,
 {
     UA_String *inputStr = (UA_String*)input->data;
     UA_String tmp = UA_STRING_ALLOC("Hello ");
-    if(inputStr->length > 0) {
+    if(inputStr->length > 0) 
+    {
         tmp.data = (UA_Byte *)UA_realloc(tmp.data, tmp.length + inputStr->length);
         memcpy(&tmp.data[tmp.length], inputStr->data, inputStr->length);
         tmp.length += inputStr->length;
     }
+    printf("%s", temp);
     UA_Variant_setScalarCopy(output, &tmp, &UA_TYPES[UA_TYPES_STRING]);
     UA_String_clear(&tmp);
     UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_SERVER, "Hello World was called");
@@ -58,7 +60,7 @@ void addHellWorldMethod(UA_Server *server)
     outputArgument.valueRank = UA_VALUERANK_SCALAR;
 
     UA_MethodAttributes helloAttr = UA_MethodAttributes_default;
-    helloAttr.description = UA_LOCALIZEDTEXT("en-US","Select : \t1 for xx \n\t2 for xy ");
+    helloAttr.description = UA_LOCALIZEDTEXT("en-US","Select : \t1 for xx \n\t2 for xy\n\t3 for yx\n\t4 for ... ");
     helloAttr.displayName = UA_LOCALIZEDTEXT("en-US","Hello World");
     helloAttr.executable = true;
     helloAttr.userExecutable = true;
