@@ -19,8 +19,8 @@ open62541.o: open62541.c open62541.h
 specNodes.o: specNodes.c specNodes.h 
 	gcc -c specNodes.c 
 	
-clean: 
-	rm *.o myServer
+#clean: 
+#	rm *.o myServer
 
-run: 
-	./myServer
+#run: 
+#	./myServer
