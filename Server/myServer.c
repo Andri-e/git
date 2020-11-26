@@ -113,7 +113,7 @@ void addMethod(UA_Server *server)
 {
     UA_Argument inputArgumentTest;
     UA_Argument_init(&inputArgumentTest);
-    inputArgumentTest.description = UA_LOCALIZEDTEXT("en-US", "A String");
+    inputArgumentTest.description = UA_LOCALIZEDTEXT("en-US", "A asd");
     inputArgumentTest.name = UA_STRING("MyInput");
     inputArgumentTest.dataType = UA_TYPES[UA_TYPES_INT32].typeId;
     inputArgumentTest.valueRank = UA_VALUERANK_SCALAR;
@@ -122,8 +122,8 @@ void addMethod(UA_Server *server)
     /* One output argument */
     UA_Argument outputArgument;
     UA_Argument_init(&outputArgument);
-    outputArgument.description = UA_LOCALIZEDTEXT("en-US", "int32[5] array");
-    outputArgument.name = UA_STRING("each entry is incremented by the delta");
+    outputArgument.description = UA_LOCALIZEDTEXT("en-US", "intasd32[5] asd");
+    outputArgument.name = UA_STRING("each entry is incremented asd the delta");
     outputArgument.dataType = UA_TYPES[UA_TYPES_INT32].typeId;
     outputArgument.valueRank = UA_VALUERANK_ONE_DIMENSION;
    // UA_UInt32 pOutputDimension = 5;
@@ -132,14 +132,14 @@ void addMethod(UA_Server *server)
 
     /* Add the method node */
     UA_MethodAttributes incAttr = UA_MethodAttributes_default;
-    incAttr.description = UA_LOCALIZEDTEXT("en-US", "IncInt32ArrayValues");
-    incAttr.displayName = UA_LOCALIZEDTEXT("en-US", "IncInt32ArrayValues");
+    incAttr.description = UA_LOCALIZEDTEXT("en-US", "asd1");
+    incAttr.displayName = UA_LOCALIZEDTEXT("en-US", "asd2");
     incAttr.executable = true;
     incAttr.userExecutable = true;
-    UA_Server_addMethodNode(server, UA_NODEID_STRING(1, "IncInt32ArrayValues"),
+    UA_Server_addMethodNode(server, UA_NODEID_STRING(1, "asd2"),
                             UA_NODEID_NUMERIC(0, UA_NS0ID_OBJECTSFOLDER),
                             UA_NODEID_NUMERIC(0, UA_NS0ID_HASCOMPONENT),
-                            UA_QUALIFIEDNAME(1, "IncInt32ArrayValues"),
+                            UA_QUALIFIEDNAME(1, "asd3"),
                             incAttr, &MethodCallBack,
                             2, &inputArgumentTest, 1, &outputArgument,
                             NULL, NULL);
