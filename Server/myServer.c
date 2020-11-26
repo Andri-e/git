@@ -30,7 +30,7 @@ UA_StatusCode helloWorldMethodCallback(UA_Server *server,
 {
     UA_String *inputStr = (UA_String*)input->data;
     UA_String tmp = UA_STRING_ALLOC("Hello ");
-    printf("%s", inputStr->length, inputStr->data);
+   // printf("%s", inputStr->length, inputStr->data);
     if(inputStr->length > 0) 
     {
         tmp.data = (UA_Byte *)UA_realloc(tmp.data, tmp.length + inputStr->length);
@@ -44,7 +44,7 @@ UA_StatusCode helloWorldMethodCallback(UA_Server *server,
 
 
 
-    UA_Variant_setScalarCopy(output, &tmp, &UA_TYPES[UA_TYPES_STRING]);
+   // UA_Variant_setScalarCopy(output, &tmp, &UA_TYPES[UA_TYPES_STRING]);
     UA_String_clear(&tmp);
     UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_SERVER, "Hello World was called");
     return UA_STATUSCODE_GOOD;
