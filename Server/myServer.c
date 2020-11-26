@@ -98,7 +98,8 @@ UA_StatusCode MethodCallBack(UA_Server *server,
                             size_t outputSize, UA_Variant *output) 
 {
     //UA_Int32 *inputArray = (UA_Int32*)input[0].data;
-    UA_Int32 *inputArray = (UA_Int32*)input[0].data;
+  //  UA_String *inputStr = (UA_String*)input->data;
+    UA_Int32 *inputData = (UA_Int32*)input->data;
 
     /* Copy the input array */
     UA_StatusCode retval = UA_Variant_setScalarCopy(output, input, &UA_TYPES[UA_TYPES_INT32]);
@@ -108,7 +109,7 @@ UA_StatusCode MethodCallBack(UA_Server *server,
         return retval;
     }
 
-    UA_Variant_setScalarCopy(output, &inputArray, &UA_TYPES[UA_TYPES_STRING]);
+    UA_Variant_setScalarCopy(output, &inputData, &UA_TYPES[UA_TYPES_STRING]);
 
 
     UA_Int32 value = *(UA_Int32*) output->data;
