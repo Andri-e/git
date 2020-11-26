@@ -1,7 +1,7 @@
 myServer: myServer.o myEvent.o myNodes.o mySettings.o open62541.o
 	gcc myServer.o myEvent.o myNodes.o mySettings.o open62541.o -o myServer
 
-myServer.o: myServer.clean	
+myServer.o: myServer.c	
 	gcc -c myServer.c 
 
 myEvent.o: myEvent.c myEvent.h 
@@ -19,8 +19,8 @@ open62541.o: open62541.c open62541.h
 specNodes.o: specNodes.c specNodes.h 
 	gcc -c specNodes.c 
 	
-#clean: 
-#	rm *.o myServer
+clean: 
+	rm *.o myServer
 
-#run: 
-#	./myServer
+run: 
+	./myServer
