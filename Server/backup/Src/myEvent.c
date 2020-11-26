@@ -1,5 +1,5 @@
 #include "open62541.h"
-#include "myEvent.h"
+#include "../Includes/myEvent.h"
 
 // Event thing a asdasdasdasd
 static UA_NodeId eventType;
