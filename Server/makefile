@@ -5,7 +5,7 @@ myServer.o: myServer.c
 	gcc -c myServer.c 
 
 myEvent.o: Include/myEvent.c Include/myEvent.h 
-	gcc -c myEvent.c 
+	gcc -c Include/myEvent.c  
 	
 myNodes.o: myNodes.c myNodes.h 
 	gcc -c myNodes.c 
