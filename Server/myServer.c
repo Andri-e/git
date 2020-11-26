@@ -130,21 +130,21 @@ void addMethod(UA_Server *server)
    // outputArgumentTest.arrayDimensionsSize = 1;
   //  outputArgument.arrayDimensions = &pOutputDimension;
 
-/*
+
     // Add the method node 
-    UA_MethodAttributes incAttr = UA_MethodAttributes_default;
-    incAttr.description = UA_LOCALIZEDTEXT("en-US", "asdIncInt32ArrayValues");
-    incAttr.displayName = UA_LOCALIZEDTEXT("en-US", "asdIncInt32ArrayValues");
-    incAttr.executable = true;
-    incAttr.userExecutable = true;
+    UA_MethodAttributes incAttrTest = UA_MethodAttributes_default;
+    incAttrTest.description = UA_LOCALIZEDTEXT("en-US", "asdIncInt32ArrayValues");
+    incAttrTest.displayName = UA_LOCALIZEDTEXT("en-US", "asdIncInt32ArrayValues");
+    incAttrTest.executable = true;
+    incAttrTest.userExecutable = true;
     UA_Server_addMethodNode(server, UA_NODEID_STRING(1, "asdIncInt32ArrayValues"),
                             UA_NODEID_NUMERIC(0, UA_NS0ID_OBJECTSFOLDER),
                             UA_NODEID_NUMERIC(0, UA_NS0ID_HASCOMPONENT),
                             UA_QUALIFIEDNAME(1, "asdIncInt32ArrayValues"),
-                            incAttr, &MethodCallBack,
-                            2, &inputArgumentTest, 1, &outputArgument,
+                            incAttrTest, &MethodCallBack,
+                            2, &inputArgumentTest, 1, &outputArgumentTest,
                             NULL, NULL);
-*/
+
 }
 
 
