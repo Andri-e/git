@@ -77,13 +77,13 @@ void addHellWorldMethod(UA_Server *server)
 
     UA_MethodAttributes helloAttr = UA_MethodAttributes_default;
     helloAttr.description = UA_LOCALIZEDTEXT("en-US","Select : \t1 for xx \n\t2 for xy\n\t3 for yx\n\t4 for ... ");
-    helloAttr.displayName = UA_LOCALIZEDTEXT("en-US","Hello World asd ");
+    helloAttr.displayName = UA_LOCALIZEDTEXT("en-US","Hello World asd  asdasdasd");
     helloAttr.executable = true;
     helloAttr.userExecutable = true;
     UA_Server_addMethodNode(server, UA_NODEID_NUMERIC(1,62541),
                             UA_NODEID_NUMERIC(0, UA_NS0ID_OBJECTSFOLDER),
                             UA_NODEID_NUMERIC(0, UA_NS0ID_HASCOMPONENT),
-                            UA_QUALIFIEDNAME(1, "hello world"),
+                            UA_QUALIFIEDNAME(1, "hello world aasd 2 "),
                             helloAttr, &helloWorldMethodCallback,
                             1, &inputArgument, 1, &outputArgument, NULL, NULL);
 }
