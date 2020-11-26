@@ -145,7 +145,6 @@ void addMethod(UA_Server *server)
                             1, &inputArgumentTest, 1, &outputArgumentTest,
                             NULL, NULL);
 
-
 }
 
 
