@@ -118,18 +118,19 @@ void addMethod(UA_Server *server)
     inputArgumentTest.dataType = UA_TYPES[UA_TYPES_INT32].typeId;
     inputArgumentTest.valueRank = UA_VALUERANK_SCALAR;
 
-/*
+
     // One output argument 
-    UA_Argument outputArgument;
-    UA_Argument_init(&outputArgument);
-    outputArgument.description = UA_LOCALIZEDTEXT("en-US", "asdint32[5] array");
-    outputArgument.name = UA_STRING("asdeach entry is incremented by the delta");
-    outputArgument.dataType = UA_TYPES[UA_TYPES_INT32].typeId;
-    outputArgument.valueRank = UA_VALUERANK_ONE_DIMENSION;
+    UA_Argument outputArgumentTest;
+    UA_Argument_init(&outputArgumentTest);
+    outputArgumentTest.description = UA_LOCALIZEDTEXT("en-US", "asdint32[5] array");
+    outputArgumentTest.name = UA_STRING("asdeach entry is incremented by the delta");
+    outputArgumentTest.dataType = UA_TYPES[UA_TYPES_INT32].typeId;
+    outputArgumentTest.valueRank = UA_VALUERANK_SCALAR;
    // UA_UInt32 pOutputDimension = 5;
-    outputArgument.arrayDimensionsSize = 1;
+   // outputArgumentTest.arrayDimensionsSize = 1;
   //  outputArgument.arrayDimensions = &pOutputDimension;
 
+/*
     // Add the method node 
     UA_MethodAttributes incAttr = UA_MethodAttributes_default;
     incAttr.description = UA_LOCALIZEDTEXT("en-US", "asdIncInt32ArrayValues");
