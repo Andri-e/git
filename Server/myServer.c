@@ -40,7 +40,7 @@ UA_StatusCode helloWorldMethodCallback(UA_Server *server,
 
 
     printf("\nasdasd\n");
-    printf("%p", tmp);
+    printf("%s", tmp);
 
 
 
