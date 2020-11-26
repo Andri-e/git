@@ -109,11 +109,11 @@ UA_StatusCode MethodCallBack(UA_Server *server,
         return retval;
     }
 
-    UA_Variant_setScalarCopy(output, &inputData, &UA_TYPES[UA_TYPES_STRING]);
+   // UA_Variant_setScalarCopy(output, &inputData, &UA_TYPES[UA_TYPES_STRING]);
 
 
-    UA_Int32 value = *(UA_Int32*) output->data;
-    printf("\tOutput: %x\n", value);
+  //  UA_Int32 value = *(UA_Int32*) output->data;
+ //   printf("\tOutput: %x\n", value);
 
     return UA_STATUSCODE_GOOD;
 }
