@@ -111,16 +111,13 @@ UA_StatusCode MethodCallBack(UA_Server *server,
 
 void addMethod(UA_Server *server) 
 {
-    /* Two input arguments */
-    UA_Argument inputArguments;
-    UA_Argument_init(&inputArguments);
-    inputArguments.description = UA_LOCALIZEDTEXT("en-US", "int32[5] array");
-    inputArguments.name = UA_STRING("int32 array");
-    inputArguments.dataType = UA_TYPES[UA_TYPES_INT32].typeId;
-    inputArguments.valueRank = UA_VALUERANK_ONE_DIMENSION;
-   // UA_UInt32 pInputDimension = 5;
-    inputArguments.arrayDimensionsSize = 1;
-    //inputArguments.arrayDimensions = &pInputDimension;
+    UA_Argument inputArgumentTest;
+    UA_Argument_init(&inputArgumentTest);
+    inputArgumentTest.description = UA_LOCALIZEDTEXT("en-US", "A String");
+    inputArgumentTest.name = UA_STRING("MyInput");
+    inputArgumentTest.dataType = UA_TYPES[UA_TYPES_INT32].typeId;
+    inputArgumentTest.valueRank = UA_VALUERANK_SCALAR;
+
 
     /* One output argument */
     UA_Argument outputArgument;
