@@ -4,7 +4,7 @@ myServer: myServer.o myEvent.o myNodes.o mySettings.o open62541.o
 myServer.o: myServer.c	
 	gcc -c myServer.c 
 
-myEvent.o: myEvent.c myEvent.h 
+myEvent.o: ./Includes/myEvent.c ./Includes/myEvent.h 
 	gcc -c myEvent.c 
 	
 myNodes.o: myNodes.c myNodes.h 
