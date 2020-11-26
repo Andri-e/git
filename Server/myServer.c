@@ -49,7 +49,7 @@ UA_StatusCode helloWorldMethodCallback(UA_Server *server,
     UA_Variant_setScalarCopy(output, &tmp, &UA_TYPES[UA_TYPES_STRING]);
 
 
-    UA_Int32 value = *(UA_Int32*) output->data;
+    UA_String value = *(UA_String*) output->data;
     printf("\tOutput: %x\n", value);
 
 
