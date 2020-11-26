@@ -123,7 +123,7 @@ static void
 addIncInt32ArrayMethod(UA_Server *server) 
 {
     /* Two input arguments */
-    UA_Argument inputArguments[2];
+    UA_Argument inputArguments[1];
     UA_Argument_init(&inputArguments[0]);
     inputArguments[0].description = UA_LOCALIZEDTEXT("en-US", "int32[5] array");
     inputArguments[0].name = UA_STRING("int32 array");
@@ -132,7 +132,7 @@ addIncInt32ArrayMethod(UA_Server *server)
     UA_UInt32 pInputDimension = 5;
     inputArguments[0].arrayDimensionsSize = 1;
     inputArguments[0].arrayDimensions = &pInputDimension;
-    
+
 /*
     UA_Argument_init(&inputArguments[1]);
     inputArguments[1].description = UA_LOCALIZEDTEXT("en-US", "int32 delta");
