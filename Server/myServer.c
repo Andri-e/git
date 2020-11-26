@@ -35,6 +35,8 @@ UA_StatusCode helloWorldMethodCallback(UA_Server *server,
     if(inputStr->length > 0) 
     {
         printf("%s", &tmp.length, &tmp.data);
+
+
         tmp.data = (UA_Byte *)UA_realloc(tmp.data, tmp.length + inputStr->length);
         memcpy(&tmp.data[tmp.length], inputStr->data, inputStr->length);
         tmp.length += inputStr->length;
@@ -42,7 +44,7 @@ UA_StatusCode helloWorldMethodCallback(UA_Server *server,
 
 
     printf("\nasdasd\n");
-    printf("%s", &tmp.length, &tmp.data);
+    printf("%x", tmp);
 
 
 
