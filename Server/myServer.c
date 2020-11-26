@@ -28,10 +28,13 @@ UA_StatusCode helloWorldMethodCallback(UA_Server *server,
                          size_t inputSize, const UA_Variant *input,
                          size_t outputSize, UA_Variant *output) 
 {
-    UA_String *inputStr = (UA_String*)input->data;
-    UA_String tmp = UA_STRING_ALLOC("Hello ");
-   // printf("%s", inputStr->length, inputStr->data);
-   printf("%s", &tmp.length, &tmp.data);
+    //UA_String *inputStr = (UA_String*)input->data;
+    //UA_String tmp = UA_STRING_ALLOC("Hello ");
+
+    UA_Int32 *inputStr = (UA_Int32*)input->data; 
+    UA_Int32 tmp = "Hello ";
+
+/*
     if(inputStr->length > 0) 
     {
         printf("%s", &tmp.length, &tmp.data);
@@ -41,16 +44,16 @@ UA_StatusCode helloWorldMethodCallback(UA_Server *server,
         memcpy(&tmp.data[tmp.length], inputStr->data, inputStr->length);
         tmp.length += inputStr->length;
     }
+*/
 
 
 
 
+    UA_Variant_setScalarCopy(output, &tmp, &UA_TYPES[UA_TYPES_UINT32]);
 
-    UA_Variant_setScalarCopy(output, &tmp, &UA_TYPES[UA_TYPES_STRING]);
 
-
-   UA_Int32 value = *(UA_Int32*) output->data;
-printf("\tOutput: %x\n", value);
+    UA_Int32 value = *(UA_Int32*) output->data;
+    printf("\tOutput: %x\n", value);
 
 
 
@@ -65,7 +68,7 @@ void addHellWorldMethod(UA_Server *server)
     UA_Argument_init(&inputArgument);
     inputArgument.description = UA_LOCALIZEDTEXT("en-US", "A String");
     inputArgument.name = UA_STRING("MyInput");
-    inputArgument.dataType = UA_TYPES[UA_TYPES_STRING].typeId;
+    inputArgument.dataType = UA_TYPES[UA_TYPES_UINT32].typeId;
     inputArgument.valueRank = UA_VALUERANK_SCALAR;
 
     UA_Argument outputArgument;
@@ -87,6 +90,10 @@ void addHellWorldMethod(UA_Server *server)
                             helloAttr, &helloWorldMethodCallback,
                             1, &inputArgument, 1, &outputArgument, NULL, NULL);
 }
+
+
+
+
 
 
 
