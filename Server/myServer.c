@@ -103,7 +103,9 @@ UA_StatusCode MethodCallBack(UA_Server *server,
 
     /* Copy the input array */
     UA_StatusCode retval = UA_Variant_setScalarCopy(output, input, &UA_TYPES[UA_TYPES_INT32]);
-printf("\tOutput: %x\n", output);
+
+    UA_Int32 value = *(UA_Int32*) output->data;
+    printf("\tOutput: %x\n", value);
 
 
 
