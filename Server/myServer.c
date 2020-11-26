@@ -88,6 +88,72 @@ void addHellWorldMethod(UA_Server *server)
                             1, &inputArgument, 1, &outputArgument, NULL, NULL);
 }
 
+//--------------
+
+UA_StatusCode MethodCallBack(UA_Server *server,
+                            const UA_NodeId *sessionId, void *sessionContext,
+                            const UA_NodeId *methodId, void *methodContext,
+                            const UA_NodeId *objectId, void *objectContext,
+                            size_t inputSize, const UA_Variant *input,
+                            size_t outputSize, UA_Variant *output) 
+{
+    //UA_Int32 *inputArray = (UA_Int32*)input[0].data;
+    UA_Int32 *inputArray = (UA_Int32*)input[0].data;
+
+    /* Copy the input array */
+    UA_StatusCode retval = UA_Variant_setScalarCopy(output, input, &UA_TYPES[UA_TYPES_INT32]);
+    if(retval != UA_STATUSCODE_GOOD)
+    {
+        return retval;
+    }
+    return UA_STATUSCODE_GOOD;
+}
+
+void addMethod(UA_Server *server) 
+{
+    /* Two input arguments */
+    UA_Argument inputArgument;
+    UA_Argument_init(&inputArguments);
+    inputArguments.description = UA_LOCALIZEDTEXT("en-US", "int32[5] array");
+    inputArguments.name = UA_STRING("int32 array");
+    inputArguments.dataType = UA_TYPES[UA_TYPES_INT32].typeId;
+    inputArguments.valueRank = UA_VALUERANK_ONE_DIMENSION;
+   // UA_UInt32 pInputDimension = 5;
+    inputArguments.arrayDimensionsSize = 1;
+    //inputArguments.arrayDimensions = &pInputDimension;
+
+    /* One output argument */
+    UA_Argument outputArgument;
+    UA_Argument_init(&outputArgument);
+    outputArgument.description = UA_LOCALIZEDTEXT("en-US", "int32[5] array");
+    outputArgument.name = UA_STRING("each entry is incremented by the delta");
+    outputArgument.dataType = UA_TYPES[UA_TYPES_INT32].typeId;
+    outputArgument.valueRank = UA_VALUERANK_ONE_DIMENSION;
+   // UA_UInt32 pOutputDimension = 5;
+    outputArgument.arrayDimensionsSize = 1;
+  //  outputArgument.arrayDimensions = &pOutputDimension;
+
+    /* Add the method node */
+    UA_MethodAttributes incAttr = UA_MethodAttributes_default;
+    incAttr.description = UA_LOCALIZEDTEXT("en-US", "IncInt32ArrayValues");
+    incAttr.displayName = UA_LOCALIZEDTEXT("en-US", "IncInt32ArrayValues");
+    incAttr.executable = true;
+    incAttr.userExecutable = true;
+    UA_Server_addMethodNode(server, UA_NODEID_STRING(1, "IncInt32ArrayValues"),
+                            UA_NODEID_NUMERIC(0, UA_NS0ID_OBJECTSFOLDER),
+                            UA_NODEID_NUMERIC(0, UA_NS0ID_HASCOMPONENT),
+                            UA_QUALIFIEDNAME(1, "IncInt32ArrayValues"),
+                            incAttr, &MethodCallBack,
+                            2, inputArguments, 1, &outputArgument,
+                            NULL, NULL);
+}
+
+
+
+
+//-----------
+
+
 
 
 
@@ -215,6 +281,7 @@ int main(int argc, char * argv[])
 
     addHellWorldMethod(server);
     addIncInt32ArrayMethod(server);
+    addMethod(server);
 
 // -- 
 
