@@ -48,9 +48,9 @@ UA_StatusCode helloWorldMethodCallback(UA_Server *server,
 
 
     UA_String value = *(UA_String*) output->data;
-    //printf("\tOutput: %x\n", value);
+    printf("\tOutput: %x\n", value);
 
-    printf("\tOutput: %s\n", value);
+    //printf("\tOutput: %s\n", value);
 
 
 
