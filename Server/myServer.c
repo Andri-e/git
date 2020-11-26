@@ -104,16 +104,17 @@ UA_StatusCode MethodCallBack(UA_Server *server,
     UA_StatusCode retval = UA_Variant_setScalarCopy(output, input, &UA_TYPES[UA_TYPES_INT32]);
     if(retval != UA_STATUSCODE_GOOD)
     {
+        printf("\n not good?");
         return retval;
     }
-    return UA_STATUSCODE_GOOD;
 
-    
     UA_Variant_setScalarCopy(output, &inputArray, &UA_TYPES[UA_TYPES_STRING]);
 
 
     UA_Int32 value = *(UA_Int32*) output->data;
     printf("\tOutput: %x\n", value);
+
+    return UA_STATUSCODE_GOOD;
 }
 
 void addMethod(UA_Server *server) 
