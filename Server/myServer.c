@@ -128,7 +128,7 @@ UA_StatusCode helloWorldMethodCallback2(UA_Server *server,
     return UA_STATUSCODE_GOOD;
 }
 
-void addHellWorldMethod(UA_Server *server) 
+void addHellWorldMethod2(UA_Server *server) 
 {
     UA_Argument inputArgument;
     UA_Argument_init(&inputArgument);
@@ -364,6 +364,7 @@ int main(int argc, char * argv[])
     addHellWorldMethod(server);
     addIncInt32ArrayMethod(server);
     addMethod(server);
+    addHellWorldMethod2(server);
 
 // -- 
 
