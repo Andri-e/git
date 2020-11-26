@@ -16,7 +16,7 @@ $(OBJS): %.o: Src/%.c
 # such that it rebuilds the former if the latter changes
 myEvent.o: Includes/myEvent.h
  
-myNodes.o: Includes/myNodes.h 
+#myNodes.o: Includes/myNodes.h 
  
 mySettings.o: Includes/mySettings.h 
  
