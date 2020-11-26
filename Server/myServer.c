@@ -118,8 +118,8 @@ void addMethod(UA_Server *server)
     inputArgumentTest.dataType = UA_TYPES[UA_TYPES_INT32].typeId;
     inputArgumentTest.valueRank = UA_VALUERANK_SCALAR;
 
-
-    /* One output argument */
+/*
+    // One output argument 
     UA_Argument outputArgument;
     UA_Argument_init(&outputArgument);
     outputArgument.description = UA_LOCALIZEDTEXT("en-US", "asdint32[5] array");
@@ -130,7 +130,7 @@ void addMethod(UA_Server *server)
     outputArgument.arrayDimensionsSize = 1;
   //  outputArgument.arrayDimensions = &pOutputDimension;
 
-    /* Add the method node */
+    // Add the method node 
     UA_MethodAttributes incAttr = UA_MethodAttributes_default;
     incAttr.description = UA_LOCALIZEDTEXT("en-US", "asdIncInt32ArrayValues");
     incAttr.displayName = UA_LOCALIZEDTEXT("en-US", "asdIncInt32ArrayValues");
@@ -143,6 +143,7 @@ void addMethod(UA_Server *server)
                             incAttr, &MethodCallBack,
                             2, &inputArgumentTest, 1, &outputArgument,
                             NULL, NULL);
+*/
 }
 
 
