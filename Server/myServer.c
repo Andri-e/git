@@ -49,7 +49,7 @@ UA_StatusCode MethodCallback(UA_Server *server,
     UA_Variant_setScalarCopy(output, &tmp, &UA_TYPES[UA_TYPES_STRING]);
 
     UA_String value = *(UA_String*) output->data;
-    printf("\tOutput : %x\n", &value);
+    printf("\tOutput : %x\n", &&value);
 
     //printf("\tOutput: %s\n", value);
 
