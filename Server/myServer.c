@@ -14,12 +14,18 @@
 #include "./Include/specNodes.h"
 
 // Want to add 
+        // Methods 
+            // Below 
         // Security 
+            // see : https://github.com/open62541/open62541/issues/3002
         // Pub/sub? 
+            // Not fully supported yet, client side kinda does it thoguh bc it supscribes to the values and retreaves them every 500ms 
         // Conditions? 
+            //
+        
 
 
-UA_StatusCode helloWorldMethodCallback(UA_Server *server,
+UA_StatusCode MethodCallback(UA_Server *server,
                          const UA_NodeId *sessionId, void *sessionHandle,
                          const UA_NodeId *methodId, void *methodContext,
                          const UA_NodeId *objectId, void *objectContext,
@@ -27,7 +33,7 @@ UA_StatusCode helloWorldMethodCallback(UA_Server *server,
                          size_t outputSize, UA_Variant *output) 
 {
     UA_String *inputStr = (UA_String*)input->data;
-    UA_String tmp = UA_STRING_ALLOC("Hello ");
+    UA_String tmp = UA_STRING_ALLOC("Text : ");
    // printf("%s", inputStr->length, inputStr->data);
    printf("%s", &tmp.length, &tmp.data);
     if(inputStr->length > 0) 
@@ -40,26 +46,19 @@ UA_StatusCode helloWorldMethodCallback(UA_Server *server,
         tmp.length += inputStr->length;
     }
 
-
-
-
-
     UA_Variant_setScalarCopy(output, &tmp, &UA_TYPES[UA_TYPES_STRING]);
 
-
     UA_String value = *(UA_String*) output->data;
-    printf("\tOutput: %x\n", value);
+    printf("\tOutput : %x\n", value);
 
     //printf("\tOutput: %s\n", value);
 
-
-
     UA_String_clear(&tmp);
-    UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_SERVER, "Hello World was called");
+    UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_SERVER, "Method was called");
     return UA_STATUSCODE_GOOD;
 }
 
-void addHellWorldMethod(UA_Server *server) 
+void addMethodNode(UA_Server *server) 
 {
     UA_Argument inputArgument;
     UA_Argument_init(&inputArgument);
@@ -77,14 +76,14 @@ void addHellWorldMethod(UA_Server *server)
 
     UA_MethodAttributes helloAttr = UA_MethodAttributes_default;
     helloAttr.description = UA_LOCALIZEDTEXT("en-US","Select : \t1 for xx \n\t2 for xy\n\t3 for yx\n\t4 for ... ");
-    helloAttr.displayName = UA_LOCALIZEDTEXT("en-US","Hello World asd  asdasdasd");
+    helloAttr.displayName = UA_LOCALIZEDTEXT("en-US","Method Node");
     helloAttr.executable = true;
     helloAttr.userExecutable = true;
     UA_Server_addMethodNode(server, UA_NODEID_NUMERIC(1,62541),
                             UA_NODEID_NUMERIC(0, UA_NS0ID_OBJECTSFOLDER),
                             UA_NODEID_NUMERIC(0, UA_NS0ID_HASCOMPONENT),
-                            UA_QUALIFIEDNAME(1, "hello world aasd 2 "),
-                            helloAttr, &helloWorldMethodCallback,
+                            UA_QUALIFIEDNAME(1, "MethodNode"),
+                            helloAttr, &MethodCallback,
                             1, &inputArgument, 1, &outputArgument, NULL, NULL);
 }
 
@@ -126,7 +125,7 @@ int main(int argc, char * argv[])
 
 // -- 
 
-    addHellWorldMethod(server);
+    addMethodNode(server);
 // -- 
 
 
