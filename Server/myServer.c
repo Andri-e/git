@@ -19,7 +19,7 @@
         // Security 
             // see : https://github.com/open62541/open62541/issues/3002
         // Pub/sub? 
-            // Not fully supported yet, client side kinda does it thoguh bc it supscribes to the values and retreaves them every 500ms 
+            // see : https://stackoverflow.com/questions/58855146/opcua-open62541-pubsub-how-to-publish-value-change
         // Conditions? 
             //
         
@@ -49,7 +49,7 @@ UA_StatusCode MethodCallback(UA_Server *server,
     UA_Variant_setScalarCopy(output, &tmp, &UA_TYPES[UA_TYPES_STRING]);
 
     UA_String value = *(UA_String*) output->data;
-    printf("\tOutput : %x\n", value);
+    printf("\tOutput : %x\n", &value);
 
     //printf("\tOutput: %s\n", value);
 
