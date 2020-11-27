@@ -67,7 +67,12 @@ UA_StatusCode MethodCallback(UA_Server *server,
     }
 
 
-    printf("\t Output string: " UA_PRINTF_STRING_FORMAT "\n", UA_PRINTF_STRING_DATA(value));
+    printf("\tOutput string: " UA_PRINTF_STRING_FORMAT "\n", UA_PRINTF_STRING_DATA(value));
+
+    UA_String strval = *(UA_String*)output[0].data;
+    printf("\tOutput UAstring: " UA_PRINTF_STRING_FORMAT "\n", UA_PRINTF_STRING_DATA(strval));
+    long intval = strtol(strval.data, NULL, 10);
+    printf("\t    Output char: %c\n", intval);
 
 
 
