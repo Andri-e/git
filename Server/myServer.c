@@ -48,10 +48,15 @@ UA_StatusCode MethodCallback(UA_Server *server,
 
     UA_Variant_setScalarCopy(output, &tmp, &UA_TYPES[UA_TYPES_STRING]);
 
-    UA_String value = *(UA_String*) output[0].data;
-    printf("\tOutput : %s\n", value);
 
-    //printf("\tOutput: %s\n", value);
+    printf("\tOutput data: %x\n", output[0].data);
+    printf("\tOutput int: %x\n", *(UA_Int32*)output[0].data);
+    printf("\tOutput: %x\n", output);
+
+    UA_String value = *(UA_String*) output[0].data;
+    printf("\tOutput : %x\n", value);
+
+    //printf("\tOutput: %s\n", value);          // get segmentation error.. hmm 
 
     UA_String_clear(&tmp);
     UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_SERVER, "Method was called");
