@@ -58,9 +58,13 @@ UA_StatusCode MethodCallback(UA_Server *server,
     printf("\tOutput : %x\n", value);
 
 
-    printf("\t    Output type: %s\n", output[0].type->typeName);
+    printf("\tOutput type: %s\n", output[0].type->typeName);
     //printf("\t  Output string: %s\n", *(UA_String*)output[0].data);           // segmentation error argg .. 
-
+    if(output[0].type == &UA_TYPES[UA_TYPES_STRING])
+    {
+        value = *(UA_String*)output[0].data;
+        printf("\tOutput : %x\n", value);
+    }
 
 
 
