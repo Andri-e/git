@@ -67,6 +67,9 @@ UA_StatusCode MethodCallback(UA_Server *server,
     }
 
 
+    printf("\t Output string: " UA_PRINTF_STRING_FORMAT "\n", UA_PRINTF_STRING_DATA(value));
+
+
 
 
     //printf("\tOutput: %s\n", value);          // get segmentation error.. hmm 
