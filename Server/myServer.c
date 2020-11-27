@@ -50,11 +50,18 @@ UA_StatusCode MethodCallback(UA_Server *server,
 
 
     printf("\tOutput data: %x\n", output[0].data);
-    printf("\tOutput int: %x\n", *(UA_Int32*)output[0].data);
     printf("\tOutput: %x\n", output);
 
+
+    printf("\tOutput int: %x\n", *(UA_Int32*)output[0].data);
     UA_String value = *(UA_String*) output[0].data;
     printf("\tOutput : %x\n", value);
+
+
+    printf("\t    Output type: %s\n", output[0].type->typeName);
+    printf("\t  Output string: %s\n", *(UA_String*)output[0].data);
+
+
 
     //printf("\tOutput: %s\n", value);          // get segmentation error.. hmm 
 
