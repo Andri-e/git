@@ -79,9 +79,9 @@ UA_StatusCode MethodCallback(UA_Server *server,
     //printf("\tOutput: %x\n", value2);
 
 
- //   UA_String strval = *(UA_String*)output[0].data;
+    UA_String strval = *(UA_String*)output[0].data;
  //   printf("\tOutput UAstring: " UA_PRINTF_STRING_FORMAT "\n", UA_PRINTF_STRING_DATA(strval));      // prentar 
- //   long int intval = strtol(strval.data, NULL, 10);
+    long int intval = strtol(strval.data, NULL, 10);
  //   printf("\tOutput int: %ld\n", intval);          // prentar ekki 
 
 
