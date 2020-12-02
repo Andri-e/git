@@ -55,34 +55,34 @@ UA_StatusCode MethodCallback(UA_Server *server,
     printf("\tOutput: %x\n", output);
 
 
-    printf("\tOutput int: %x\n", *(UA_Int32*)output[0].data);
-    UA_String value = *(UA_String*) output[0].data;
-    printf("\tOutput : %x\n", value);
+  //  printf("\tOutput int: %x\n", *(UA_Int32*)output[0].data);
+ //   UA_String value = *(UA_String*) output[0].data;
+ //   printf("\tOutput : %x\n", value);
 
 
-    printf("\tOutput type: %s\n", output[0].type->typeName);
+ //   printf("\tOutput type: %s\n", output[0].type->typeName);
     //printf("\t  Output string: %s\n", *(UA_String*)output[0].data);           // segmentation error argg .. 
-    if(output[0].type == &UA_TYPES[UA_TYPES_STRING])
-    {
-        value = *(UA_String*)output[0].data;
-        printf("\tOutput : %x\n", value);
-    }
+ //   if(output[0].type == &UA_TYPES[UA_TYPES_STRING])
+  //  {
+  //      value = *(UA_String*)output[0].data;
+  //     printf("\tOutput : %x\n", value);
+//}
 
-    printf("Drasl : %.*s\" ", (int)(value).length, (value).data);
+ //   printf("Drasl : %.*s\" ", (int)(value).length, (value).data);
 
     // virkar ekki 
-    long drasl = strtol((value).data, NULL,  10 );
-    printf("drasl prent : %ld\n", drasl);
+ //   long drasl = strtol((value).data, NULL,  10 );
+ //   printf("drasl prent : %ld\n", drasl);
  
     // ?? 
     //UA_Int32 value2 = *(UA_Int32*) output->data[0];
     //printf("\tOutput: %x\n", value2);
 
 
-    UA_String strval = *(UA_String*)output[0].data;
-    printf("\tOutput UAstring: " UA_PRINTF_STRING_FORMAT "\n", UA_PRINTF_STRING_DATA(strval));      // prentar 
-    long int intval = strtol(strval.data, NULL, 10);
-    printf("\tOutput int: %ld\n", intval);          // prentar ekki 
+ //   UA_String strval = *(UA_String*)output[0].data;
+ //   printf("\tOutput UAstring: " UA_PRINTF_STRING_FORMAT "\n", UA_PRINTF_STRING_DATA(strval));      // prentar 
+ //   long int intval = strtol(strval.data, NULL, 10);
+ //   printf("\tOutput int: %ld\n", intval);          // prentar ekki 
 
 
     
