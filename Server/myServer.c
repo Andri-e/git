@@ -46,7 +46,7 @@ UA_StatusCode MethodCallback(UA_Server *server,
             tmp.length += inputStr->length;
             */
     }
-       if(inputStr->length = 1) 
+       if(inputStr->length < 1) 
     {
             printf(" length 1  \n");
             /*
@@ -64,6 +64,8 @@ UA_StatusCode MethodCallback(UA_Server *server,
             tmp.length += inputStr->length;
             */
     }
+
+    printf("string length : %zu \n", inputStr->length);
 
     UA_Variant_setScalarCopy(output, &tmp, &UA_TYPES[UA_TYPES_STRING]);
 
