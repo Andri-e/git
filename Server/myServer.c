@@ -34,7 +34,7 @@ UA_StatusCode MethodCallback(UA_Server *server,
                          size_t outputSize, UA_Variant *output) 
 {
     UA_String *inputStr = (UA_String*)input->data;
-    UA_String tmp = UA_STRING_ALLOC("Text : ");
+    UA_String tmp = UA_STRING_ALLOC("");
    // printf("%s", inputStr->length, inputStr->data);
    printf("%s", &tmp.length, &tmp.data);
     if(inputStr->length > 0) 
