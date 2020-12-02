@@ -1,4 +1,37 @@
 
+The type of security to use on a message.
+typedef enum {
+UA_MESSAGESECURITYMODE_INVALID = 0,
+UA_MESSAGESECURITYMODE_NONE = 1,
+UA_MESSAGESECURITYMODE_SIGN = 2,
+UA_MESSAGESECURITYMODE_SIGNANDENCRYPT = 3,
+__UA_MESSAGESECURITYMODE_FORCE32BIT = 0x7fffffff
+} UA_MessageSecurityMode;
+UA_STATIC_ASSERT(sizeof(UA_MessageSecurityMode) == sizeof(UA_Int32), enum_must_be_32bit);
+#define UA_TYPES_MESSAGESECURITYMODE 34
+
+
+
+
+
+UA_StatusCode
+UA_Variant_setScalarCopy(UA_Variant *v, const void *p,
+                         const UA_DataType *type) {
+    void *n = UA_malloc(type->memSize);
+    if(!n)
+        return UA_STATUSCODE_BADOUTOFMEMORY;
+    UA_StatusCode retval = UA_copy(p, n, type);
+    if(retval != UA_STATUSCODE_GOOD) {
+        UA_free(n);
+        //cppcheck-suppress memleak
+        return retval;
+    }
+    UA_Variant_setScalar(v, n, type);
+    //cppcheck-suppress memleak
+    return UA_STATUSCODE_GOOD;
+}
+
+
 
 UA_UInt16 UA_THREADSAFE UA_Server_addNamespace(UA_Server *server, const char* name);
 

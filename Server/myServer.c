@@ -3,20 +3,13 @@
 #include <signal.h>
 #include <stdlib.h>
 
-// mySettings.h
 #include "./Include/mySettings.h"
-// myEvent.h 
 #include "./Include/myEvent.h"
-// myNodes.h 
 #include "./Include/myNodes.h"
-// specNodes.h
 #include "./Include/specNodes.h"
-// Methods 
 #include "./Include/myMethod.h"
 
 // Want to add 
-        // Methods 
-            // Below 
         // Security 
             // see : https://github.com/open62541/open62541/issues/3002
         // Pub/sub? 
@@ -43,6 +36,9 @@ int main(int argc, char * argv[])
 	// Creating a new server 
     UA_Server *server = UA_Server_new();
 
+    // Set security 
+    UA_ServerConfig_setDefault(UA_Server_getConfig(server));
+
 	// Check for Arguments, host name and port number
 	checkArguments(server, argc, argv);
 
@@ -61,8 +57,6 @@ int main(int argc, char * argv[])
 	
     // Method node 
     addMethodNode(server);
-
-
 
 	// Server start up 
     UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND, "Starting server...");
