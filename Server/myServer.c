@@ -48,7 +48,7 @@ UA_StatusCode MethodCallback(UA_Server *server,
        tmp.length += inputStr->length;
    }
 
-//UA_Variant_setScalarCopy(output, &tmp, &UA_TYPES[UA_TYPES_STRING]);
+UA_Variant_setScalarCopy(output, &tmp, &UA_TYPES[UA_TYPES_STRING]);
 
 
     printf("\tOutput data: %x\n", output[0].data);
