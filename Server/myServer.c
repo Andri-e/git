@@ -39,9 +39,11 @@ UA_StatusCode MethodCallback(UA_Server *server,
  
     if(inputStr->length > 0) 
     {
-        tmp.data = (UA_Byte *)UA_realloc(tmp.data, tmp.length + inputStr->length);
-        memcpy(&tmp.data[tmp.length], inputStr->data, inputStr->length);
-        tmp.length += inputStr->length;
+            /*
+            tmp.data = (UA_Byte *)UA_realloc(tmp.data, tmp.length + inputStr->length);
+            memcpy(&tmp.data[tmp.length], inputStr->data, inputStr->length);
+            tmp.length += inputStr->length;
+            */
     }
 
     UA_Variant_setScalarCopy(output, &tmp, &UA_TYPES[UA_TYPES_STRING]);
@@ -56,12 +58,6 @@ UA_StatusCode MethodCallback(UA_Server *server,
     UA_String strval = *(UA_String*)output[0].data;
     printf("\tOutput UAstring: " UA_PRINTF_STRING_FORMAT "\n", UA_PRINTF_STRING_DATA(strval));      // prentar 
 
-
-    //long int intval = strtol(strval.data, NULL, 10);
- //   printf("\tOutput int: %ld\n", intval);          // prentar ekki 
-
-    char intval = '1'; 
-    
     switch(inputStr->data[0])
     {
         case '1' :
