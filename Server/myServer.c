@@ -62,7 +62,7 @@ UA_StatusCode MethodCallback(UA_Server *server,
 
     char intval = '1'; 
     
-    switch(intval)
+    switch(inputStr->data[0])
     {
         case '1' :
             printf("Case 1 \n");
