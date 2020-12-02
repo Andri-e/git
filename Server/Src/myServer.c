@@ -1,13 +1,13 @@
-#include "open62541.h"
+#include "../Include/open62541.h"
 
 #include <signal.h>
 #include <stdlib.h>
 
-#include "./Include/mySettings.h"
-#include "./Include/myEvent.h"
-#include "./Include/myNodes.h"
-#include "./Include/specNodes.h"
-#include "./Include/myMethod.h"
+#include "../Include/mySettings.h"
+#include "../Include/myEvent.h"
+#include "../Include/myNodes.h"
+#include "../Include/specNodes.h"
+#include "../Include/myMethod.h"
 
 // Want to add 
         // Security 

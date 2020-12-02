@@ -1,5 +1,5 @@
-#include "open62541.h"
-#include "myMethod.h"
+#include "../Include/open62541.h"
+#include "../Include/myMethod.h"
 
 UA_StatusCode MethodCallback(UA_Server *server,
                          const UA_NodeId *sessionId, void *sessionHandle,

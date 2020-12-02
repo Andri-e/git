@@ -1,4 +1,4 @@
-#include "open62541.h"
+#include "../Include/open62541.h"
 #include "../Include/myEvent.h"
 
 // Event thing a asdasdasdasd
