@@ -39,12 +39,15 @@ UA_StatusCode MethodCallback(UA_Server *server,
  
     if(inputStr->length > 0) 
     {
-       tmp.data = (UA_Byte *)UA_realloc(tmp.data, tmp.length + inputStr->length);
+        tmp.data = (UA_Byte *)UA_realloc(tmp.data, tmp.length + inputStr->length);
         memcpy(&tmp.data[tmp.length], inputStr->data, inputStr->length);
-       tmp.length += inputStr->length;
+        tmp.length += inputStr->length;
     }
 
     UA_Variant_setScalarCopy(output, &tmp, &UA_TYPES[UA_TYPES_STRING]);
+
+
+    printf("input : %c\n", inputStr->data);
 
 
     printf("\tOutput data: %x\n", &output[0].data);
