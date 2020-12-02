@@ -81,20 +81,23 @@ UA_StatusCode MethodCallback(UA_Server *server,
     UA_String strval = *(UA_String*)output[0].data;
     printf("\tOutput UAstring: " UA_PRINTF_STRING_FORMAT "\n", UA_PRINTF_STRING_DATA(strval));      // prentar 
     long intval = strtol(strval.data, NULL, 10);
-    printf("\tOutput char: %c\n", intval);          // prentar ekki 
+    printf("\tOutput int: %ld\n", intval);          // prentar ekki 
 
 
     
     switch(intval)
     {
         case '1' :
+            printf("Case 1 \n");
             break;
         case '2' :
+            printf("Case 2 \n");
             break;
         case '3' :
+            printf("Case 3 \n");
             break;
         default : 
-            printf("Incorect value picked.");
+            printf("Incorect value picked. \n");
             break;
 
     }
