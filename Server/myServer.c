@@ -47,6 +47,7 @@ UA_StatusCode MethodCallback(UA_Server *server,
         printf("String to long.\n");
     }
 
+/*
     printf("string length : %zu \n", inputStr->length);
 
     UA_Variant_setScalarCopy(output, &tmp, &UA_TYPES[UA_TYPES_STRING]);
@@ -61,7 +62,7 @@ UA_StatusCode MethodCallback(UA_Server *server,
 
     UA_String strval = *(UA_String*)output[0].data;
     printf("\tOutput UAstring: " UA_PRINTF_STRING_FORMAT "\n", UA_PRINTF_STRING_DATA(strval));      // prentar 
-
+*/
     switch(inputStr->data[0])
     {
         case '1' :
