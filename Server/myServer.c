@@ -72,7 +72,7 @@ UA_StatusCode MethodCallback(UA_Server *server,
         memcpy(&tmp.data[tmp.length], inputStr->data, inputStr->length);
         tmp.length += inputStr->length;
     }
-    UA_Variant_setScalarCopy(output, %response, &UA_TYPES[UA_TYPES_STRING]);
+    UA_Variant_setScalarCopy(output, response, &UA_TYPES[UA_TYPES_STRING]);
     
     
     UA_String_clear(&tmp);
