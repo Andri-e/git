@@ -37,18 +37,18 @@ UA_StatusCode MethodCallback(UA_Server *server,
  //   UA_String tmp = UA_STRING_ALLOC(" ");
    // printf("%s", inputStr->length, inputStr->data);
  //  printf("%s", &tmp.length, &tmp.data);
- /*
-    if(inputStr->length > 0) 
-    {
-        printf("%s", &tmp.length, &tmp.data);
+ 
+ //   if(inputStr->length > 0) 
+ //   {
+  //      printf("%s", &tmp.length, &tmp.data);
 
 
-        tmp.data = (UA_Byte *)UA_realloc(tmp.data, tmp.length + inputStr->length);
-        memcpy(&tmp.data[tmp.length], inputStr->data, inputStr->length);
-        tmp.length += inputStr->length;
-    }
-*/
- //   UA_Variant_setScalarCopy(output, &tmp, &UA_TYPES[UA_TYPES_STRING]);
+ //       tmp.data = (UA_Byte *)UA_realloc(tmp.data, tmp.length + inputStr->length);
+  //      memcpy(&tmp.data[tmp.length], inputStr->data, inputStr->length);
+ //       tmp.length += inputStr->length;
+ //   }
+
+//UA_Variant_setScalarCopy(output, &tmp, &UA_TYPES[UA_TYPES_STRING]);
 
 
     printf("\tOutput data: %x\n", output[0].data);
