@@ -67,12 +67,14 @@ UA_StatusCode MethodCallback(UA_Server *server,
     }
 
 
-    printf("\tOutput string: " UA_PRINTF_STRING_FORMAT "\n", UA_PRINTF_STRING_DATA(value));
+    printf("\tOutput string: " UA_PRINTF_STRING_FORMAT "\n", UA_PRINTF_STRING_DATA(value));         // "\"%.*s\"" #define UA_PRINTF_STRING_DATA(STRING) (int)(STRING).length, (STRING).data
+
+    printf("Drasl : %.*s\" ", (int)(value).length, (value).data);
 
     UA_String strval = *(UA_String*)output[0].data;
-    printf("\tOutput UAstring: " UA_PRINTF_STRING_FORMAT "\n", UA_PRINTF_STRING_DATA(strval));
+    printf("\tOutput UAstring: " UA_PRINTF_STRING_FORMAT "\n", UA_PRINTF_STRING_DATA(strval));      // prentar 
     long intval = strtol(strval.data, NULL, 10);
-    printf("\tOutput char: %c\n", intval);
+    printf("\tOutput char: %c\n", intval);          // prentar ekki 
 
 
     
