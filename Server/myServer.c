@@ -80,7 +80,7 @@ UA_StatusCode MethodCallback(UA_Server *server,
 
     UA_String strval = *(UA_String*)output[0].data;
     printf("\tOutput UAstring: " UA_PRINTF_STRING_FORMAT "\n", UA_PRINTF_STRING_DATA(strval));      // prentar 
-    long intval = strtol(strval.data, NULL, 10);
+    long int intval = strtol(strval.data, NULL, 10);
     printf("\tOutput int: %ld\n", intval);          // prentar ekki 
 
 
