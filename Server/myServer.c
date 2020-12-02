@@ -34,7 +34,7 @@ UA_StatusCode MethodCallback(UA_Server *server,
                          size_t outputSize, UA_Variant *output) 
 {
     UA_String *inputStr = (UA_String*)input->data;
-    UA_String response = "undefined";
+    UA_String response = UA_STRING_ALLOC("Undefined");
 
     if(inputStr->length == 1)
     {
