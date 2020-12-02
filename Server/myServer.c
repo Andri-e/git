@@ -68,9 +68,15 @@ UA_StatusCode MethodCallback(UA_Server *server,
 
     printf("Drasl : %.*s\" ", (int)(value).length, (value).data);
 
+    // virkar ekki 
     long drasl = strtol((value).data, NULL,  10 );
     printf("drasl prent : %ld\n", drasl);
  
+    // ?? 
+    int dott = atoi(value);
+    printf("The integer is: %d\n", dott);
+
+
     UA_String strval = *(UA_String*)output[0].data;
     printf("\tOutput UAstring: " UA_PRINTF_STRING_FORMAT "\n", UA_PRINTF_STRING_DATA(strval));      // prentar 
     long intval = strtol(strval.data, NULL, 10);
