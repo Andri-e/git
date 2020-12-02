@@ -77,7 +77,7 @@ UA_StatusCode MethodCallback(UA_Server *server,
     }
 
     // Cleanup 
-    UA_String_clear(&tmp);
+   // UA_String_clear(&tmp);
     UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_SERVER, "Method was called");
     return UA_STATUSCODE_GOOD;
 }
