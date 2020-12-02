@@ -37,7 +37,7 @@ int main(int argc, char * argv[])
     UA_Server *server = UA_Server_new();
 
     // Set security 
-    UA_ServerConfig_setDefault(UA_Server_getConfig(server));
+    //UA_ServerConfig_setDefault(UA_Server_getConfig(server));
 
 	// Check for Arguments, host name and port number
 	checkArguments(server, argc, argv);
