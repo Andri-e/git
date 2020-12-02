@@ -55,7 +55,7 @@ UA_StatusCode MethodCallback(UA_Server *server,
     //long int intval = strtol(strval.data, NULL, 10);
  //   printf("\tOutput int: %ld\n", intval);          // prentar ekki 
 
-    long int intval = 1; 
+    char intval = '1'; 
     
     switch(intval)
     {
