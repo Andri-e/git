@@ -42,26 +42,26 @@ UA_StatusCode MethodCallback(UA_Server *server,
         {
             case '1' :
                 printf("Case 1 \n");
-                response = "Case 1 selected.";
+                response = UA_STRING_ALLOC("Case 1 selected.");
                 break;
             case '2' :
                 printf("Case 2 \n");
-                response = "Case 2 selected.";
+                response = UA_STRING_ALLOC("Case 2 selected.");
                 break;
             case '3' :
                 printf("Case 3 \n");
-                response = "Case 3 selected.";
+                response = UA_STRING_ALLOC("Case 3 selected.");
                 break;
             default : 
                 printf("Incorect value picked. \n");
-                response = "Incorect value picked.";
+                response = UA_STRING_ALLOC("Incorect value picked.");
                 break;
         }
     } 
     else 
     {
         printf("String to long, please try again.\n");
-        response = "String to long, please try again.";
+        response = UA_STRING_ALLOC("String to long, please try again.");
     }
 
     UA_String tmp = UA_STRING_ALLOC("Hello ");
