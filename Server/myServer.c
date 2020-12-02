@@ -68,7 +68,7 @@ UA_StatusCode MethodCallback(UA_Server *server,
 
     printf("Drasl : %.*s\" ", (int)(value).length, (value).data);
 
-    long drasl = strtol((value).data, NULL,  10 )
+    long drasl = strtol((value).data, NULL,  10 );
     printf("drasl prent : %ld\n", drasl);
  
     UA_String strval = *(UA_String*)output[0].data;
