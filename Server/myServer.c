@@ -64,20 +64,12 @@ UA_StatusCode MethodCallback(UA_Server *server,
         response = UA_STRING_ALLOC("String to long, please try again.");
     }
 
-    UA_String tmp = UA_STRING_ALLOC("Hello ");
 
-    if(inputStr->length > 0) 
-    {
-        response.data = (UA_Byte *)UA_realloc(response.data, response.length);
-      //  memcpy(&response.data[response.length], inputStr->data, inputStr->length);
-       // response.length += inputStr->length;
-    }
+    response.data = (UA_Byte *)UA_realloc(response.data, response.length);
     UA_Variant_setScalarCopy(output, &response, &UA_TYPES[UA_TYPES_STRING]);
     
-    
-    UA_String_clear(&tmp);
-
     // Cleanup 
+    UA_String_clear(&response);
     UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_SERVER, "Method was called");
     return UA_STATUSCODE_GOOD;
 }
