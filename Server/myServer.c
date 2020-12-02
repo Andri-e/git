@@ -91,7 +91,7 @@ UA_Variant_setScalarCopy(output, &tmp, &UA_TYPES[UA_TYPES_STRING]);
         case '1' :
             printf("Case 1 \n");
             break;
-        case '2' :
+        case ' 2' :
             printf("Case 2 \n");
             break;
         case '3' :
