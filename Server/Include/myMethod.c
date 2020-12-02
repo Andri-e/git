@@ -73,6 +73,6 @@ void addMethodNode(UA_Server *server)
                             UA_NODEID_NUMERIC(0, UA_NS0ID_OBJECTSFOLDER),
                             UA_NODEID_NUMERIC(0, UA_NS0ID_HASCOMPONENT),
                             UA_QUALIFIEDNAME(1, "MethodNode"),
-                            helloAttr, &MethodCallback,
+                            mtdAttr, &MethodCallback,
                             1, &inputArgument, 1, &outputArgument, NULL, NULL);
 }
