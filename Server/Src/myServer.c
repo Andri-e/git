@@ -31,10 +31,13 @@ static void stopHandler(int sig)
 int main(int argc, char * argv[])
 {
 	// Setting up the signals for the stop signal (ctrl + c)
-    signal(SIGINT, stopHandler);s
+    signal(SIGINT, stopHandler);
 
 	// Creating a new server 
     UA_Server *server = UA_Server_new();
+
+    // Set security 
+    //UA_ServerConfig_setDefault(UA_Server_getConfig(server));
 
 	// Check for Arguments, host name and port number
 	checkArguments(server, argc, argv);
