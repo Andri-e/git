@@ -37,9 +37,9 @@ UA_StatusCode MethodCallback(UA_Server *server,
    UA_String tmp = UA_STRING_ALLOC(" ");
 
  
-    if(inputStr->data[1] != NULL) 
+    if(inputStr->data[1]) 
     {
-            printf("DRASLLSASD ");
+            printf(" drasl \n");
             /*
             tmp.data = (UA_Byte *)UA_realloc(tmp.data, tmp.length + inputStr->length);
             memcpy(&tmp.data[tmp.length], inputStr->data, inputStr->length);
