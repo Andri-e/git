@@ -34,7 +34,6 @@ UA_StatusCode MethodCallback(UA_Server *server,
                          size_t outputSize, UA_Variant *output) 
 {
     UA_String *inputStr = (UA_String*)input->data;
-   //UA_String tmp = UA_STRING_ALLOC(" ");
 
     if(inputStr->length == 1)
     {
@@ -59,25 +58,19 @@ UA_StatusCode MethodCallback(UA_Server *server,
         printf("String to long, please try again.\n");
     }
 
-    switch(inputStr->data[0])
-    {
-        case '1' :
-            printf("Case 1 \n");
-            break;
-        case '2' :
-            printf("Case 2 \n");
-            break;
-        case '3' :
-            printf("Case 3 \n");
-            break;
-        default : 
-            printf("Incorect value picked. \n");
-            break;
+    UA_String tmp = UA_STRING_ALLOC("Hello ");
 
+    if(inputStr->length > 0) {
+        tmp.data = (UA_Byte *)UA_realloc(tmp.data, tmp.length + inputStr->length);
+        memcpy(&tmp.data[tmp.length], inputStr->data, inputStr->length);
+        tmp.length += inputStr->length;
     }
+    UA_Variant_setScalarCopy(output, &tmp, &UA_TYPES[UA_TYPES_STRING]);
+    
+    
+    UA_String_clear(&tmp);
 
     // Cleanup 
-   // UA_String_clear(&tmp);
     UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_SERVER, "Method was called");
     return UA_STATUSCODE_GOOD;
 }
