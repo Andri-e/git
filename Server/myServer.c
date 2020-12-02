@@ -40,11 +40,11 @@ UA_StatusCode MethodCallback(UA_Server *server,
     if(inputStr->data[1]) 
     {
             printf(" drasl \n");
-            /*
-            tmp.data = (UA_Byte *)UA_realloc(tmp.data, tmp.length + inputStr->length);
-            memcpy(&tmp.data[tmp.length], inputStr->data, inputStr->length);
-            tmp.length += inputStr->length;
-            */
+    }
+
+    if(inputStr->length != 1)
+    {
+        printf("String to long.\n");
     }
 
     printf("string length : %zu \n", inputStr->length);
