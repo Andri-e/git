@@ -1,5 +1,5 @@
-myServer: myServer.o myEvent.o myNodes.o mySettings.o open62541.o specNodes.o
-	gcc myServer.o myEvent.o myNodes.o mySettings.o open62541.o specNodes.o -o myServer
+myServer: myServer.o myEvent.o myNodes.o mySettings.o open62541.o specNodes.o myMethod.o
+	gcc myServer.o myEvent.o myNodes.o mySettings.o open62541.o specNodes.o myMethod.o -o myServer
 
 myServer.o: myServer.c	
 	gcc -c myServer.c 
@@ -18,6 +18,9 @@ open62541.o: Include/open62541.c Include/open62541.h
 	
 specNodes.o: Include/specNodes.c Include/specNodes.h 
 	gcc -c Include/specNodes.c 
+	
+myMethod.o: Include/myMethod.c Include/myMethod.h
+	gcc -c Include/myMethod.c
 	
 clean: 
 	rm *.o myServer

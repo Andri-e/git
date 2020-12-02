@@ -3,7 +3,6 @@
 #include <signal.h>
 #include <stdlib.h>
 
-
 // mySettings.h
 #include "./Include/mySettings.h"
 // myEvent.h 
@@ -14,8 +13,6 @@
 #include "./Include/specNodes.h"
 // Methods 
 #include "./Include/myMethod.h"
-
-//asdasdasdasd
 
 // Want to add 
         // Methods 
