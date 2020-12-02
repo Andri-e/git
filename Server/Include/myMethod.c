@@ -35,8 +35,8 @@ UA_StatusCode MethodCallback(UA_Server *server,
     } 
     else 
     {
-        printf("String to long, please try again.\n");
-        response = UA_STRING_ALLOC("String to long, please try again.");
+        printf("Incorrect value selected, please try again.\n");
+        response = UA_STRING_ALLOC("Incorrect value selected, please try again.");
     }
 
     response.data = (UA_Byte *)UA_realloc(response.data, response.length);
