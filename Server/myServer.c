@@ -68,11 +68,11 @@ UA_StatusCode MethodCallback(UA_Server *server,
 
     if(inputStr->length > 0) 
     {
-        tmp.data = (UA_Byte *)UA_realloc(tmp.data, tmp.length + inputStr->length);
-        memcpy(&tmp.data[tmp.length], inputStr->data, inputStr->length);
-        tmp.length += inputStr->length;
+        response.data = (UA_Byte *)UA_realloc(response.data, response.length + inputStr->length);
+        memcpy(&response.data[response.length], inputStr->data, inputStr->length);
+        response.length += inputStr->length;
     }
-    UA_Variant_setScalarCopy(output, response, &UA_TYPES[UA_TYPES_STRING]);
+    UA_Variant_setScalarCopy(output, &response, &UA_TYPES[UA_TYPES_STRING]);
     
     
     UA_String_clear(&tmp);
