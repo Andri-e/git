@@ -34,35 +34,31 @@ UA_StatusCode MethodCallback(UA_Server *server,
                          size_t outputSize, UA_Variant *output) 
 {
     UA_String *inputStr = (UA_String*)input->data;
-   UA_String tmp = UA_STRING_ALLOC(" ");
+   //UA_String tmp = UA_STRING_ALLOC(" ");
 
- 
-    if(inputStr->data[1]) 
+    if(inputStr->length == 1)
     {
-            printf(" drasl \n");
+        switch(inputStr->data[0])
+        {
+            case '1' :
+                printf("Case 1 \n");
+                break;
+            case '2' :
+                printf("Case 2 \n");
+                break;
+            case '3' :
+                printf("Case 3 \n");
+                break;
+            default : 
+                printf("Incorect value picked. \n");
+                break;
+        }
+    } 
+    else 
+    {
+        printf("String to long, please try again.\n");
     }
 
-    if(inputStr->length != 1)
-    {
-        printf("String to long.\n");
-    }
-
-/*
-    printf("string length : %zu \n", inputStr->length);
-
-    UA_Variant_setScalarCopy(output, &tmp, &UA_TYPES[UA_TYPES_STRING]);
-
-
-    printf("input [0] : %c\n", inputStr->data[0]);
-
-    printf("input [1] : %c\n", inputStr->data[1]);
-
-    printf("\tOutput data: %x\n", &output[0].data);
-    printf("\tOutput: %x\n", output);
-
-    UA_String strval = *(UA_String*)output[0].data;
-    printf("\tOutput UAstring: " UA_PRINTF_STRING_FORMAT "\n", UA_PRINTF_STRING_DATA(strval));      // prentar 
-*/
     switch(inputStr->data[0])
     {
         case '1' :
