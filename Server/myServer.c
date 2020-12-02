@@ -80,7 +80,7 @@ UA_Variant_setScalarCopy(output, &tmp, &UA_TYPES[UA_TYPES_STRING]);
 
 
     UA_String strval = *(UA_String*)output[0].data;
- //   printf("\tOutput UAstring: " UA_PRINTF_STRING_FORMAT "\n", UA_PRINTF_STRING_DATA(strval));      // prentar 
+    printf("\tOutput UAstring: " UA_PRINTF_STRING_FORMAT "\n", UA_PRINTF_STRING_DATA(strval));      // prentar 
     long int intval = strtol(strval.data, NULL, 10);
  //   printf("\tOutput int: %ld\n", intval);          // prentar ekki 
 
