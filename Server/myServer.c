@@ -47,7 +47,7 @@ UA_StatusCode MethodCallback(UA_Server *server,
     UA_Variant_setScalarCopy(output, &tmp, &UA_TYPES[UA_TYPES_STRING]);
 
 
-    printf("input : %c\n", (char)inputStr->data);
+    printf("input : %c\n", inputStr->data[0]);
 
 
     printf("\tOutput data: %x\n", &output[0].data);
