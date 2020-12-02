@@ -13,7 +13,7 @@
 // specNodes.h
 #include "./Include/specNodes.h"
 // Methods 
-#include "./Includes/myMethod.h"
+#include "./Include/myMethod.h"
 
 // Want to add 
         // Methods 
