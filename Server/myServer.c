@@ -20,6 +20,7 @@
             // see : https://github.com/open62541/open62541/issues/3002
         // Pub/sub? 
             // see : https://stackoverflow.com/questions/58855146/opcua-open62541-pubsub-how-to-publish-value-change
+            //       https://github.com/open62541/open62541/issues/2363 
         // Conditions? 
             //
         
@@ -73,8 +74,8 @@ UA_StatusCode MethodCallback(UA_Server *server,
     printf("drasl prent : %ld\n", drasl);
  
     // ?? 
-    int dott = atoi(value);
-    printf("The integer is: %d\n", dott);
+    UA_Int32 value2 = *(UA_Int32*) output->data;
+p   rintf("\tOutput: %x\n", value2);
 
 
     UA_String strval = *(UA_String*)output[0].data;
