@@ -59,12 +59,9 @@ int main(int argc, char * argv[])
     addNewEventType(server);
     addGenerateEventMethod(server);
 	
-
-
-// -- 
-
+    // Method node 
     addMethodNode(server);
-// -- 
+
 
 
 	// Server start up 
