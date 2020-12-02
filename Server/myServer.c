@@ -68,9 +68,9 @@ UA_StatusCode MethodCallback(UA_Server *server,
 
     if(inputStr->length > 0) 
     {
-        response.data = (UA_Byte *)UA_realloc(response.data, response.length + inputStr->length);
-        memcpy(&response.data[response.length], inputStr->data, inputStr->length);
-        response.length += inputStr->length;
+        response.data = (UA_Byte *)UA_realloc(response.data, response.length);
+      //  memcpy(&response.data[response.length], inputStr->data, inputStr->length);
+       // response.length += inputStr->length;
     }
     UA_Variant_setScalarCopy(output, &response, &UA_TYPES[UA_TYPES_STRING]);
     
