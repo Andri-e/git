@@ -35,63 +35,34 @@ UA_StatusCode MethodCallback(UA_Server *server,
 {
     UA_String *inputStr = (UA_String*)input->data;
    UA_String tmp = UA_STRING_ALLOC(" ");
-   // printf("%s", inputStr->length, inputStr->data);
- //  printf("%s", &tmp.length, &tmp.data);
+
  
     if(inputStr->length > 0) 
-   {
-        printf("%s", &tmp.length, &tmp.data);
-
-
+    {
        tmp.data = (UA_Byte *)UA_realloc(tmp.data, tmp.length + inputStr->length);
         memcpy(&tmp.data[tmp.length], inputStr->data, inputStr->length);
        tmp.length += inputStr->length;
-   }
+    }
 
-UA_Variant_setScalarCopy(output, &tmp, &UA_TYPES[UA_TYPES_STRING]);
+    UA_Variant_setScalarCopy(output, &tmp, &UA_TYPES[UA_TYPES_STRING]);
 
 
     printf("\tOutput data: %x\n", output[0].data);
     printf("\tOutput: %x\n", output);
 
-
-  //  printf("\tOutput int: %x\n", *(UA_Int32*)output[0].data);
- //   UA_String value = *(UA_String*) output[0].data;
- //   printf("\tOutput : %x\n", value);
-
-
- //   printf("\tOutput type: %s\n", output[0].type->typeName);
-    //printf("\t  Output string: %s\n", *(UA_String*)output[0].data);           // segmentation error argg .. 
- //   if(output[0].type == &UA_TYPES[UA_TYPES_STRING])
-  //  {
-  //      value = *(UA_String*)output[0].data;
-  //     printf("\tOutput : %x\n", value);
-//}
-
- //   printf("Drasl : %.*s\" ", (int)(value).length, (value).data);
-
-    // virkar ekki 
- //   long drasl = strtol((value).data, NULL,  10 );
- //   printf("drasl prent : %ld\n", drasl);
- 
-    // ?? 
-    //UA_Int32 value2 = *(UA_Int32*) output->data[0];
-    //printf("\tOutput: %x\n", value2);
-
-
     UA_String strval = *(UA_String*)output[0].data;
     printf("\tOutput UAstring: " UA_PRINTF_STRING_FORMAT "\n", UA_PRINTF_STRING_DATA(strval));      // prentar 
-    long int intval = strtol(strval.data, NULL, 10);
+    //long int intval = strtol(strval.data, NULL, 10);
  //   printf("\tOutput int: %ld\n", intval);          // prentar ekki 
 
-
+    long int intval = 1; 
     
     switch(intval)
     {
         case '1' :
             printf("Case 1 \n");
             break;
-        case ' 2' :
+        case '2' :
             printf("Case 2 \n");
             break;
         case '3' :
@@ -103,13 +74,8 @@ UA_Variant_setScalarCopy(output, &tmp, &UA_TYPES[UA_TYPES_STRING]);
 
     }
 
-
-    
-
-
-    //printf("\tOutput: %s\n", value);          // get segmentation error.. hmm 
-
- //   UA_String_clear(&tmp);
+    // Cleanup 
+    UA_String_clear(&tmp);
     UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_SERVER, "Method was called");
     return UA_STATUSCODE_GOOD;
 }
