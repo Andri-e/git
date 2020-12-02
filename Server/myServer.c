@@ -66,11 +66,11 @@ UA_StatusCode MethodCallback(UA_Server *server,
         printf("\tOutput : %x\n", value);
     }
 
-
-    printf("\tOutput string: " UA_PRINTF_STRING_FORMAT "\n", UA_PRINTF_STRING_DATA(value));         // "\"%.*s\"" #define UA_PRINTF_STRING_DATA(STRING) (int)(STRING).length, (STRING).data
-
     printf("Drasl : %.*s\" ", (int)(value).length, (value).data);
 
+    long drasl = strtol((value).data, NULL,  10 )
+    printf("drasl prent : %ld\n", drasl);
+ 
     UA_String strval = *(UA_String*)output[0].data;
     printf("\tOutput UAstring: " UA_PRINTF_STRING_FORMAT "\n", UA_PRINTF_STRING_DATA(strval));      // prentar 
     long intval = strtol(strval.data, NULL, 10);
