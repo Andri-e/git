@@ -74,7 +74,7 @@ UA_StatusCode MethodCallback(UA_Server *server,
     printf("drasl prent : %ld\n", drasl);
  
     // ?? 
-    UA_Int32 value2 = *(UA_Int32*) output->data;
+    UA_Int32 value2 = *(UA_Int32*) output.data[0];
     printf("\tOutput: %x\n", value2);
 
 
