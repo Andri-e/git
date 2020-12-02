@@ -34,6 +34,7 @@ UA_StatusCode MethodCallback(UA_Server *server,
                          size_t outputSize, UA_Variant *output) 
 {
     UA_String *inputStr = (UA_String*)input->data;
+    UA_String response = 'undefined';
 
     if(inputStr->length == 1)
     {
@@ -41,21 +42,26 @@ UA_StatusCode MethodCallback(UA_Server *server,
         {
             case '1' :
                 printf("Case 1 \n");
+                response = 'Case 1 selected.';
                 break;
             case '2' :
                 printf("Case 2 \n");
+                response = 'Case 2 selected.';
                 break;
             case '3' :
                 printf("Case 3 \n");
+                response = 'Case 3 selected.';
                 break;
             default : 
                 printf("Incorect value picked. \n");
+                response = 'Incorect value picked.';
                 break;
         }
     } 
     else 
     {
         printf("String to long, please try again.\n");
+        response = 'String to long, please try again.';
     }
 
     UA_String tmp = UA_STRING_ALLOC("Hello ");
@@ -66,7 +72,7 @@ UA_StatusCode MethodCallback(UA_Server *server,
         memcpy(&tmp.data[tmp.length], inputStr->data, inputStr->length);
         tmp.length += inputStr->length;
     }
-    UA_Variant_setScalarCopy(output, inputStr, &UA_TYPES[UA_TYPES_STRING]);
+    UA_Variant_setScalarCopy(output, response, &UA_TYPES[UA_TYPES_STRING]);
     
     
     UA_String_clear(&tmp);
