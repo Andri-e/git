@@ -72,9 +72,26 @@ UA_StatusCode MethodCallback(UA_Server *server,
     UA_String strval = *(UA_String*)output[0].data;
     printf("\tOutput UAstring: " UA_PRINTF_STRING_FORMAT "\n", UA_PRINTF_STRING_DATA(strval));
     long intval = strtol(strval.data, NULL, 10);
-    printf("\t    Output char: %c\n", intval);
+    printf("\tOutput char: %c\n", intval);
 
 
+    
+    switch(intval)
+    {
+        case '1' :
+            break;
+        case '2' :
+            break;
+        case '3' :
+            break;
+        default : 
+            printf("Incorect value picked.");
+            break;
+
+    }
+
+
+    
 
 
     //printf("\tOutput: %s\n", value);          // get segmentation error.. hmm 
