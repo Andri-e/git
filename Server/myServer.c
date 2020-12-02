@@ -47,11 +47,13 @@ UA_StatusCode MethodCallback(UA_Server *server,
     UA_Variant_setScalarCopy(output, &tmp, &UA_TYPES[UA_TYPES_STRING]);
 
 
-    printf("\tOutput data: %x\n", output[0].data);
+    printf("\tOutput data: %x\n", &output[0].data);
     printf("\tOutput: %x\n", output);
 
     UA_String strval = *(UA_String*)output[0].data;
     printf("\tOutput UAstring: " UA_PRINTF_STRING_FORMAT "\n", UA_PRINTF_STRING_DATA(strval));      // prentar 
+
+
     //long int intval = strtol(strval.data, NULL, 10);
  //   printf("\tOutput int: %ld\n", intval);          // prentar ekki 
 
