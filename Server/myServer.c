@@ -37,8 +37,27 @@ UA_StatusCode MethodCallback(UA_Server *server,
    UA_String tmp = UA_STRING_ALLOC(" ");
 
  
-    if(inputStr->length > 0) 
+    if(inputStr->length = 0) 
     {
+            printf(" length 0  \n");
+            /*
+            tmp.data = (UA_Byte *)UA_realloc(tmp.data, tmp.length + inputStr->length);
+            memcpy(&tmp.data[tmp.length], inputStr->data, inputStr->length);
+            tmp.length += inputStr->length;
+            */
+    }
+       if(inputStr->length = 1) 
+    {
+            printf(" length 1  \n");
+            /*
+            tmp.data = (UA_Byte *)UA_realloc(tmp.data, tmp.length + inputStr->length);
+            memcpy(&tmp.data[tmp.length], inputStr->data, inputStr->length);
+            tmp.length += inputStr->length;
+            */
+    }
+       if(inputStr->length = 2) 
+    {
+            printf(" length 2  \n");
             /*
             tmp.data = (UA_Byte *)UA_realloc(tmp.data, tmp.length + inputStr->length);
             memcpy(&tmp.data[tmp.length], inputStr->data, inputStr->length);
