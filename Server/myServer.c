@@ -10,13 +10,15 @@
 #include "./Include/myMethod.h"
 
 // Want to add 
-        // Security 
+        // Security? 
             // see : https://github.com/open62541/open62541/issues/3002
+            //       Prob would always use security none for this server though since it would be on an isolated network 
         // Pub/sub? 
             // see : https://stackoverflow.com/questions/58855146/opcua-open62541-pubsub-how-to-publish-value-change
             //       https://github.com/open62541/open62541/issues/2363 
-        // Conditions? 
-            //
+            //       Not fully supported yet but worth looking into a bit more. 
+        // On / Off event 
+            //  
         
 static volatile UA_Boolean running = true;			// Server state
 

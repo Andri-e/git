@@ -1,8 +1,7 @@
 #include "../Include/open62541.h"
 #include "../Include/myEvent.h"
 
-// Event thing a asdasdasdasd
-static UA_NodeId eventType;
+static UA_NodeId eventTypeOn, eventTypeOff;
 
 UA_StatusCode addNewEventType(UA_Server *server) 
 {
@@ -13,7 +12,22 @@ UA_StatusCode addNewEventType(UA_Server *server)
                                        UA_NODEID_NUMERIC(0, UA_NS0ID_BASEEVENTTYPE),
                                        UA_NODEID_NUMERIC(0, UA_NS0ID_HASSUBTYPE),
                                        UA_QUALIFIEDNAME(0, "SimpleEventType"),
-                                       attr, NULL, &eventType);
+                                       attr, NULL, &eventTypeOn);
+
+    //-------------------------------
+    UA_ObjectTypeAttributes attr = UA_ObjectTypeAttributes_default;
+    attr.displayName = UA_LOCALIZEDTEXT("en-US", "SimpleEventType");
+    attr.description = UA_LOCALIZEDTEXT("en-US", "The simple event type we created");
+    return UA_Server_addObjectTypeNode(server, UA_NODEID_NULL,
+                                       UA_NODEID_NUMERIC(0, UA_NS0ID_BASEEVENTTYPE),
+                                       UA_NODEID_NUMERIC(0, UA_NS0ID_HASSUBTYPE),
+                                       UA_QUALIFIEDNAME(0, "SimpleEventType"),
+                                       attr, NULL, &eventTypeOff);
+
+
+    //-------------------------------
+
+    
 }
 
 /**
@@ -28,7 +42,7 @@ UA_StatusCode addNewEventType(UA_Server *server)
  */
 UA_StatusCode setUpEvent(UA_Server *server, UA_NodeId *outId) 
 {
-    UA_StatusCode retval = UA_Server_createEvent(server, eventType, outId);
+    UA_StatusCode retval = UA_Server_createEvent(server, eventTypeOn, outId);
     if (retval != UA_STATUSCODE_GOOD) 
     {
         UA_LOG_WARNING(UA_Log_Stdout, UA_LOGCATEGORY_SERVER, "createEvent failed. StatusCode %s", UA_StatusCode_name(retval));
@@ -90,6 +104,37 @@ UA_StatusCode generateEventMethodCallback(UA_Server *server,
     return retval;
 }
 
+//----------------------------
+
+UA_StatusCode generateEventMethodCallbackOff(UA_Server *server,
+                         const UA_NodeId *sessionId, void *sessionHandle,
+                         const UA_NodeId *methodId, void *methodContext,
+                         const UA_NodeId *objectId, void *objectContext,
+                         size_t inputSize, const UA_Variant *input,
+                         size_t outputSize, UA_Variant *output) 
+{
+     /* set up event */
+    UA_NodeId eventNodeId;
+    UA_StatusCode retval = setUpEvent(server, &eventNodeId);
+    if(retval != UA_STATUSCODE_GOOD) 
+    {
+        UA_LOG_WARNING(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND, "Creating event failed. StatusCode %s", UA_StatusCode_name(retval));
+        return retval;
+    }
+
+    retval = UA_Server_triggerEvent(server, eventNodeId, UA_NODEID_NUMERIC(0, UA_NS0ID_SERVER), NULL, UA_TRUE);
+    if(retval != UA_STATUSCODE_GOOD)
+    {
+        UA_LOG_WARNING(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND,  "Triggering event failed. StatusCode %s", UA_StatusCode_name(retval));
+    }
+
+
+    UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND, "Event Triggerd.");
+    return retval;
+}
+
+//------------------------
+
 /**
  * Now, all that is left to do is to create a method node which uses our callback. We do not
  * require any input and as output we will be using the `EventId` we receive from ``triggerEvent``. The `EventId` is
@@ -102,7 +147,7 @@ void addGenerateEventMethod(UA_Server *server)
 {
     UA_MethodAttributes generateAttr = UA_MethodAttributes_default;
     generateAttr.description = UA_LOCALIZEDTEXT("en-US","Generate an event.");
-    generateAttr.displayName = UA_LOCALIZEDTEXT("en-US","Generate Event");
+    generateAttr.displayName = UA_LOCALIZEDTEXT("en-US","Generate Event_1");
     generateAttr.executable = true;
     generateAttr.userExecutable = true;
     // UA_Server_addMethodNode(server, UA_NODEID_NUMERIC(1, 62541),
@@ -112,4 +157,20 @@ void addGenerateEventMethod(UA_Server *server)
                             UA_QUALIFIEDNAME(1, "Generate Event"),
                             generateAttr, &generateEventMethodCallback,
                             0, NULL, 0, NULL, NULL, NULL);
+
+
+    //-------------------------------------
+    UA_MethodAttributes generateAttr = UA_MethodAttributes_default;
+    generateAttr.description = UA_LOCALIZEDTEXT("en-US","Generate an event.");
+    generateAttr.displayName = UA_LOCALIZEDTEXT("en-US","Generate Event_2");
+    generateAttr.executable = true;
+    generateAttr.userExecutable = true;
+    // UA_Server_addMethodNode(server, UA_NODEID_NUMERIC(1, 62541),
+    UA_Server_addMethodNode(server, UA_NODEID_STRING(2, "testEvent"),
+                            UA_NODEID_NUMERIC(0, UA_NS0ID_OBJECTSFOLDER),
+                            UA_NODEID_NUMERIC(0, UA_NS0ID_HASCOMPONENT),
+                            UA_QUALIFIEDNAME(1, "Generate Event"),
+                            generateAttr, &generateEventMethodCallbackOff,
+                            0, NULL, 0, NULL, NULL, NULL);
+    //-------------------------------------
 }
