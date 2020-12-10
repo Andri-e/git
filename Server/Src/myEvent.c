@@ -95,11 +95,11 @@ UA_StatusCode generateEventMethodCallback_On(UA_Server *server,
     }
 
     UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND, "Event On Triggerd.");
-    // 
+
+    // Here we can put in what ever command we want to trigger with the event, for example led on / off or restarting some onboard application. 
+
     return retval;
 }
-
-//----------------------------
 
 UA_StatusCode generateEventMethodCallback_Off(UA_Server *server,
                          const UA_NodeId *sessionId, void *sessionHandle,
@@ -124,12 +124,12 @@ UA_StatusCode generateEventMethodCallback_Off(UA_Server *server,
         return retval;
     }
 
-
     UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND, "Event Off Triggerd.");
+
+    // Here we can put in what ever command we want to trigger with the event, for example led on / off or restarting some onboard application. 
+
     return retval;
 }
-
-//------------------------
 
 /**
  * Now, all that is left to do is to create a method node which uses our callback. We do not
