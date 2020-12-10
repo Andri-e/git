@@ -15,14 +15,14 @@ UA_StatusCode addNewEventType(UA_Server *server)
                                        attr, NULL, &eventTypeOn);
 
     //-------------------------------
-    UA_ObjectTypeAttributes attr = UA_ObjectTypeAttributes_default;
-    attr.displayName = UA_LOCALIZEDTEXT("en-US", "SimpleEventType");
-    attr.description = UA_LOCALIZEDTEXT("en-US", "The simple event type we created");
+    UA_ObjectTypeAttributes attrOff = UA_ObjectTypeAttributes_default;
+    attrOff.displayName = UA_LOCALIZEDTEXT("en-US", "SimpleEventType_2");
+    attrOff.description = UA_LOCALIZEDTEXT("en-US", "The simple event type we created_2");
     return UA_Server_addObjectTypeNode(server, UA_NODEID_NULL,
                                        UA_NODEID_NUMERIC(0, UA_NS0ID_BASEEVENTTYPE),
                                        UA_NODEID_NUMERIC(0, UA_NS0ID_HASSUBTYPE),
-                                       UA_QUALIFIEDNAME(0, "SimpleEventType"),
-                                       attr, NULL, &eventTypeOff);
+                                       UA_QUALIFIEDNAME(0, "SimpleEventType_2"),
+                                       attrOff, NULL, &eventTypeOff);
 
 
     //-------------------------------
