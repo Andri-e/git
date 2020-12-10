@@ -91,10 +91,11 @@ UA_StatusCode generateEventMethodCallback_On(UA_Server *server,
     if(retval != UA_STATUSCODE_GOOD)
     {
         UA_LOG_WARNING(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND,  "Triggering event failed. StatusCode %s", UA_StatusCode_name(retval));
+        return retval;
     }
 
-
     UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND, "Event On Triggerd.");
+    // 
     return retval;
 }
 
@@ -120,6 +121,7 @@ UA_StatusCode generateEventMethodCallback_Off(UA_Server *server,
     if(retval != UA_STATUSCODE_GOOD)
     {
         UA_LOG_WARNING(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND,  "Triggering event failed. StatusCode %s", UA_StatusCode_name(retval));
+        return retval;
     }
 
 
@@ -152,8 +154,6 @@ void addGenerateEventMethod(UA_Server *server)
                             generateAttr, &generateEventMethodCallback_On,
                             0, NULL, 0, NULL, NULL, NULL);
 
-
-    //-------------------------------------
     UA_MethodAttributes generateAttrOff = UA_MethodAttributes_default;
     generateAttrOff.description = UA_LOCALIZEDTEXT("en-US","Generate an event.");
     generateAttrOff.displayName = UA_LOCALIZEDTEXT("en-US","Generate Event Off");
@@ -166,5 +166,4 @@ void addGenerateEventMethod(UA_Server *server)
                             UA_QUALIFIEDNAME(1, "Generate Off Event"),
                             generateAttrOff, &generateEventMethodCallback_Off,
                             0, NULL, 0, NULL, NULL, NULL);
-    //-------------------------------------
 }
