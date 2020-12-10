@@ -145,10 +145,10 @@ void addGenerateEventMethod(UA_Server *server)
     generateAttr.executable = true;
     generateAttr.userExecutable = true;
     // UA_Server_addMethodNode(server, UA_NODEID_NUMERIC(1, 62541),
-    UA_Server_addMethodNode(server, UA_NODEID_STRING(2, "testEvent"),
+    UA_Server_addMethodNode(server, UA_NODEID_STRING(2, "onEvent"),
                             UA_NODEID_NUMERIC(0, UA_NS0ID_OBJECTSFOLDER),
                             UA_NODEID_NUMERIC(0, UA_NS0ID_HASCOMPONENT),
-                            UA_QUALIFIEDNAME(1, "Generate Event"),
+                            UA_QUALIFIEDNAME(1, "Generate On Event"),
                             generateAttr, &generateEventMethodCallback_On,
                             0, NULL, 0, NULL, NULL, NULL);
 
@@ -160,10 +160,10 @@ void addGenerateEventMethod(UA_Server *server)
     generateAttrOff.executable = true;
     generateAttrOff.userExecutable = true;
     // UA_Server_addMethodNode(server, UA_NODEID_NUMERIC(1, 62541),
-    UA_Server_addMethodNode(server, UA_NODEID_STRING(2, "testEvent_2"),
+    UA_Server_addMethodNode(server, UA_NODEID_STRING(2, "offEvent"),
                             UA_NODEID_NUMERIC(0, UA_NS0ID_OBJECTSFOLDER),
                             UA_NODEID_NUMERIC(0, UA_NS0ID_HASCOMPONENT),
-                            UA_QUALIFIEDNAME(1, "Generate Event_2"),
+                            UA_QUALIFIEDNAME(1, "Generate Off Event"),
                             generateAttrOff, &generateEventMethodCallback_Off,
                             0, NULL, 0, NULL, NULL, NULL);
     //-------------------------------------
