@@ -71,7 +71,7 @@ UA_StatusCode setUpEvent(UA_Server *server, UA_NodeId *outId)
  * a node which emits the event - in this case the server node. We can use ``UA_Server_triggerEvent`` to trigger our
  * event onto said node. Passing ``NULL`` as the second-last argument means we will not receive the `EventId`.
  * The last boolean argument states whether the node should be deleted. */
-UA_StatusCode generateEventMethodCallback(UA_Server *server,
+UA_StatusCode generateEventMethodCallback_On(UA_Server *server,
                          const UA_NodeId *sessionId, void *sessionHandle,
                          const UA_NodeId *methodId, void *methodContext,
                          const UA_NodeId *objectId, void *objectContext,
@@ -94,13 +94,13 @@ UA_StatusCode generateEventMethodCallback(UA_Server *server,
     }
 
 
-    UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND, "Event Triggerd.");
+    UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND, "Event On Triggerd.");
     return retval;
 }
 
 //----------------------------
 
-UA_StatusCode generateEventMethodCallbackOff(UA_Server *server,
+UA_StatusCode generateEventMethodCallback_Off(UA_Server *server,
                          const UA_NodeId *sessionId, void *sessionHandle,
                          const UA_NodeId *methodId, void *methodContext,
                          const UA_NodeId *objectId, void *objectContext,
@@ -123,7 +123,7 @@ UA_StatusCode generateEventMethodCallbackOff(UA_Server *server,
     }
 
 
-    UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND, "Event Triggerd.");
+    UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND, "Event Off Triggerd.");
     return retval;
 }
 
@@ -141,7 +141,7 @@ void addGenerateEventMethod(UA_Server *server)
 {
     UA_MethodAttributes generateAttr = UA_MethodAttributes_default;
     generateAttr.description = UA_LOCALIZEDTEXT("en-US","Generate an event.");
-    generateAttr.displayName = UA_LOCALIZEDTEXT("en-US","Generate Event_1");
+    generateAttr.displayName = UA_LOCALIZEDTEXT("en-US","Generate Event On");
     generateAttr.executable = true;
     generateAttr.userExecutable = true;
     // UA_Server_addMethodNode(server, UA_NODEID_NUMERIC(1, 62541),
@@ -149,14 +149,14 @@ void addGenerateEventMethod(UA_Server *server)
                             UA_NODEID_NUMERIC(0, UA_NS0ID_OBJECTSFOLDER),
                             UA_NODEID_NUMERIC(0, UA_NS0ID_HASCOMPONENT),
                             UA_QUALIFIEDNAME(1, "Generate Event"),
-                            generateAttr, &generateEventMethodCallback,
+                            generateAttr, &generateEventMethodCallback_On,
                             0, NULL, 0, NULL, NULL, NULL);
 
 
     //-------------------------------------
     UA_MethodAttributes generateAttrOff = UA_MethodAttributes_default;
     generateAttrOff.description = UA_LOCALIZEDTEXT("en-US","Generate an event.");
-    generateAttrOff.displayName = UA_LOCALIZEDTEXT("en-US","Generate Event_2");
+    generateAttrOff.displayName = UA_LOCALIZEDTEXT("en-US","Generate Event Off");
     generateAttrOff.executable = true;
     generateAttrOff.userExecutable = true;
     // UA_Server_addMethodNode(server, UA_NODEID_NUMERIC(1, 62541),
@@ -164,7 +164,7 @@ void addGenerateEventMethod(UA_Server *server)
                             UA_NODEID_NUMERIC(0, UA_NS0ID_OBJECTSFOLDER),
                             UA_NODEID_NUMERIC(0, UA_NS0ID_HASCOMPONENT),
                             UA_QUALIFIEDNAME(1, "Generate Event_2"),
-                            generateAttrOff, &generateEventMethodCallbackOff,
+                            generateAttrOff, &generateEventMethodCallback_Off,
                             0, NULL, 0, NULL, NULL, NULL);
     //-------------------------------------
 }
