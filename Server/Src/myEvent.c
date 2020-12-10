@@ -160,17 +160,17 @@ void addGenerateEventMethod(UA_Server *server)
 
 
     //-------------------------------------
-    UA_MethodAttributes generateAttr = UA_MethodAttributes_default;
-    generateAttr.description = UA_LOCALIZEDTEXT("en-US","Generate an event.");
-    generateAttr.displayName = UA_LOCALIZEDTEXT("en-US","Generate Event_2");
-    generateAttr.executable = true;
-    generateAttr.userExecutable = true;
+    UA_MethodAttributes generateAttrOff = UA_MethodAttributes_default;
+    generateAttrOff.description = UA_LOCALIZEDTEXT("en-US","Generate an event.");
+    generateAttrOff.displayName = UA_LOCALIZEDTEXT("en-US","Generate Event_2");
+    generateAttrOff.executable = true;
+    generateAttrOff.userExecutable = true;
     // UA_Server_addMethodNode(server, UA_NODEID_NUMERIC(1, 62541),
-    UA_Server_addMethodNode(server, UA_NODEID_STRING(2, "testEvent"),
+    UA_Server_addMethodNode(server, UA_NODEID_STRING(2, "testEvent_2"),
                             UA_NODEID_NUMERIC(0, UA_NS0ID_OBJECTSFOLDER),
                             UA_NODEID_NUMERIC(0, UA_NS0ID_HASCOMPONENT),
-                            UA_QUALIFIEDNAME(1, "Generate Event"),
-                            generateAttr, &generateEventMethodCallbackOff,
+                            UA_QUALIFIEDNAME(1, "Generate Event_2"),
+                            generateAttrOff, &generateEventMethodCallbackOff,
                             0, NULL, 0, NULL, NULL, NULL);
     //-------------------------------------
 }
