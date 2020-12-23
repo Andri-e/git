@@ -10,7 +10,7 @@ UA_Double sysidle = 0;
 void nodeSetup(UA_Server *server)
 {
  //Add a new namespace to the server
-    UA_Int16 ns_1 = UA_Server_addNamespace(server, "Namespace_1");
+   // UA_Int16 ns_1 = UA_Server_addNamespace(server, "Namespace_1");
     UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND, "New Namespace added with Nr. %d", ns_1);
 
     //Add a new object called testObject 
@@ -20,7 +20,7 @@ void nodeSetup(UA_Server *server)
     oAttr.displayName = UA_LOCALIZEDTEXT("en-US", "Device name");
     oAttr.description = UA_LOCALIZEDTEXT("en-US", "This is a test device");
     UA_Server_addObjectNode(server, UA_NODEID_STRING(2, "testObject"),
-                            UA_NODEID_NUMERIC(0, UA_NS0ID_ROOTFOLDER ),
+                            UA_NODEID_NUMERIC(0, UA_NS0ID_OBJECTSFOLDER),
                             UA_NODEID_NUMERIC(0, UA_NS0ID_ORGANIZES),
                             UA_QUALIFIEDNAME(2, "Test Object"), 
                             UA_NODEID_NUMERIC(0, UA_NS0ID_BASEOBJECTTYPE),
