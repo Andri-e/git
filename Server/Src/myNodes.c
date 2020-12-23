@@ -22,7 +22,7 @@ void nodeSetup(UA_Server *server)
     UA_Server_addObjectNode(server, UA_NODEID_STRING(2, "testObject"),
                             UA_NODEID_NUMERIC(0, UA_NS0ID_OBJECTSFOLDER),
                             UA_NODEID_NUMERIC(0, UA_NS0ID_ORGANIZES),
-                            UA_QUALIFIEDNAME(2, "Test Object"), 
+                            UA_QUALIFIEDNAME("en-US", "Test Object"), 
                             UA_NODEID_NUMERIC(0, UA_NS0ID_BASEOBJECTTYPE),
                             oAttr, NULL, &testObjectId);
 
