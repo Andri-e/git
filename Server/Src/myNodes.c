@@ -11,7 +11,7 @@ void nodeSetup(UA_Server *server)
 {
  //Add a new namespace to the server
    // UA_Int16 ns_1 = UA_Server_addNamespace(server, "Namespace_1");
-    UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND, "New Namespace added with Nr. %d", ns_1);
+   // UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND, "New Namespace added with Nr. %d", ns_1);
 
     //Add a new object called testObject 
     UA_NodeId testObjectId;
