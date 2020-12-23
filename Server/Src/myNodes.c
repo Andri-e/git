@@ -22,9 +22,10 @@ void nodeSetup(UA_Server *server)
     UA_Server_addObjectNode(server, UA_NODEID_STRING(2, "testObject"),
                             UA_NODEID_NUMERIC(0, UA_NS0ID_OBJECTSFOLDER),                           // Parent node 
                             UA_NODEID_NUMERIC(0, UA_NS0ID_ORGANIZES),                               // Referance node 
-                            UA_QUALIFIEDNAME(2, "Test Object"), 
-                            UA_NODEID_NUMERIC(0, UA_NS0ID_BASEOBJECTTYPE),
-                            oAttr, NULL, &testObjectId);
+                            UA_QUALIFIEDNAME(2, "Device name"),                                     // Browse name  
+                            UA_NODEID_NUMERIC(0, UA_NS0ID_FOLDERTYPE),                          // 
+                            oAttr,
+                            NULL, &testObjectId);
 
     //Add the variable name to the server
     UA_VariableAttributes vnAttr = UA_VariableAttributes_default;
