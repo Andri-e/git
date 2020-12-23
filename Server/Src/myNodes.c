@@ -21,7 +21,7 @@ void nodeSetup(UA_Server *server)
     oAttr.description = UA_LOCALIZEDTEXT("en-US", "This is a test device");
     UA_Server_addObjectNode(server, UA_NODEID_STRING(2, "testObject"),
                             UA_NODEID_NUMERIC(0, UA_NS0ID_OBJECTSFOLDER),                           // Parent node 
-                            UA_NODEID_NUMERIC(0, UA_NS0ID_HASDESCRIPTION),                               // Referance node 
+                            UA_NODEID_NUMERIC(0, UA_NS0ID_ORGANIZES),                               // Referance node 
                             UA_QUALIFIEDNAME(2, "Test Object"), 
                             UA_NODEID_NUMERIC(0, UA_NS0ID_BASEOBJECTTYPE),
                             oAttr, NULL, &testObjectId);
