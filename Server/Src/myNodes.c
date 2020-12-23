@@ -16,20 +16,23 @@ void nodeSetup(UA_Server *server)
     //Add a new object called testObject 
     UA_NodeId testObjectId;
     UA_ObjectAttributes oAttr = UA_ObjectAttributes_default;
+    oAttr.displayName = UA_LOCALIZEDTEXT("en-US", "Test Device");
     UA_Server_addObjectNode(server, UA_NODEID_STRING(2, "testObject"),
                             UA_NODEID_NUMERIC(0, UA_NS0ID_OBJECTSFOLDER),
                             UA_NODEID_NUMERIC(0, UA_NS0ID_ORGANIZES),
-                            UA_QUALIFIEDNAME(2, "Test Object"), UA_NODEID_NUMERIC(0, UA_NS0ID_BASEOBJECTTYPE),
+                            UA_QUALIFIEDNAME(2, "Test Object"), 
+                            UA_NODEID_NUMERIC(0, UA_NS0ID_BASEOBJECTTYPE),
                             oAttr, NULL, &testObjectId);
 
     //Add the variable name to the server
     UA_VariableAttributes vnAttr = UA_VariableAttributes_default;
     UA_String variableName = UA_STRING("nameOfVariable");
     UA_Variant_setScalar(&vnAttr.value, &variableName, &UA_TYPES[UA_TYPES_STRING]);
-    UA_Server_addVariableNode(server, UA_NODEID_STRING(2, "testVariableName"), testObjectId,
-                              UA_NODEID_NUMERIC(0, UA_NS0ID_HASCOMPONENT),
-                              UA_QUALIFIEDNAME(2, "Vendor Name"),
-                              UA_NODEID_NUMERIC(0, UA_NS0ID_BASEDATAVARIABLETYPE), vnAttr, NULL, NULL);
+    UA_Server_addVariableNode(server, UA_NODEID_STRING(2, "testVariableName"), 
+                            testObjectId,
+                            UA_NODEID_NUMERIC(0, UA_NS0ID_HASCOMPONENT),
+                            UA_QUALIFIEDNAME(2, "Vendor Name"),
+                            UA_NODEID_NUMERIC(0, UA_NS0ID_BASEDATAVARIABLETYPE), vnAttr, NULL, NULL);
 
     //Add the variable serial number to the server 
     UA_VariableAttributes snAttr = UA_VariableAttributes_default;

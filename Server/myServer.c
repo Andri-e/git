@@ -23,17 +23,18 @@
 static volatile UA_Boolean running = true;			// Server state
 
 // Stop handler to watch for ctrl + c 
-static void stopHandler(int sig)
+static void stopHandler(int sig)                    // do I need an int here? 
 {
     UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND, "received ctrl-c");
     running = false;
 }
 
+
 // myServer main 
 int main(int argc, char * argv[])
 {
 	// Setting up the signals for the stop signal (ctrl + c)
-    signal(SIGINT, stopHandler);
+    signal(SIGINT, stopHandler);                    // SIGINT is for intrupt, calls stopHandler
 
 	// Creating a new server 
     UA_Server *server = UA_Server_new();
