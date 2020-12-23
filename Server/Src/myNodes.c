@@ -18,7 +18,7 @@ void nodeSetup(UA_Server *server)
     UA_ObjectAttributes oAttr = UA_ObjectAttributes_default;
 
     oAttr.displayName = UA_LOCALIZEDTEXT("en-US", "Device name");
-    oAttr.description = UA_LOCALIZEDTEXT("Test description");
+    oAttr.description = UA_LOCALIZEDTEXT("en-US", "Test description");
     UA_Server_addObjectNode(server, UA_NODEID_STRING(2, "testObject"),
                             UA_NODEID_NUMERIC(0, UA_NS0ID_OBJECTSFOLDER),
                             UA_NODEID_NUMERIC(0, UA_NS0ID_ORGANIZES),
