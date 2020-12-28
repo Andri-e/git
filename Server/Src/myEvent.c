@@ -72,7 +72,7 @@ UA_StatusCode generateEventMethodCallback_On(UA_Server *server,
                          size_t outputSize, UA_Variant *output) 
 {
     UA_NodeId onEventNodeId;
-    UA_StatusCode retval = UA_Server_createEvent(server, eventType, eventNodeId);
+    UA_StatusCode retval = UA_Server_createEvent(server, eventType, onEventNodeId);
     if (retval != UA_STATUSCODE_GOOD) 
     {
         UA_LOG_WARNING(UA_Log_Stdout, UA_LOGCATEGORY_SERVER, "Create On event failed.");
