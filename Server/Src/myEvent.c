@@ -11,7 +11,7 @@ UA_StatusCode addNewEventType(UA_Server *server)
     return UA_Server_addObjectTypeNode(server, UA_NODEID_NULL ,
                                        UA_NODEID_NUMERIC(0, UA_NS0ID_BASEEVENTTYPE),
                                        UA_NODEID_NUMERIC(0, UA_NS0ID_HASSUBTYPE),
-                                       UA_QUALIFIEDNAME(0, "EventType"),
+                                       UA_QUALIFIEDNAME(0, "1EventType1"),
                                        attrOn, 
                                        NULL, &eventType);
 }
