@@ -73,16 +73,14 @@ UA_StatusCode generateEventMethodCallback_On(UA_Server *server,
     UA_StatusCode retval = setUpEvent(server, &eventNodeId);
     if(retval != UA_STATUSCODE_GOOD) 
     {
-        UA_LOG_ERROR(UA_Log_Stdout, UA_LOGCATEGORY_SERVER, "Not connected. Retrying to connect in 1 second");
-       // UA_LOG_WARNING(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND, "Creating event failed. StatusCode %s", UA_StatusCode_name(retval));
+        UA_LOG_ERROR(UA_Log_Stdout, UA_LOGCATEGORY_SERVER, "Failed to setup OnEvent.");
         return retval;
     }
 
     retval = UA_Server_triggerEvent(server, eventNodeId, UA_NODEID_NUMERIC(0, UA_NS0ID_SERVER), NULL, UA_TRUE);
     if(retval != UA_STATUSCODE_GOOD)
     {
-        UA_LOG_ERROR(UA_Log_Stdout, UA_LOGCATEGORY_SERVER, "Not connected. Retrying to connect in 1 second");
-       // UA_LOG_WARNING(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND,  "Triggering event failed. StatusCode %s", UA_StatusCode_name(retval));
+        UA_LOG_ERROR(UA_Log_Stdout, UA_LOGCATEGORY_SERVER, "Failed to trigger OnEvent.");
         return retval;
     }
 
@@ -105,18 +103,18 @@ UA_StatusCode generateEventMethodCallback_Off(UA_Server *server,
     UA_StatusCode retval = setUpEvent(server, &eventNodeId);
     if(retval != UA_STATUSCODE_GOOD) 
     {
-        UA_LOG_WARNING(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND, "Creating event failed. StatusCode %s", UA_StatusCode_name(retval));
+        UA_LOG_ERROR(UA_Log_Stdout, UA_LOGCATEGORY_SERVER, "Failed to trigger OffEvent.");
         return retval;
     }
 
     retval = UA_Server_triggerEvent(server, eventNodeId, UA_NODEID_NUMERIC(0, UA_NS0ID_SERVER), NULL, UA_TRUE);
     if(retval != UA_STATUSCODE_GOOD)
     {
-        UA_LOG_WARNING(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND,  "Triggering event failed. StatusCode %s", UA_StatusCode_name(retval));
+        UA_LOG_ERROR(UA_Log_Stdout, UA_LOGCATEGORY_SERVER, "Failed to trigger OffEvent.");
         return retval;
     }
 
-    UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND, "Event Off Triggerd.");
+    UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_SERVER, "Event Off Triggerd.");
 
     // Here we can put in what ever command we want to trigger with the event, for example led on / off or restarting some onboard application. 
 
