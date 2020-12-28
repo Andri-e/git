@@ -5,18 +5,6 @@
 UA_StatusCode addNewEventType(UA_Server *server);
 
 /**
- * Setting up an event
- * ^^^^^^^^^^^^^^^^^^^
- * In order to set up the event, we can first use ``UA_Server_createEvent`` to give us a node representation of the event.
- * All we need for this is our `EventType`. Once we have our event node, which is saved internally as an `ObjectNode`,
- * we can define the attributes the event has the same way we would define the attributes of an object node. It is not
- * necessary to define the attributes `EventId`, `ReceiveTime`, `SourceNode` or `EventType` since these are set
- * automatically by the server. In this example, we will be setting the fields 'Message' and 'Severity' in addition
- * to `Time` which is needed to make the example UaExpert compliant.
- */
-//UA_StatusCode setUpEvent(UA_Server *server, UA_NodeId *outId);
-
-/**
  * Triggering an event
  * ^^^^^^^^^^^^^^^^^^^
  * First a node representing an event is generated using ``setUpEvent``. Once our event is good to go, we specify
