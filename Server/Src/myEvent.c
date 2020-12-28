@@ -73,18 +73,20 @@ UA_StatusCode generateEventMethodCallback_On(UA_Server *server,
     UA_StatusCode retval = setUpEvent(server, &eventNodeId);
     if(retval != UA_STATUSCODE_GOOD) 
     {
-        UA_LOG_WARNING(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND, "Creating event failed. StatusCode %s", UA_StatusCode_name(retval));
+        UA_LOG_ERROR(UA_Log_Stdout, UA_LOGCATEGORY_SERVER, "Not connected. Retrying to connect in 1 second");
+       // UA_LOG_WARNING(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND, "Creating event failed. StatusCode %s", UA_StatusCode_name(retval));
         return retval;
     }
 
     retval = UA_Server_triggerEvent(server, eventNodeId, UA_NODEID_NUMERIC(0, UA_NS0ID_SERVER), NULL, UA_TRUE);
     if(retval != UA_STATUSCODE_GOOD)
     {
-        UA_LOG_WARNING(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND,  "Triggering event failed. StatusCode %s", UA_StatusCode_name(retval));
+        UA_LOG_ERROR(UA_Log_Stdout, UA_LOGCATEGORY_SERVER, "Not connected. Retrying to connect in 1 second");
+       // UA_LOG_WARNING(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND,  "Triggering event failed. StatusCode %s", UA_StatusCode_name(retval));
         return retval;
     }
 
-    UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND, "Event On Triggerd.");
+    UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_SERVER, "Event On Triggerd.");
 
     // Here we can put in what ever command we want to trigger with the event, for example led on / off or restarting some onboard application. 
 
@@ -136,7 +138,6 @@ void addGenerateEventMethod(UA_Server *server)
     generateAttr.displayName = UA_LOCALIZEDTEXT("en-US","Generate Event On");
     generateAttr.executable = true;
     generateAttr.userExecutable = true;
-    // UA_Server_addMethodNode(server, UA_NODEID_NUMERIC(1, 62541),
     UA_Server_addMethodNode(server, UA_NODEID_STRING(2, "onEvent"),
                             UA_NODEID_NUMERIC(0, UA_NS0ID_OBJECTSFOLDER),
                             UA_NODEID_NUMERIC(0, UA_NS0ID_HASCOMPONENT),
