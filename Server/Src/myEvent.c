@@ -1,31 +1,19 @@
 #include "../Include/open62541.h"
 #include "../Include/myEvent.h"
 
-static UA_NodeId eventTypeOn, eventTypeOff;
+static UA_NodeId eventType;
 
 UA_StatusCode addNewEventType(UA_Server *server) 
 {
-    // UA_NODEID_NULL 
-    UA_ObjectTypeAttributes attrOn = UA_ObjectTypeAttributes_default;
-    attrOn.displayName = UA_LOCALIZEDTEXT("en-US", "SimpleEventTypeOn");
-    attrOn.description = UA_LOCALIZEDTEXT("en-US", "A simple event to turn on");
+    UA_ObjectTypeAttributes attrEvent = UA_ObjectTypeAttributes_default;
+   // attrOn.displayName = UA_LOCALIZEDTEXT("en-US", "SimpleEventType");
+   // attrOn.description = UA_LOCALIZEDTEXT("en-US", "A simple event to turn on");
     return UA_Server_addObjectTypeNode(server, UA_NODEID_NULL ,
                                        UA_NODEID_NUMERIC(0, UA_NS0ID_BASEEVENTTYPE),
                                        UA_NODEID_NUMERIC(0, UA_NS0ID_HASSUBTYPE),
-                                       UA_QUALIFIEDNAME(0, "SimpleEventTypeOn"),
-                                       attrOn, 
-                                       NULL, &eventTypeOn);
-/*
-    UA_ObjectTypeAttributes attrOff = UA_ObjectTypeAttributes_default;
-    attrOff.displayName = UA_LOCALIZEDTEXT("en-US", "SimpleEventTypeOff");
-    attrOff.description = UA_LOCALIZEDTEXT("en-US", "A simple event to turn off");
-    return UA_Server_addObjectTypeNode(server, UA_NODEID_NULL ,
-                                       UA_NODEID_NUMERIC(0, UA_NS0ID_BASEEVENTTYPE),
-                                       UA_NODEID_NUMERIC(0, UA_NS0ID_HASSUBTYPE),
-                                       UA_QUALIFIEDNAME(0, "SimpleEventTypeOff"),
-                                       attrOff, 
-                                       NULL, &eventTypeOff);   
-                                       */
+                                       UA_QUALIFIEDNAME(0, "EventType"),
+                                       attrEvent, 
+                                       NULL, &eventType);
 }
 
 /**
@@ -40,7 +28,7 @@ UA_StatusCode addNewEventType(UA_Server *server)
  */
 UA_StatusCode setUpEvent(UA_Server *server, UA_NodeId *outId) 
 {
-    UA_StatusCode retval = UA_Server_createEvent(server, eventTypeOn, outId);
+    UA_StatusCode retval = UA_Server_createEvent(server, eventType, outId);
     if (retval != UA_STATUSCODE_GOOD) 
     {
         UA_LOG_WARNING(UA_Log_Stdout, UA_LOGCATEGORY_SERVER, "createEvent failed. StatusCode %s", UA_StatusCode_name(retval));
