@@ -73,17 +73,6 @@ void nodeSetup(UA_Server *server)
                               UA_QUALIFIEDNAME(2, "sysIdlePercentage"),
                               UA_NODEID_NUMERIC(0, UA_NS0ID_BASEDATAVARIABLETYPE), sysIdleAttr, NULL, NULL);
 	
-	
-
-/*
-    //Add the Variable to the server
-    UA_VariableAttributes variableAttr = UA_VariableAttributes_default;
-    UA_Variant_setScalar(&variableAttr.value, &variable, &UA_TYPES[UA_TYPES_DOUBLE]);
-    UA_Server_addVariableNode(server, UA_NODEID_STRING(2, "testVariable"), testObjectId,
-                              UA_NODEID_NUMERIC(0, UA_NS0ID_HASCOMPONENT),
-                              UA_QUALIFIEDNAME(2, "Variable"),
-                              UA_NODEID_NUMERIC(0, UA_NS0ID_BASEDATAVARIABLETYPE), variableAttr, NULL, NULL);
-*/
 }
 
 

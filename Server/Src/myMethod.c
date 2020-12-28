@@ -8,17 +8,10 @@ UA_StatusCode MethodCallback(UA_Server *server,
                          size_t inputSize, const UA_Variant *input,
                          size_t outputSize, UA_Variant *output) 
 {
-    /*
-    UA_String *inputStr = (UA_String*)input->data;
-    UA_String response = UA_STRING_ALLOC("Undefined");
-
-    if(inputStr->length == 1)
-    {
-        switch(inputStr->data[0])
-        {
-            */
     UA_String inputStr = *(UA_String*)input->data;
     UA_String response = UA_STRING_ALLOC("Undefined");
+
+    // State machine or function ect.. to be executed 
 
     if(inputStr.length == 1)
     {
@@ -27,18 +20,22 @@ UA_StatusCode MethodCallback(UA_Server *server,
             case '1' :
                 printf("Case 1 \n");
                 response = UA_STRING_ALLOC("Case 1 selected.");
+                UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_SERVER, "Method was called - Case 1");
                 break;
             case '2' :
                 printf("Case 2 \n");
                 response = UA_STRING_ALLOC("Case 2 selected.");
+                UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_SERVER, "Method was called - Case 2");
                 break;
             case '3' :
                 printf("Case 3 \n");
                 response = UA_STRING_ALLOC("Case 3 selected.");
+                UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_SERVER, "Method was called - Case 3");
                 break;
             default : 
                 printf("Incorect value picked. \n");
                 response = UA_STRING_ALLOC("Incorect value picked.");
+                UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_SERVER, "Method was called with incorect value");
                 break;
         }
     } 
@@ -46,6 +43,7 @@ UA_StatusCode MethodCallback(UA_Server *server,
     {
         printf("Incorrect value selected, please try again.\n");
         response = UA_STRING_ALLOC("Incorrect value selected, please try again.");
+        UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_SERVER, "Method was called with incorect length");
     }
 
     response.data = (UA_Byte *)UA_realloc(response.data, response.length);
@@ -53,7 +51,6 @@ UA_StatusCode MethodCallback(UA_Server *server,
     
     // Cleanup 
     UA_String_clear(&response);
-    UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_SERVER, "Method was called");
     return UA_STATUSCODE_GOOD;
 }
 
