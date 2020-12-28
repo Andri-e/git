@@ -6,7 +6,7 @@ static UA_NodeId eventType;
 UA_StatusCode addNewEventType(UA_Server *server) 
 {
     UA_ObjectTypeAttributes attrEvent = UA_ObjectTypeAttributes_default;
-    return UA_Server_addObjectTypeNode(server, UA_NODEID_NUMERIC(2,0),
+    return UA_Server_addObjectTypeNode(server, UA_NODEID_STRING(2, "TestEvent"),
                                        UA_NODEID_NUMERIC(0, UA_NS0ID_BASEEVENTTYPE),
                                        UA_NODEID_NUMERIC(0, UA_NS0ID_HASSUBTYPE),
                                        UA_QUALIFIEDNAME(0, "TestEvent"),
