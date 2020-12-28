@@ -18,7 +18,7 @@ static void stopHandler(int sign)
     running = 0;
 }
 
-
+/*
 // read out the nodes 
 static void readNode(UA_Client *client, UA_StatusCode retval, UA_Variant value)
 {
@@ -68,20 +68,10 @@ static void readNode(UA_Client *client, UA_StatusCode retval, UA_Variant value)
 	UA_DateTimeStruct dts_1 = UA_DateTime_toStruct(refTimeStamp);	
 	UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND, "%u-%u-%u %u:%u:%u.%03u", dts_1.day, dts_1.month, dts_1.year, dts_1.hour, dts_1.min, dts_1.sec, dts_1.milliSec);
 	
-
-		
-	/*
-    //Read the variable 
-    retval = UA_Client_readValueAttribute(client, UA_NODEID_STRING(2, "testVariable"), &value);
-    if(retval == UA_STATUSCODE_GOOD && UA_Variant_hasScalarType(&value, &UA_TYPES[UA_TYPES_DOUBLE])) 
-    {
-		variable = *(UA_Double *) value.data;
-		//UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND, "Variable Value : %f", variable);
-    }
-	*/
 	
 	UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND, "%.*s \t%d \t\t%u-%u-%u %u:%u:%u.%03u \t%f ", userName.length, userName.data, userId, dts.day, dts.month, dts.year, dts.hour, dts.min, dts.sec, dts.milliSec, variable );
 }
+*/
 
 // myClient main 
 int main(void)
