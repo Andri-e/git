@@ -25,6 +25,7 @@ UA_StatusCode addNewEventType(UA_Server *server)
  * to `Time` which is needed to make the example UaExpert compliant.
  */
 
+/*
 UA_StatusCode setUpEvent(UA_Server *server, UA_NodeId *outId) 
 {
     UA_StatusCode retval = UA_Server_createEvent(server, eventType, outId);
@@ -54,6 +55,7 @@ UA_StatusCode setUpEvent(UA_Server *server, UA_NodeId *outId)
 
     return UA_STATUSCODE_GOOD;
 }
+*/
 
 /**
  * Triggering an event
@@ -70,7 +72,37 @@ UA_StatusCode generateEventMethodCallback_On(UA_Server *server,
                          size_t outputSize, UA_Variant *output) 
 {
     UA_NodeId eventNodeId;
-    UA_StatusCode retval = setUpEvent(server, &eventNodeId);
+    //UA_StatusCode retval = setUpEvent(server, &eventNodeId);
+    //------------
+    UA_StatusCode retval = UA_Server_createEvent(server, eventType, eventNodeId);
+    if (retval != UA_STATUSCODE_GOOD) 
+    {
+        UA_LOG_WARNING(UA_Log_Stdout, UA_LOGCATEGORY_SERVER, "createEvent failed. StatusCode %s", UA_StatusCode_name(retval));
+        return retval;
+    }
+
+    // Set the Event Attributes 
+    // Setting the Time is required or else the event will not show up in UAExpert! 
+    UA_DateTime eventTime = UA_DateTime_now();
+    UA_Server_writeObjectProperty_scalar(server, *outId, UA_QUALIFIEDNAME(0, "Time"),
+                                         &eventTime, &UA_TYPES[UA_TYPES_DATETIME]);
+
+    UA_UInt16 eventSeverity = 100;
+    UA_Server_writeObjectProperty_scalar(server, *outId, UA_QUALIFIEDNAME(0, "Severity"),
+                                         &eventSeverity, &UA_TYPES[UA_TYPES_UINT16]);
+
+    UA_LocalizedText eventMessage = UA_LOCALIZEDTEXT("en-US", "An event has been generated.");
+    UA_Server_writeObjectProperty_scalar(server, *outId, UA_QUALIFIEDNAME(0, "Message"),
+                                         &eventMessage, &UA_TYPES[UA_TYPES_LOCALIZEDTEXT]);
+
+    UA_String eventSourceName = UA_STRING("Server");
+    UA_Server_writeObjectProperty_scalar(server, *outId, UA_QUALIFIEDNAME(0, "SourceName"),
+                                         &eventSourceName, &UA_TYPES[UA_TYPES_STRING]);
+
+
+
+
+    //-----------
     if(retval != UA_STATUSCODE_GOOD) 
     {
         UA_LOG_ERROR(UA_Log_Stdout, UA_LOGCATEGORY_SERVER, "Failed to setup OnEvent.");
