@@ -6,20 +6,20 @@ static UA_NodeId eventTypeOn, eventTypeOff;
 UA_StatusCode addNewEventType(UA_Server *server) 
 {
     // UA_NODEID_NULL 
-    UA_ObjectTypeAttributes attr = UA_ObjectTypeAttributes_default;
-    attr.displayName = UA_LOCALIZEDTEXT("en-US", "SimpleEventTypeOn");
-    attr.description = UA_LOCALIZEDTEXT("en-US", "A simple event to turn on");
-    return UA_Server_addObjectTypeNode(server, UA_NODEID_STRING(2, "Rando node Id On"),
+    UA_ObjectTypeAttributes attrOn = UA_ObjectTypeAttributes_default;
+    attrOn.displayName = UA_LOCALIZEDTEXT("en-US", "SimpleEventTypeOn");
+    attrOn.description = UA_LOCALIZEDTEXT("en-US", "A simple event to turn on");
+    return UA_Server_addObjectTypeNode(server, UA_NODEID_NULL ,
                                        UA_NODEID_NUMERIC(0, UA_NS0ID_BASEEVENTTYPE),
                                        UA_NODEID_NUMERIC(0, UA_NS0ID_HASSUBTYPE),
                                        UA_QUALIFIEDNAME(0, "SimpleEventTypeOn"),
-                                       attr, 
+                                       attrOn, 
                                        NULL, &eventTypeOn);
 
     UA_ObjectTypeAttributes attrOff = UA_ObjectTypeAttributes_default;
     attrOff.displayName = UA_LOCALIZEDTEXT("en-US", "SimpleEventTypeOff");
     attrOff.description = UA_LOCALIZEDTEXT("en-US", "A simple event to turn off");
-    return UA_Server_addObjectTypeNode(server, UA_NODEID_STRING(2, "Rando Node ID off"),
+    return UA_Server_addObjectTypeNode(server, UA_NODEID_NULL ,
                                        UA_NODEID_NUMERIC(0, UA_NS0ID_BASEEVENTTYPE),
                                        UA_NODEID_NUMERIC(0, UA_NS0ID_HASSUBTYPE),
                                        UA_QUALIFIEDNAME(0, "SimpleEventTypeOff"),
