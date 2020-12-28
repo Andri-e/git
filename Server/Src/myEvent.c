@@ -5,14 +5,12 @@ static UA_NodeId eventType;
 
 UA_StatusCode addNewEventType(UA_Server *server) 
 {
-    UA_ObjectTypeAttributes attrOn = UA_ObjectTypeAttributes_default;
-   // attrOn.displayName = UA_LOCALIZEDTEXT("en-US", "TestEventType");
-   // attrOn.description = UA_LOCALIZEDTEXT("en-US", "A test event to turn on/off");
+    UA_ObjectTypeAttributes attrEvent = UA_ObjectTypeAttributes_default;
     return UA_Server_addObjectTypeNode(server, UA_NODEID_NULL ,
                                        UA_NODEID_NUMERIC(0, UA_NS0ID_BASEEVENTTYPE),
                                        UA_NODEID_NUMERIC(0, UA_NS0ID_HASSUBTYPE),
                                        UA_QUALIFIEDNAME(0, "TestEventType"),
-                                       attrOn, 
+                                       attrEvent, 
                                        NULL, &eventType);
 }
 
