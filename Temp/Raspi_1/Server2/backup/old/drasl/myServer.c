@@ -1,0 +1,368 @@
+#include "open62541.h"
+
+#include <signal.h>
+#include <stdlib.h>
+
+static volatile UA_Boolean running = true;			// Server state
+
+UA_Double variable = 20.0;						
+UA_DateTime timeStamp = 0;	
+UA_Float systemp = 0; 
+UA_Double sysidle = 0;
+
+// Stop handler to watch for ctrl + c 
+static void stopHandler(int sig)
+{
+    UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND, "received ctrl-c");
+    running = false;
+}
+
+// Argument check, is Host name and Port number default? 
+static void checkArguments(UA_Server *server, int argc, char * argv[] )
+{
+	//Check for Arguments, host name and port number
+    if(argc > 2)
+    {
+		UA_Int16 port_number = atoi(argv[2]);
+		UA_ServerConfig_setMinimal(UA_Server_getConfig(server), port_number, 0);
+    } 
+    else
+    {	
+		UA_ServerConfig_setDefault(UA_Server_getConfig(server));
+    }
+
+    if(argc > 1)
+    {
+		//Copy the hostname from char * to an open62541 Variable
+		UA_String hostname;
+		UA_String_init(&hostname);
+		hostname.length = strlen(argv[1]);
+		hostname.data = (UA_Byte *) argv[1];
+
+		//Change the configuration 
+		UA_ServerConfig_setCustomHostname(UA_Server_getConfig(server), hostname);
+    }
+}
+
+// Setting up the object node and its variables 
+static void nodeSetup(UA_Server *server)
+{
+ //Add a new namespace to the server
+    UA_Int16 ns_1 = UA_Server_addNamespace(server, "Namespace_1");
+    UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND, "New Namespace added with Nr. %d", ns_1);
+
+    //Add a new object called testObject 
+    UA_NodeId testObjectId;
+    UA_ObjectAttributes oAttr = UA_ObjectAttributes_default;
+    UA_Server_addObjectNode(server, UA_NODEID_STRING(2, "testObject"),
+                            UA_NODEID_NUMERIC(0, UA_NS0ID_OBJECTSFOLDER),
+                            UA_NODEID_NUMERIC(0, UA_NS0ID_ORGANIZES),
+                            UA_QUALIFIEDNAME(2, "Test Object"), UA_NODEID_NUMERIC(0, UA_NS0ID_BASEOBJECTTYPE),
+                            oAttr, NULL, &testObjectId);
+
+    //Add the variable name to the server
+    UA_VariableAttributes vnAttr = UA_VariableAttributes_default;
+    UA_String variableName = UA_STRING("nameOfVariable");
+    UA_Variant_setScalar(&vnAttr.value, &variableName, &UA_TYPES[UA_TYPES_STRING]);
+    UA_Server_addVariableNode(server, UA_NODEID_STRING(2, "testVariableName"), testObjectId,
+                              UA_NODEID_NUMERIC(0, UA_NS0ID_HASCOMPONENT),
+                              UA_QUALIFIEDNAME(2, "Vendor Name"),
+                              UA_NODEID_NUMERIC(0, UA_NS0ID_BASEDATAVARIABLETYPE), vnAttr, NULL, NULL);
+
+    //Add the variable serial number to the server 
+    UA_VariableAttributes snAttr = UA_VariableAttributes_default;
+    UA_Int32 serialNumber = 123456;
+    UA_Variant_setScalar(&snAttr.value, &serialNumber, &UA_TYPES[UA_TYPES_INT32]);
+    UA_Server_addVariableNode(server, UA_NODEID_STRING(2, "testSerial"), testObjectId,
+                              UA_NODEID_NUMERIC(0, UA_NS0ID_HASCOMPONENT),
+                              UA_QUALIFIEDNAME(2, "Serial Number"),
+                              UA_NODEID_NUMERIC(0, UA_NS0ID_BASEDATAVARIABLETYPE), snAttr, NULL, NULL);
+	
+	//Add the time stamp to the server
+    UA_VariableAttributes tsAttr = UA_VariableAttributes_default;
+    UA_Variant_setScalar(&tsAttr.value, &timeStamp, &UA_TYPES[UA_TYPES_DATETIME]);
+    UA_Server_addVariableNode(server, UA_NODEID_STRING(2, "testTimeStamp"), testObjectId,
+                              UA_NODEID_NUMERIC(0, UA_NS0ID_HASCOMPONENT),
+                              UA_QUALIFIEDNAME(2, "timeStamp"),
+                              UA_NODEID_NUMERIC(0, UA_NS0ID_BASEDATAVARIABLETYPE), tsAttr, NULL, NULL);					  
+	
+	//Add the cpu Temperature to the server
+    UA_VariableAttributes sysTempAttr = UA_VariableAttributes_default;
+    UA_Variant_setScalar(&sysTempAttr.value, &systemp, &UA_TYPES[UA_TYPES_FLOAT]);
+    UA_Server_addVariableNode(server, UA_NODEID_STRING(2, "testSysTemp"), testObjectId,
+                              UA_NODEID_NUMERIC(0, UA_NS0ID_HASCOMPONENT),
+                              UA_QUALIFIEDNAME(2, "systemTemperature"),
+                              UA_NODEID_NUMERIC(0, UA_NS0ID_BASEDATAVARIABLETYPE), sysTempAttr, NULL, NULL);
+	
+	//Add the Sys Idle to the server
+    UA_VariableAttributes sysIdleAttr = UA_VariableAttributes_default;
+    UA_Variant_setScalar(&sysIdleAttr.value, &sysidle, &UA_TYPES[UA_TYPES_DOUBLE]);
+    UA_Server_addVariableNode(server, UA_NODEID_STRING(2, "testSysIdle"), testObjectId,
+                              UA_NODEID_NUMERIC(0, UA_NS0ID_HASCOMPONENT),
+                              UA_QUALIFIEDNAME(2, "sysIdlePercentage"),
+                              UA_NODEID_NUMERIC(0, UA_NS0ID_BASEDATAVARIABLETYPE), sysIdleAttr, NULL, NULL);
+	
+	
+
+/*
+    //Add the Variable to the server
+    UA_VariableAttributes variableAttr = UA_VariableAttributes_default;
+    UA_Variant_setScalar(&variableAttr.value, &variable, &UA_TYPES[UA_TYPES_DOUBLE]);
+    UA_Server_addVariableNode(server, UA_NODEID_STRING(2, "testVariable"), testObjectId,
+                              UA_NODEID_NUMERIC(0, UA_NS0ID_HASCOMPONENT),
+                              UA_QUALIFIEDNAME(2, "Variable"),
+                              UA_NODEID_NUMERIC(0, UA_NS0ID_BASEDATAVARIABLETYPE), variableAttr, NULL, NULL);
+*/
+}
+
+// Time Stamp callback 
+static void beforeReadTime(UA_Server *server,
+               const UA_NodeId *sessionId, void *sessionContext,
+               const UA_NodeId *nodeid, void *nodeContext,
+               const UA_NumericRange *range, const UA_DataValue *data) 
+{
+    timeStamp = UA_DateTime_now();
+    UA_Variant value;
+    UA_Variant_setScalar(&value, &timeStamp, &UA_TYPES[UA_TYPES_DATETIME]);
+    UA_Server_writeValue(server, UA_NODEID_STRING(2, "testTimeStamp"), value);
+}
+
+static void addValueCallbackToCurrentTimeVariable(UA_Server *server) {
+    UA_ValueCallback callback ;
+    callback.onRead = beforeReadTime;
+    callback.onWrite = NULL;
+    UA_Server_setVariableNode_valueCallback(server, UA_NODEID_STRING(2, "testTimeStamp"), callback);
+}
+
+// CPU Temperature Callback 
+static void beforeReadTemperature(UA_Server *server,
+               const UA_NodeId *sessionId, void *sessionContext,
+               const UA_NodeId *nodeid, void *nodeContext,
+               const UA_NumericRange *range, const UA_DataValue *data) 
+{
+	// Read cpu Temp 
+	float millideg;
+	FILE *thermal;
+	int n;
+
+	thermal = fopen("/sys/class/thermal/thermal_zone0/temp","r");
+	n = fscanf(thermal,"%f",&millideg);
+	fclose(thermal);
+	systemp = millideg / 1000;
+
+	// Way to update the variable 
+	UA_Variant value;
+	UA_Variant_setScalar(&value, &systemp, &UA_TYPES[UA_TYPES_FLOAT]);
+    UA_Server_writeValue(server, UA_NODEID_STRING(2, "testSysTemp"), value);
+}
+
+static void addValueCallbackToCurrentTemerature(UA_Server *server) {
+    UA_ValueCallback callback ;
+    callback.onRead = beforeReadTemperature;
+    callback.onWrite = NULL;
+    UA_Server_setVariableNode_valueCallback(server, UA_NODEID_STRING(2, "testSysTemp"), callback);
+}
+
+
+
+// CPU Not idle Callback  - https://rosettacode.org/wiki/Linux_CPU_utilization - https://www.kgoettler.com/post/proc-stat/ for math n stuff 
+static void beforeReadIdle(UA_Server *server,
+               const UA_NodeId *sessionId, void *sessionContext,
+               const UA_NodeId *nodeid, void *nodeContext,
+               const UA_NumericRange *range, const UA_DataValue *data) 
+{
+	char str[100];
+	const char d[2] = " ";
+	char* token;
+	int i = 0,times,lag;
+	long int sum = 0, idle, lastSum = 0,lastIdle = 0;
+	double sysIdleFraction;
+
+	FILE* fp = fopen("/proc/stat","r");
+	i = 0;
+	fgets(str,100,fp);
+	fclose(fp);
+	token = strtok(str,d);
+	sum = 0;
+	while(token!=NULL)
+	{
+		token = strtok(NULL,d);
+		if(token!=NULL)
+		{
+			sum += atoi(token);
+			if(i==3)
+			{
+				idle = atoi(token);
+			}
+			i++;
+		}
+	}
+	sysIdleFraction = 100 - (idle-lastIdle)*100.0/(sum-lastSum);
+	lastIdle = idle;
+	lastSum = sum;
+
+	// Way to update the variable 
+	UA_Variant value;
+	UA_Variant_setScalar(&value, &sysIdleFraction, &UA_TYPES[UA_TYPES_DOUBLE]);
+    UA_Server_writeValue(server, UA_NODEID_STRING(2, "testSysIdle"), value);
+}
+
+static void addValueCallbackToCurrentIdle(UA_Server *server) {
+    UA_ValueCallback callback ;
+    callback.onRead = beforeReadIdle;
+    callback.onWrite = NULL;
+    UA_Server_setVariableNode_valueCallback(server, UA_NODEID_STRING(2, "testSysIdle"), callback);
+}
+
+
+// Event thing 
+
+static UA_NodeId eventType;
+
+static UA_StatusCode
+addNewEventType(UA_Server *server) 
+{
+    UA_ObjectTypeAttributes attr = UA_ObjectTypeAttributes_default;
+    attr.displayName = UA_LOCALIZEDTEXT("en-US", "SimpleEventType");
+    attr.description = UA_LOCALIZEDTEXT("en-US", "The simple event type we created");
+    return UA_Server_addObjectTypeNode(server, UA_NODEID_NULL,
+                                       UA_NODEID_NUMERIC(0, UA_NS0ID_BASEEVENTTYPE),
+                                       UA_NODEID_NUMERIC(0, UA_NS0ID_HASSUBTYPE),
+                                       UA_QUALIFIEDNAME(0, "SimpleEventType"),
+                                       attr, NULL, &eventType);
+}
+
+/**
+ * Setting up an event
+ * ^^^^^^^^^^^^^^^^^^^
+ * In order to set up the event, we can first use ``UA_Server_createEvent`` to give us a node representation of the event.
+ * All we need for this is our `EventType`. Once we have our event node, which is saved internally as an `ObjectNode`,
+ * we can define the attributes the event has the same way we would define the attributes of an object node. It is not
+ * necessary to define the attributes `EventId`, `ReceiveTime`, `SourceNode` or `EventType` since these are set
+ * automatically by the server. In this example, we will be setting the fields 'Message' and 'Severity' in addition
+ * to `Time` which is needed to make the example UaExpert compliant.
+ */
+static UA_StatusCode setUpEvent(UA_Server *server, UA_NodeId *outId) 
+{
+    UA_StatusCode retval = UA_Server_createEvent(server, eventType, outId);
+    if (retval != UA_STATUSCODE_GOOD) 
+    {
+        UA_LOG_WARNING(UA_Log_Stdout, UA_LOGCATEGORY_SERVER, "createEvent failed. StatusCode %s", UA_StatusCode_name(retval));
+        return retval;
+    }
+
+    /* Set the Event Attributes */
+    /* Setting the Time is required or else the event will not show up in UAExpert! */
+    UA_DateTime eventTime = UA_DateTime_now();
+    UA_Server_writeObjectProperty_scalar(server, *outId, UA_QUALIFIEDNAME(0, "Time"),
+                                         &eventTime, &UA_TYPES[UA_TYPES_DATETIME]);
+
+    UA_UInt16 eventSeverity = 100;
+    UA_Server_writeObjectProperty_scalar(server, *outId, UA_QUALIFIEDNAME(0, "Severity"),
+                                         &eventSeverity, &UA_TYPES[UA_TYPES_UINT16]);
+
+    UA_LocalizedText eventMessage = UA_LOCALIZEDTEXT("en-US", "An event has been generated.");
+    UA_Server_writeObjectProperty_scalar(server, *outId, UA_QUALIFIEDNAME(0, "Message"),
+                                         &eventMessage, &UA_TYPES[UA_TYPES_LOCALIZEDTEXT]);
+
+    UA_String eventSourceName = UA_STRING("Server");
+    UA_Server_writeObjectProperty_scalar(server, *outId, UA_QUALIFIEDNAME(0, "SourceName"),
+                                         &eventSourceName, &UA_TYPES[UA_TYPES_STRING]);
+
+    return UA_STATUSCODE_GOOD;
+}
+
+/**
+ * Triggering an event
+ * ^^^^^^^^^^^^^^^^^^^
+ * First a node representing an event is generated using ``setUpEvent``. Once our event is good to go, we specify
+ * a node which emits the event - in this case the server node. We can use ``UA_Server_triggerEvent`` to trigger our
+ * event onto said node. Passing ``NULL`` as the second-last argument means we will not receive the `EventId`.
+ * The last boolean argument states whether the node should be deleted. */
+static UA_StatusCode generateEventMethodCallback(UA_Server *server,
+                         const UA_NodeId *sessionId, void *sessionHandle,
+                         const UA_NodeId *methodId, void *methodContext,
+                         const UA_NodeId *objectId, void *objectContext,
+                         size_t inputSize, const UA_Variant *input,
+                         size_t outputSize, UA_Variant *output) 
+{
+     /* set up event */
+    UA_NodeId eventNodeId;
+    UA_StatusCode retval = setUpEvent(server, &eventNodeId);
+    if(retval != UA_STATUSCODE_GOOD) 
+    {
+        UA_LOG_WARNING(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND, "Creating event failed. StatusCode %s", UA_StatusCode_name(retval));
+        return retval;
+    }
+
+    retval = UA_Server_triggerEvent(server, eventNodeId, UA_NODEID_NUMERIC(0, UA_NS0ID_SERVER), NULL, UA_TRUE);
+    if(retval != UA_STATUSCODE_GOOD)
+    {
+        UA_LOG_WARNING(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND,  "Triggering event failed. StatusCode %s", UA_StatusCode_name(retval));
+    }
+
+
+    UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND, "Event Triggerd.");
+    return retval;
+}
+
+/**
+ * Now, all that is left to do is to create a method node which uses our callback. We do not
+ * require any input and as output we will be using the `EventId` we receive from ``triggerEvent``. The `EventId` is
+ * generated by the server internally and is a random unique ID which identifies that specific event.
+ *
+ * This method node will be added to a basic server setup.
+ */
+
+static void addGenerateEventMethod(UA_Server *server)
+{
+    UA_MethodAttributes generateAttr = UA_MethodAttributes_default;
+    generateAttr.description = UA_LOCALIZEDTEXT("en-US","Generate an event.");
+    generateAttr.displayName = UA_LOCALIZEDTEXT("en-US","Generate Event");
+    generateAttr.executable = true;
+    generateAttr.userExecutable = true;
+    // UA_Server_addMethodNode(server, UA_NODEID_NUMERIC(1, 62541),
+    UA_Server_addMethodNode(server, UA_NODEID_STRING(2, "testEvent"),
+                            UA_NODEID_NUMERIC(0, UA_NS0ID_OBJECTSFOLDER),
+                            UA_NODEID_NUMERIC(0, UA_NS0ID_HASCOMPONENT),
+                            UA_QUALIFIEDNAME(1, "Generate Event"),
+                            generateAttr, &generateEventMethodCallback,
+                            0, NULL, 0, NULL, NULL, NULL);
+}
+
+
+// myServer main 
+int main(int argc, char * argv[])
+{
+	// Setting up the signals for the stop signal (ctrl + c)
+    signal(SIGINT, stopHandler);
+   // signal(SIGTERM, stopHandler);
+
+
+	// Creating a new server 
+    UA_Server *server = UA_Server_new();
+
+	// Check for Arguments, host name and port number
+	checkArguments(server, argc, argv);
+
+	// Setup the nodes used 
+	nodeSetup(server);
+	
+	// Add callback for updating the variables 
+	addValueCallbackToCurrentTimeVariable(server);
+	addValueCallbackToCurrentTemerature(server);
+	addValueCallbackToCurrentIdle(server);
+
+    // Add a event to trigger a response 
+    addNewEventType(server);
+    addGenerateEventMethod(server);
+	
+	// Server start up 
+    UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND, "Starting server...");
+    UA_StatusCode retval = UA_Server_run(server, &running);
+    UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND, "Shuting down server....");
+
+	// Clean up after shut down 
+    UA_Server_delete(server);
+    return retval == UA_STATUSCODE_GOOD ? EXIT_SUCCESS : EXIT_FAILURE;
+}
