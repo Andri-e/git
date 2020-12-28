@@ -24,6 +24,7 @@ UA_StatusCode addNewEventType(UA_Server *server)
  * automatically by the server. In this example, we will be setting the fields 'Message' and 'Severity' in addition
  * to `Time` which is needed to make the example UaExpert compliant.
  */
+
 UA_StatusCode setUpEvent(UA_Server *server, UA_NodeId *outId) 
 {
     UA_StatusCode retval = UA_Server_createEvent(server, eventType, outId);
@@ -33,8 +34,8 @@ UA_StatusCode setUpEvent(UA_Server *server, UA_NodeId *outId)
         return retval;
     }
 
-    /* Set the Event Attributes */
-    /* Setting the Time is required or else the event will not show up in UAExpert! */
+    // Set the Event Attributes 
+    // Setting the Time is required or else the event will not show up in UAExpert! 
     UA_DateTime eventTime = UA_DateTime_now();
     UA_Server_writeObjectProperty_scalar(server, *outId, UA_QUALIFIEDNAME(0, "Time"),
                                          &eventTime, &UA_TYPES[UA_TYPES_DATETIME]);
@@ -68,7 +69,6 @@ UA_StatusCode generateEventMethodCallback_On(UA_Server *server,
                          size_t inputSize, const UA_Variant *input,
                          size_t outputSize, UA_Variant *output) 
 {
-     /* set up event */
     UA_NodeId eventNodeId;
     UA_StatusCode retval = setUpEvent(server, &eventNodeId);
     if(retval != UA_STATUSCODE_GOOD) 
@@ -84,9 +84,9 @@ UA_StatusCode generateEventMethodCallback_On(UA_Server *server,
         return retval;
     }
 
-    UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_SERVER, "Event On Triggerd.");
+    UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_SERVER, "OnEvent Triggerd.");
 
-    // Here we can put in what ever command we want to trigger with the event, for example led on / off or restarting some onboard application. 
+    // Function to be executed 
 
     return retval;
 }
@@ -114,7 +114,7 @@ UA_StatusCode generateEventMethodCallback_Off(UA_Server *server,
         return retval;
     }
 
-    UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_SERVER, "Event Off Triggerd.");
+    UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_SERVER, "OffEvent Triggerd.");
 
     // Here we can put in what ever command we want to trigger with the event, for example led on / off or restarting some onboard application. 
 
@@ -148,7 +148,6 @@ void addGenerateEventMethod(UA_Server *server)
     generateAttrOff.displayName = UA_LOCALIZEDTEXT("en-US","Generate Event Off");
     generateAttrOff.executable = true;
     generateAttrOff.userExecutable = true;
-    // UA_Server_addMethodNode(server, UA_NODEID_NUMERIC(1, 62541),
     UA_Server_addMethodNode(server, UA_NODEID_STRING(2, "offEvent"),
                             UA_NODEID_NUMERIC(0, UA_NS0ID_OBJECTSFOLDER),
                             UA_NODEID_NUMERIC(0, UA_NS0ID_HASCOMPONENT),
