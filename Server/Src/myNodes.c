@@ -20,10 +20,10 @@ void nodeSetup(UA_Server *server)
     oAttr.displayName = UA_LOCALIZEDTEXT("en-US", "Device name");
     oAttr.description = UA_LOCALIZEDTEXT("en-US", "This is a test device");
     UA_Server_addObjectNode(server, UA_NODEID_STRING(2, "testObject"),
-                            UA_NODEID_NUMERIC(0, UA_NS0ID_OBJECTSFOLDER),                           // Parent node 
-                            UA_NODEID_NUMERIC(0, UA_NS0ID_ORGANIZES),                               // Referance node 
-                            UA_QUALIFIEDNAME(2, "Device name"),                                     // Browse name  
-                            UA_NODEID_NUMERIC(0, UA_NS0ID_BASEOBJECTTYPE),                          // 
+                            UA_NODEID_NUMERIC(0, UA_NS0ID_OBJECTSFOLDER),                       
+                            UA_NODEID_NUMERIC(0, UA_NS0ID_ORGANIZES),                            
+                            UA_QUALIFIEDNAME(2, "Device name"),                                 
+                            UA_NODEID_NUMERIC(0, UA_NS0ID_BASEOBJECTTYPE),                          
                             oAttr,
                             NULL, &testObjectId);
 
@@ -57,10 +57,13 @@ void nodeSetup(UA_Server *server)
 	//Add the cpu Temperature to the server
     UA_VariableAttributes sysTempAttr = UA_VariableAttributes_default;
     UA_Variant_setScalar(&sysTempAttr.value, &systemp, &UA_TYPES[UA_TYPES_FLOAT]);
-    UA_Server_addVariableNode(server, UA_NODEID_STRING(2, "testSysTemp"), testObjectId,
+    UA_Server_addVariableNode(server, UA_NODEID_STRING(2, "testSysTemp"), 
+                              testObjectId,
                               UA_NODEID_NUMERIC(0, UA_NS0ID_HASCOMPONENT),
                               UA_QUALIFIEDNAME(2, "systemTemperature"),
-                              UA_NODEID_NUMERIC(0, UA_NS0ID_BASEDATAVARIABLETYPE), sysTempAttr, NULL, NULL);
+                              UA_NODEID_NUMERIC(0, UA_NS0ID_BASEDATAVARIABLETYPE), 
+                              sysTempAttr, 
+                              NULL, NULL);
 	
 	//Add the Sys Idle to the server
     UA_VariableAttributes sysIdleAttr = UA_VariableAttributes_default;
@@ -96,7 +99,8 @@ void beforeReadTime(UA_Server *server,
     UA_Server_writeValue(server, UA_NODEID_STRING(2, "testTimeStamp"), value);
 }
 
-void addValueCallbackToCurrentTimeVariable(UA_Server *server) {
+void addValueCallbackToCurrentTimeVariable(UA_Server *server) 
+{
     UA_ValueCallback callback ;
     callback.onRead = beforeReadTime;
     callback.onWrite = NULL;
@@ -125,7 +129,8 @@ void beforeReadTemperature(UA_Server *server,
     UA_Server_writeValue(server, UA_NODEID_STRING(2, "testSysTemp"), value);
 }
 
-void addValueCallbackToCurrentTemerature(UA_Server *server) {
+void addValueCallbackToCurrentTemerature(UA_Server *server) 
+{
     UA_ValueCallback callback ;
     callback.onRead = beforeReadTemperature;
     callback.onWrite = NULL;
@@ -176,7 +181,8 @@ void beforeReadIdle(UA_Server *server,
     UA_Server_writeValue(server, UA_NODEID_STRING(2, "testSysIdle"), value);
 }
 
-void addValueCallbackToCurrentIdle(UA_Server *server) {
+void addValueCallbackToCurrentIdle(UA_Server *server) 
+{
     UA_ValueCallback callback ;
     callback.onRead = beforeReadIdle;
     callback.onWrite = NULL;
