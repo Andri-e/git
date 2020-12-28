@@ -12,7 +12,7 @@ void checkArguments(UA_Server *server, int argc, char * argv[] )
     } 
     else
     {	
-		UA_ServerConfig_setDefault(UA_Server_getConfig(server));
+		UA_ServerConfig_setMinimal(UA_Server_getConfig(server), 4841, 0);
     }
 
     if(argc > 1)
