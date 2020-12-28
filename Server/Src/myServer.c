@@ -52,7 +52,7 @@ int main(int argc, char * argv[])
 	addValueCallbackToCurrentIdle(server);
 
     // Add a event to trigger a response 
-    //addNewEventType(server);
+    addNewEventType(server);
     addGenerateEventMethod(server);
 	
     // Method node 

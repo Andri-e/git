@@ -2,7 +2,7 @@
 #define MYEVENT_H
 
 // Event thing asdasdasdasd
-//UA_StatusCode addNewEventType(UA_Server *server);
+UA_StatusCode addNewEventType(UA_Server *server);
 
 /**
  * Setting up an event
