@@ -71,7 +71,7 @@ UA_StatusCode generateEventMethodCallback_On(UA_Server *server,
                          size_t inputSize, const UA_Variant *input,
                          size_t outputSize, UA_Variant *output) 
 {
-    UA_NodeId eventNodeId;
+    UA_NodeId onEventNodeId;
     UA_StatusCode retval = UA_Server_createEvent(server, eventType, eventNodeId);
     if (retval != UA_STATUSCODE_GOOD) 
     {
@@ -81,19 +81,19 @@ UA_StatusCode generateEventMethodCallback_On(UA_Server *server,
 
     // Set the Event Attributes 
     UA_DateTime eventTime = UA_DateTime_now();
-    UA_Server_writeObjectProperty_scalar(server, *outId, UA_QUALIFIEDNAME(0, "Time"),
+    UA_Server_writeObjectProperty_scalar(server, onEventNodeId, UA_QUALIFIEDNAME(0, "Time"),
                                          &eventTime, &UA_TYPES[UA_TYPES_DATETIME]);
 
     UA_UInt16 eventSeverity = 100;
-    UA_Server_writeObjectProperty_scalar(server, *outId, UA_QUALIFIEDNAME(0, "Severity"),
+    UA_Server_writeObjectProperty_scalar(server, onEventNodeId, UA_QUALIFIEDNAME(0, "Severity"),
                                          &eventSeverity, &UA_TYPES[UA_TYPES_UINT16]);
 
     UA_LocalizedText eventMessage = UA_LOCALIZEDTEXT("en-US", "An event has been generated.");
-    UA_Server_writeObjectProperty_scalar(server, *outId, UA_QUALIFIEDNAME(0, "Message"),
+    UA_Server_writeObjectProperty_scalar(server, onEventNodeId, UA_QUALIFIEDNAME(0, "Message"),
                                          &eventMessage, &UA_TYPES[UA_TYPES_LOCALIZEDTEXT]);
 
     UA_String eventSourceName = UA_STRING("Server");
-    UA_Server_writeObjectProperty_scalar(server, *outId, UA_QUALIFIEDNAME(0, "SourceName"),
+    UA_Server_writeObjectProperty_scalar(server, onEventNodeId, UA_QUALIFIEDNAME(0, "SourceName"),
                                          &eventSourceName, &UA_TYPES[UA_TYPES_STRING]);
 
     UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_SERVER, "OnEvent Triggerd.");
