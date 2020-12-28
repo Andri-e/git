@@ -15,7 +15,7 @@ UA_StatusCode addNewEventType(UA_Server *server)
                                        UA_QUALIFIEDNAME(0, "SimpleEventTypeOn"),
                                        attrOn, 
                                        NULL, &eventTypeOn);
-
+/*
     UA_ObjectTypeAttributes attrOff = UA_ObjectTypeAttributes_default;
     attrOff.displayName = UA_LOCALIZEDTEXT("en-US", "SimpleEventTypeOff");
     attrOff.description = UA_LOCALIZEDTEXT("en-US", "A simple event to turn off");
@@ -25,6 +25,7 @@ UA_StatusCode addNewEventType(UA_Server *server)
                                        UA_QUALIFIEDNAME(0, "SimpleEventTypeOff"),
                                        attrOff, 
                                        NULL, &eventTypeOff);   
+                                       */
 }
 
 /**
