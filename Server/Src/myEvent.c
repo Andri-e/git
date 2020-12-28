@@ -112,7 +112,7 @@ UA_StatusCode generateEventMethodCallback_Off(UA_Server *server,
 {
      /* set up event */
     UA_NodeId eventNodeId;
-    UA_StatusCode retval = setUpEvent(server, &eventNodeId);
+  //  UA_StatusCode retval = setUpEvent(server, &eventNodeId);
     if(retval != UA_STATUSCODE_GOOD) 
     {
         UA_LOG_ERROR(UA_Log_Stdout, UA_LOGCATEGORY_SERVER, "Failed to trigger OffEvent.");
