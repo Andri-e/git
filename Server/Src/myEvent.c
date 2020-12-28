@@ -2,7 +2,7 @@
 #include "../Include/myEvent.h"
 
 static UA_NodeId eventTypeOn, eventTypeOff;
-
+/*
 UA_StatusCode addNewEventType(UA_Server *server) 
 {
     // UA_NODEID_NULL 
@@ -26,7 +26,7 @@ UA_StatusCode addNewEventType(UA_Server *server)
                                        attrOff, 
                                        NULL, &eventTypeOff);   
 }
-
+*/
 /**
  * Setting up an event
  * ^^^^^^^^^^^^^^^^^^^
