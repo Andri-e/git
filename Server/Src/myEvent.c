@@ -6,8 +6,8 @@ static UA_NodeId eventType;
 UA_StatusCode addNewEventType(UA_Server *server) 
 {
     UA_ObjectTypeAttributes attrOn = UA_ObjectTypeAttributes_default;
-    attrOn.displayName = UA_LOCALIZEDTEXT("en-US", "TestEventType");
-    attrOn.description = UA_LOCALIZEDTEXT("en-US", "A test event to turn on/off");
+   // attrOn.displayName = UA_LOCALIZEDTEXT("en-US", "TestEventType");
+   // attrOn.description = UA_LOCALIZEDTEXT("en-US", "A test event to turn on/off");
     return UA_Server_addObjectTypeNode(server, UA_NODEID_NULL ,
                                        UA_NODEID_NUMERIC(0, UA_NS0ID_BASEEVENTTYPE),
                                        UA_NODEID_NUMERIC(0, UA_NS0ID_HASSUBTYPE),
