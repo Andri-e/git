@@ -4,20 +4,11 @@
 #include <stdlib.h>
 
 #include "../Include/mySettings.h"
-#include "../Include/myEvent.h"
+//#include "../Include/myEvent.h"
 #include "../Include/myNodes.h"
-#include "../Include/specNodes.h"
-#include "../Include/myMethod.h"
+//#include "../Include/specNodes.h"
+//#include "../Include/myMethod.h"
 
-// Want to add 
-        // Security 
-            // see : https://github.com/open62541/open62541/issues/3002
-        // Pub/sub? 
-            // see : https://stackoverflow.com/questions/58855146/opcua-open62541-pubsub-how-to-publish-value-change
-            //       https://github.com/open62541/open62541/issues/2363 
-        // Conditions? 
-            //
-        
 static volatile UA_Boolean running = true;			// Server state
 
 // Stop handler to watch for ctrl + c 
@@ -44,19 +35,19 @@ int main(int argc, char * argv[])
 
 	// Setup the nodes used 
 	nodeSetup(server);
-    powerlinkNode(server);
+   // powerlinkNode(server);
 	
 	// Add callback for updating the variables 
-	addValueCallbackToCurrentTimeVariable(server);
-	addValueCallbackToCurrentTemerature(server);
-	addValueCallbackToCurrentIdle(server);
+//	addValueCallbackToCurrentTimeVariable(server);
+//	addValueCallbackToCurrentTemerature(server);
+//	addValueCallbackToCurrentIdle(server);
 
     // Add a event to trigger a response 
-    addNewEventType(server);
-    addGenerateEventMethod(server);
+ //   addNewEventType(server);
+//    addGenerateEventMethod(server);
 	
     // Method node 
-    addMethodNode(server);
+  //  addMethodNode(server);
 
 	// Server start up 
     UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND, "Starting server...");
