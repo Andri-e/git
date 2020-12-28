@@ -4,10 +4,7 @@
 #include <stdlib.h>
 
 #include "../Include/mySettings.h"
-//#include "../Include/myEvent.h"
 #include "../Include/myNodes.h"
-//#include "../Include/specNodes.h"
-//#include "../Include/myMethod.h"
 
 static volatile UA_Boolean running = true;			// Server state
 
@@ -26,28 +23,9 @@ int main(int argc, char * argv[])
 
 	// Creating a new server 
     UA_Server *server = UA_Server_new();
-
-    // Set security 
-    //UA_ServerConfig_setDefault(UA_Server_getConfig(server));
-
-	// Check for Arguments, host name and port number
 	checkArguments(server, argc, argv);
 
-	// Setup the nodes used 
 	nodeSetup(server);
-   // powerlinkNode(server);
-	
-	// Add callback for updating the variables 
-//	addValueCallbackToCurrentTimeVariable(server);
-//	addValueCallbackToCurrentTemerature(server);
-//	addValueCallbackToCurrentIdle(server);
-
-    // Add a event to trigger a response 
- //   addNewEventType(server);
-//    addGenerateEventMethod(server);
-	
-    // Method node 
-  //  addMethodNode(server);
 
 	// Server start up 
     UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND, "Starting server...");
