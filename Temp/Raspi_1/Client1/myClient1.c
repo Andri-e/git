@@ -6,7 +6,7 @@
 UA_Boolean running = true;
 
 //#define DISCOVERY_SERVER_ENDPOINT "opc.tcp://localhost:4840"
-#define SERVER_ENDPOINT "opc.tcp://notMyPi:4840 "
+#define SERVER_ENDPOINT "opc.tcp://localhost:4840"
 
 static void stopHandler(int sign) 
 {
