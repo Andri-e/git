@@ -6,7 +6,7 @@
 UA_Boolean running = true;
 
 //#define DISCOVERY_SERVER_ENDPOINT "opc.tcp://localhost:4840"
-#define SERVER_ENDPOINT "opc.tcp://notMyPi:4840/"
+#define SERVER_ENDPOINT "opc.tcp://localhost:4840"
 
 static void stopHandler(int sign) 
 {
@@ -77,7 +77,6 @@ static void readNode(UA_Client *client, UA_StatusCode retval, UA_Variant value)
 	UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND, "%.*s , %d , %u-%u-%u %u:%u:%u.%03u , %f °C, %f %%", variableName.length, variableName.data, serialNumber, dts.day, dts.month, dts.year, dts.hour, dts.min, dts.sec, dts.milliSec, sysTemp, sysIdle );
 }
 */
-
 // myClient main 
 int main(void)
 {
