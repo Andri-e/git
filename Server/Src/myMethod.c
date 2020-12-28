@@ -8,13 +8,22 @@ UA_StatusCode MethodCallback(UA_Server *server,
                          size_t inputSize, const UA_Variant *input,
                          size_t outputSize, UA_Variant *output) 
 {
-    UA_String inputStr = *(UA_String*)input->data;
+    /*
+    UA_String *inputStr = (UA_String*)input->data;
     UA_String response = UA_STRING_ALLOC("Undefined");
 
     if(inputStr->length == 1)
     {
         switch(inputStr->data[0])
         {
+            */
+    UA_String inputStr = *(UA_String*)input->data;
+    UA_String response = UA_STRING_ALLOC("Undefined");
+
+    if(inputStr.length == 1)
+    {
+        switch(inputStr.data[0])
+        {          
             case '1' :
                 printf("Case 1 \n");
                 response = UA_STRING_ALLOC("Case 1 selected.");
