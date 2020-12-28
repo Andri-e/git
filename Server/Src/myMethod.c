@@ -58,14 +58,14 @@ void addMethodNode(UA_Server *server)
 {
     UA_Argument inputArgument;
     UA_Argument_init(&inputArgument);
-    inputArgument.description = UA_LOCALIZEDTEXT("en-US", "A String");
+    inputArgument.description = UA_LOCALIZEDTEXT("en-US", "Input Argument");
     inputArgument.name = UA_STRING("Input");
     inputArgument.dataType = UA_TYPES[UA_TYPES_STRING].typeId;
     inputArgument.valueRank = UA_VALUERANK_SCALAR;
 
     UA_Argument outputArgument;
     UA_Argument_init(&outputArgument);
-    outputArgument.description = UA_LOCALIZEDTEXT("en-US", "A String");
+    outputArgument.description = UA_LOCALIZEDTEXT("en-US", "Output Argument");
     outputArgument.name = UA_STRING("Output");
     outputArgument.dataType = UA_TYPES[UA_TYPES_STRING].typeId;
     outputArgument.valueRank = UA_VALUERANK_SCALAR;
