@@ -14,7 +14,7 @@ UA_StatusCode addNewEventType(UA_Server *server);
  * automatically by the server. In this example, we will be setting the fields 'Message' and 'Severity' in addition
  * to `Time` which is needed to make the example UaExpert compliant.
  */
-UA_StatusCode setUpEvent(UA_Server *server, UA_NodeId *outId);
+//UA_StatusCode setUpEvent(UA_Server *server, UA_NodeId *outId);
 
 /**
  * Triggering an event

@@ -110,9 +110,10 @@ UA_StatusCode generateEventMethodCallback_Off(UA_Server *server,
                          size_t inputSize, const UA_Variant *input,
                          size_t outputSize, UA_Variant *output) 
 {
-     /* set up event */
+    /*
+     // set up event
     UA_NodeId eventNodeId;
-  //  UA_StatusCode retval = setUpEvent(server, &eventNodeId);
+    UA_StatusCode retval = setUpEvent(server, &eventNodeId);
     if(retval != UA_STATUSCODE_GOOD) 
     {
         UA_LOG_ERROR(UA_Log_Stdout, UA_LOGCATEGORY_SERVER, "Failed to trigger OffEvent.");
@@ -131,6 +132,7 @@ UA_StatusCode generateEventMethodCallback_Off(UA_Server *server,
     // Here we can put in what ever command we want to trigger with the event, for example led on / off or restarting some onboard application. 
 
     return retval;
+    */
 }
 
 /**
