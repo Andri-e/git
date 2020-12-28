@@ -107,7 +107,7 @@ int main(void)
     };
 
     // Clean up 
-    UA_Variant_clear(&value);
+   // UA_Variant_clear(&value);
     UA_Client_delete(client); //Disconnects the client internally 
     return EXIT_SUCCESS;
 }
