@@ -88,7 +88,7 @@ UA_StatusCode generateEventMethodCallback_On(UA_Server *server,
     UA_Server_writeObjectProperty_scalar(server, onEventNodeId, UA_QUALIFIEDNAME(0, "Severity"),
                                          &eventSeverity, &UA_TYPES[UA_TYPES_UINT16]);
 
-    UA_LocalizedText eventMessage = UA_LOCALIZEDTEXT("en-US", "An event has been generated.");
+    UA_LocalizedText eventMessage = UA_LOCALIZEDTEXT("en-US", "An on event has been generated.");
     UA_Server_writeObjectProperty_scalar(server, onEventNodeId, UA_QUALIFIEDNAME(0, "Message"),
                                          &eventMessage, &UA_TYPES[UA_TYPES_LOCALIZEDTEXT]);
 
@@ -110,29 +110,39 @@ UA_StatusCode generateEventMethodCallback_Off(UA_Server *server,
                          size_t inputSize, const UA_Variant *input,
                          size_t outputSize, UA_Variant *output) 
 {
-    /*
+    
      // set up event
-    UA_NodeId eventNodeId;
-    UA_StatusCode retval = setUpEvent(server, &eventNodeId);
-    if(retval != UA_STATUSCODE_GOOD) 
+    UA_NodeId offEventNodeId;
+    UA_StatusCode retval = UA_Server_createEvent(server, eventType, &offEventNodeId);
+    if (retval != UA_STATUSCODE_GOOD) 
     {
-        UA_LOG_ERROR(UA_Log_Stdout, UA_LOGCATEGORY_SERVER, "Failed to trigger OffEvent.");
+        UA_LOG_WARNING(UA_Log_Stdout, UA_LOGCATEGORY_SERVER, "Create off event failed.");
         return retval;
     }
 
-    retval = UA_Server_triggerEvent(server, eventNodeId, UA_NODEID_NUMERIC(0, UA_NS0ID_SERVER), NULL, UA_TRUE);
-    if(retval != UA_STATUSCODE_GOOD)
-    {
-        UA_LOG_ERROR(UA_Log_Stdout, UA_LOGCATEGORY_SERVER, "Failed to trigger OffEvent.");
-        return retval;
-    }
+    // Set the Event Attributes 
+    UA_DateTime eventTime = UA_DateTime_now();
+    UA_Server_writeObjectProperty_scalar(server, offEventNodeId, UA_QUALIFIEDNAME(0, "Time"),
+                                         &eventTime, &UA_TYPES[UA_TYPES_DATETIME]);
+
+    UA_UInt16 eventSeverity = 100;
+    UA_Server_writeObjectProperty_scalar(server, offEventNodeId, UA_QUALIFIEDNAME(0, "Severity"),
+                                         &eventSeverity, &UA_TYPES[UA_TYPES_UINT16]);
+
+    UA_LocalizedText eventMessage = UA_LOCALIZEDTEXT("en-US", "An off event has been generated.");
+    UA_Server_writeObjectProperty_scalar(server, offEventNodeId, UA_QUALIFIEDNAME(0, "Message"),
+                                         &eventMessage, &UA_TYPES[UA_TYPES_LOCALIZEDTEXT]);
+
+    UA_String eventSourceName = UA_STRING("Server");
+    UA_Server_writeObjectProperty_scalar(server, offEventNodeId, UA_QUALIFIEDNAME(0, "SourceName"),
+                                         &eventSourceName, &UA_TYPES[UA_TYPES_STRING]);
 
     UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_SERVER, "OffEvent Triggerd.");
 
-    // Here we can put in what ever command we want to trigger with the event, for example led on / off or restarting some onboard application. 
+    // Function to be executed 
 
     return retval;
-    */
+    
 }
 
 /**
