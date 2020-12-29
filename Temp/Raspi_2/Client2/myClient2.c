@@ -92,8 +92,8 @@ int main(void)
         return (int)retval;
     }
 
- //   UA_Variant value; /* Variants can hold scalar values and arrays of any type */
- //   UA_Variant_init(&value);
+    UA_Variant value; /* Variants can hold scalar values and arrays of any type */
+    UA_Variant_init(&value);
 	//UA_StatusCode retval = UA_Client_connect(client, SERVER_ENDPOINT);
 	
 //	printf("\t\t\t\t\t\t\tUser Name \tUser Id \tTime Stamp \t\tVariable\n");	
@@ -108,13 +108,13 @@ int main(void)
 		//	UA_StatusCode retval = UA_Client_connect(client, SERVER_ENDPOINT);
             continue;
         }
-	//	readNode(client, retval, value);
+		readNode(client, retval, value);
 		
-       // UA_sleep_ms(500);				// Just a delay to reduce the spam
+        UA_sleep_ms(500);				// Just a delay to reduce the spam
     };
 
     // Clean up 
-   // UA_Variant_clear(&value);
+    UA_Variant_clear(&value);
     UA_Client_delete(client); //Disconnects the client internally 
     return EXIT_SUCCESS;
 }
