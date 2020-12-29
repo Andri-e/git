@@ -8,8 +8,8 @@ UA_Boolean running = true;
 // ---------------------------------------
 
 // #define DISCOVERY_SERVER_ENDPOINT "opc.tcp://localhost:4840"
-//#define SERVER_ENDPOINT "opc.tcp://localhost:4840"
-#define SERVER_ENDPOINT "opc.tcp://myPi:4840"
+#define SERVER_ENDPOINT "opc.tcp://localhost:4840"
+//#define SERVER_ENDPOINT "opc.tcp://192.168.1.59:4840"
 
 // ---------------------------------------
 
