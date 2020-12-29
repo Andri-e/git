@@ -19,7 +19,7 @@ static void stopHandler(int sign)
     running = 0;
 }
 
-/*
+
 // read out the nodes 
 static void readNode(UA_Client *client, UA_StatusCode retval, UA_Variant value)
 {
@@ -72,7 +72,7 @@ static void readNode(UA_Client *client, UA_StatusCode retval, UA_Variant value)
 	
 	UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND, "%.*s \t%d \t\t%u-%u-%u %u:%u:%u.%03u \t%f ", userName.length, userName.data, userId, dts.day, dts.month, dts.year, dts.hour, dts.min, dts.sec, dts.milliSec, variable );
 }
-*/
+
 
 // myClient main 
 int main(void)
