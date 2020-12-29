@@ -105,7 +105,7 @@ int main(void)
 			UA_LOG_ERROR(UA_Log_Stdout, UA_LOGCATEGORY_CLIENT, "Not connected. Retrying to connect in 2 second");	
             UA_StatusCode retval = UA_Client_connect(client, "opc.tcp://192.168.1.59:4840");	
             UA_sleep_ms(2000);
-			UA_StatusCode retval = UA_Client_connect(client, SERVER_ENDPOINT);
+		//	UA_StatusCode retval = UA_Client_connect(client, SERVER_ENDPOINT);
             continue;
         }
 	//	readNode(client, retval, value);
