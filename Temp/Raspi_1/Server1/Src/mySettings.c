@@ -1,10 +1,9 @@
 #include "../Include/open62541.h"
 #include "../Include/mySettings.h"
 
-// Argument check, is Host name and Port number default? 
+// Argument check, is Port number default? 
 void checkArguments(UA_Server *server, int argc, char * argv[] )
 {
-	//Check for Arguments, host name and port number
     if(argc != 0)
     {
 		UA_Int16 port_number = atoi(argv[1]);
