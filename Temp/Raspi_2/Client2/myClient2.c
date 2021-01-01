@@ -8,8 +8,8 @@ UA_Boolean running = true;
 // ---------------------------------------
 
 // #define DISCOVERY_SERVER_ENDPOINT "opc.tcp://localhost:4840"
-#define SERVER_ENDPOINT "opc.tcp://localhost:4840"
-//#define SERVER_ENDPOINT "opc.tcp://192.168.1.59:4840"
+// #define SERVER_ENDPOINT "opc.tcp://localhost:4840"
+ #define SERVER_ENDPOINT "opc.tcp://192.168.1.59:4840"
 
 // ---------------------------------------
 
@@ -105,26 +105,26 @@ int main(void)
     UA_ClientConfig_setDefault(cc);
 
     // default timeout is 5 seconds. Set it to 1 second here for demo 
-   // cc->timeout = 1000;
+    // cc->timeout = 1000;
 
-    UA_StatusCode retval = UA_Client_connect(client, "opc.tcp://192.168.1.59:4840");
-    if(retval != UA_STATUSCODE_GOOD) {
+    //UA_StatusCode retval = UA_Client_connect(client, "opc.tcp://192.168.1.59:4840");
+    UA_StatusCode retval = UA_Client_connect(client, SERVER_ENDPOINT);
+    if(retval != UA_STATUSCODE_GOOD) 
+    {
         UA_Client_delete(client);
-        return (int)retval;
+        return retval;
     }
 
     UA_Variant value; /* Variants can hold scalar values and arrays of any type */
     UA_Variant_init(&value);
-	//UA_StatusCode retval = UA_Client_connect(client, SERVER_ENDPOINT);
-	
-//	printf("\t\t\t\t\t\t\tUser Name \tUser Id \tTime Stamp \t\tVariable\n");	
-	// While loop that keeps reading the value from the server until it is disconnected 
+
     while(running) 
 	{
         if(retval != UA_STATUSCODE_GOOD) 						// If status code not good then log time and try to reconect 
 		{ 
 			UA_LOG_ERROR(UA_Log_Stdout, UA_LOGCATEGORY_CLIENT, "Not connected. Retrying to connect in 2 second");	
-            UA_StatusCode retval = UA_Client_connect(client, "opc.tcp://192.168.1.59:4840");	
+            //UA_StatusCode retval = UA_Client_connect(client, "opc.tcp://192.168.1.59:4840");
+            UA_StatusCode retval = UA_Client_connect(client, SERVER_ENDPOINT);	
             UA_sleep_ms(2000);
 		//	UA_StatusCode retval = UA_Client_connect(client, SERVER_ENDPOINT);
             continue;
