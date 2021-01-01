@@ -19,7 +19,7 @@ static void stopHandler(int sign)
     running = 0;
 }
 
-void checkArguments(UA_Server *server, int argc, char * argv[] )
+void checkArguments(UA_Server *client, int argc, char * argv[] )
 {
     if(argc != 0)
     {
@@ -121,7 +121,7 @@ int main(int argc, char * argv[])
     // cc->timeout = 1000;
 
     //UA_StatusCode retval = UA_Client_connect(client, "opc.tcp://192.168.1.59:4840");
-    checkArguments(server, argc, argv);
+    checkArguments(client, argc, argv);
 
    // UA_StatusCode retval = UA_Client_connect(client, SERVER_ENDPOINT);
     if(retval != UA_STATUSCODE_GOOD) 
