@@ -10,12 +10,7 @@ void checkArguments(UA_Server *server, int argc, char * argv[] )
 		UA_Int16 port_number = atoi(argv[2]);
 		UA_ServerConfig_setMinimal(UA_Server_getConfig(server), port_number, 0);
     } 
-    else
-    {	
-		UA_ServerConfig_setDefault(UA_Server_getConfig(server));
-    }
-
-    if(argc > 1)
+    else if(argc > 1)
     {
 		//Copy the hostname from char * to an open62541 Variable
 		UA_String hostname;
@@ -25,6 +20,10 @@ void checkArguments(UA_Server *server, int argc, char * argv[] )
 
 		//Change the configuration 
 		UA_ServerConfig_setCustomHostname(UA_Server_getConfig(server), hostname);
+    }
+	else
+    {	
+		UA_ServerConfig_setDefault(UA_Server_getConfig(server));
     }
 }
 
