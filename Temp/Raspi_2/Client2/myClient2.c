@@ -19,6 +19,19 @@ static void stopHandler(int sign)
     running = 0;
 }
 
+void checkArguments(UA_Server *server, int argc, char * argv[] )
+{
+    if(argc != 0)
+    {
+	//	UA_Int16 port_number = atoi(argv[1]);
+	//	UA_ServerConfig_setMinimal(UA_Server_getConfig(server), port_number, 0);
+    }
+	else
+    {	
+		UA_StatusCode retval = UA_Client_connect(client, SERVER_ENDPOINT);
+    }
+}
+
 
 // read out the nodes 
 static void readNode(UA_Client *client, UA_StatusCode retval, UA_Variant value)
@@ -96,7 +109,7 @@ static void readNode(UA_Client *client, UA_StatusCode retval, UA_Variant value)
 
 
 // myClient main 
-int main(void)
+int main(int argc, char * argv[])
 {
 	signal(SIGINT, stopHandler); // catches ctrl-c 
 	
@@ -108,7 +121,9 @@ int main(void)
     // cc->timeout = 1000;
 
     //UA_StatusCode retval = UA_Client_connect(client, "opc.tcp://192.168.1.59:4840");
-    UA_StatusCode retval = UA_Client_connect(client, SERVER_ENDPOINT);
+    checkArguments(server, argc, argv);
+
+   // UA_StatusCode retval = UA_Client_connect(client, SERVER_ENDPOINT);
     if(retval != UA_STATUSCODE_GOOD) 
     {
         UA_Client_delete(client);
