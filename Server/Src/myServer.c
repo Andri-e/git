@@ -9,14 +9,6 @@
 #include "../Include/specNodes.h"
 #include "../Include/myMethod.h"
 
-// Want to add 
-        // Security 
-            // see : https://github.com/open62541/open62541/issues/3002
-        // Pub/sub? 
-            // see : https://stackoverflow.com/questions/58855146/opcua-open62541-pubsub-how-to-publish-value-change
-            //       https://github.com/open62541/open62541/issues/2363 
-        // Conditions? 
-            //
         
 static volatile UA_Boolean running = true;			// Server state
 
@@ -35,9 +27,6 @@ int main(int argc, char * argv[])
 
 	// Creating a new server 
     UA_Server *server = UA_Server_new();
-
-    // Set security 
-    //UA_ServerConfig_setDefault(UA_Server_getConfig(server));
 
 	// Check for Arguments, host name and port number
 	checkArguments(server, argc, argv);

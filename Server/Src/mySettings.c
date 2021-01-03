@@ -1,7 +1,7 @@
 #include "../Include/open62541.h"
 #include "../Include/mySettings.h"
 
-// Argument check, is Host name and Port number default? 
+// Argument check, and Port number default? 
 void checkArguments(UA_Server *server, int argc, char * argv[] )
 {
 	//Check for Arguments, host name and port number
@@ -13,18 +13,6 @@ void checkArguments(UA_Server *server, int argc, char * argv[] )
     else
     {	
 		UA_ServerConfig_setDefault(UA_Server_getConfig(server));
-    }
-
-    if(argc > 1)
-    {
-		//Copy the hostname from char * to an open62541 Variable
-		UA_String hostname;
-		UA_String_init(&hostname);
-		hostname.length = strlen(argv[1]);
-		hostname.data = (UA_Byte *) argv[1];
-
-		//Change the configuration 
-		UA_ServerConfig_setCustomHostname(UA_Server_getConfig(server), hostname);
     }
 }
 

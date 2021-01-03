@@ -21,21 +21,25 @@ UA_StatusCode MethodCallback(UA_Server *server,
                 printf("Case 1 \n");
                 response = UA_STRING_ALLOC("Case 1 selected.");
                 UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_SERVER, "Method was called - Case 1");
+                // Case to be executed 
                 break;
             case '2' :
                 printf("Case 2 \n");
                 response = UA_STRING_ALLOC("Case 2 selected.");
                 UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_SERVER, "Method was called - Case 2");
+                // Case to be executed 
                 break;
             case '3' :
                 printf("Case 3 \n");
                 response = UA_STRING_ALLOC("Case 3 selected.");
                 UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_SERVER, "Method was called - Case 3");
+                // Case to be executed 
                 break;
             default : 
                 printf("Incorect value picked. \n");
                 response = UA_STRING_ALLOC("Incorect value picked.");
                 UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_SERVER, "Method was called with incorect value");
+                // Case to be executed 
                 break;
         }
     } 

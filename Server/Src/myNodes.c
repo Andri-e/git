@@ -6,10 +6,10 @@ UA_DateTime timeStamp = 0;
 UA_Float systemp = 0; 
 UA_Double sysidle = 0;
 
-// Setting up the object node and its variables  asdasdasdasd
+// Setting up the object node and its variables 
 void nodeSetup(UA_Server *server)
 {
- //Add a new namespace to the server
+    //Add a new namespace to the server
     UA_Int16 ns_1 = UA_Server_addNamespace(server, "Namespace_1");
     UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_USERLAND, "New Namespace added with Nr. %d", ns_1);
 
