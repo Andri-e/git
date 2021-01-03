@@ -4,7 +4,7 @@ myClient: myClient.o myRead.o
 myClient.o: src/myClient.c	
 	gcc -c src/myClient.c 
 
-myEvent.o: src/myRead.c include/myRead.h 
+myRead.o: src/myRead.c include/myRead.h 
 	gcc -c src/myRead.c  
 	
 clean: 
