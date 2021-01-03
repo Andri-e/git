@@ -1,4 +1,4 @@
-#include "open62541.h"
+#include "../include/open62541.h"
 
 #include <signal.h>
 #include <stdlib.h>
@@ -14,7 +14,6 @@ static void stopHandler(int sign)
   UA_LOG_INFO(UA_Log_Stdout, UA_LOGCATEGORY_CLIENT, "Received Ctrl-C");
   running = 0;
 }
-
 
 // myClient main 
 int main(void)
