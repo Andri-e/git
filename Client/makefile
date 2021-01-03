@@ -10,5 +10,5 @@ myEvent.o: Src/myRead.c Include/myRead.h
 clean: 
 	rm *.o myClient
 
-run: 
+run: #adasdasdas
 	./myClient  
