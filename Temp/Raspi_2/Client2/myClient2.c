@@ -24,8 +24,6 @@ static void readNode(UA_Client *client, UA_StatusCode retval, UA_Variant value)
 	UA_Float sysTemp;
 	UA_Double sysIdle;
 	
-	//UA_Double variable;
-	
 	UA_Variant_clear(&value);
 	UA_DateTimeStruct dts = UA_DateTime_toStruct(timeStamp);	
 
@@ -79,10 +77,6 @@ int main(void)
   UA_ClientConfig *cc = UA_Client_getConfig(client);
   UA_ClientConfig_setDefault(cc);
 
-  // default timeout is 5 seconds. Set it to 1 second here for demo 
-  // cc->timeout = 1000;
-
-  //UA_StatusCode retval = UA_Client_connect(client, "opc.tcp://192.168.1.59:4840");
   UA_StatusCode retval = UA_Client_connect(client, SERVER_ENDPOINT);
   if(retval != UA_STATUSCODE_GOOD) 
   {
@@ -90,18 +84,17 @@ int main(void)
     return retval;
   }
 
-  UA_Variant value; /* Variants can hold scalar values and arrays of any type */
+  UA_Variant value; 
   UA_Variant_init(&value);
 
   while(running) 
 	{
-    if(retval != UA_STATUSCODE_GOOD) 						// If status code not good then log time and try to reconect 
+    // Check if Client is still connected 
+    if(retval != UA_STATUSCODE_GOOD) 						
 		{ 
 			UA_LOG_ERROR(UA_Log_Stdout, UA_LOGCATEGORY_CLIENT, "Not connected. Retrying to connect in 2 second");	
-      //UA_StatusCode retval = UA_Client_connect(client, "opc.tcp://192.168.1.59:4840");
       UA_StatusCode retval = UA_Client_connect(client, SERVER_ENDPOINT);	
       UA_sleep_ms(2000);
-		  //UA_StatusCode retval = UA_Client_connect(client, SERVER_ENDPOINT);
       continue;
     }
 		readNode(client, retval, value);
