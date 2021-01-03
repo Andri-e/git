@@ -1,6 +1,6 @@
 /* THIS IS A SINGLE-FILE DISTRIBUTION CONCATENATED FROM THE OPEN62541 SOURCES
  * visit http://open62541.org/ for information about this software
- * Git-Revision: v1.1.2-244-g8844c770
+ * Git-Revision: v1.1.2-244-g8844c770 a
  */
 
 /*

@@ -25,7 +25,7 @@ int main(void)
   UA_ClientConfig_setDefault(cc);
 
   // default timeout is 5 seconds. Set it to 1 second here for demo 
-  // cc->timeout = 1000;
+  // cc->timeout = 1000;a
 
   //UA_StatusCode retval = UA_Client_connect(client, "opc.tcp://192.168.1.59:4840");
   UA_StatusCode retval = UA_Client_connect(client, SERVER_ENDPOINT);

@@ -5,7 +5,7 @@
 // read out the nodes 
 void readNode(UA_Client *client, UA_StatusCode retval, UA_Variant value)
 {
-  //Variables for read access 
+  //Variables for read access a
   UA_String variableName;
   UA_Int32 serialNumber;
 	UA_DateTime timeStamp;
