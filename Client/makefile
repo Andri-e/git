@@ -1,14 +1,14 @@
-myClient: ../Open62541/open62541.o myClient.o
-	gcc ../Open62541/open62541.o myClient.o -o myClient
+myClient: myClient.o myRead.o 
+	gcc myClient.o myRead.o 
 
-../Open62541/open62541.o: ../Open62541/open62541.c
-	gcc -c -std=c99 ../Open62541/open62541.c -o ../Open62541/open62541.o
-	
-myClient.o: myClient.c 
+myClient.o: Src/myClient.c	
 	gcc -c myClient.c 
 
+myEvent.o: Src/myRead.c Include/myRead.h 
+	gcc -c Src/myRead.c  
+	
 clean: 
-	rm *.o myClient
+	rm *.o myServer
 
 run: 
 	./myClient
