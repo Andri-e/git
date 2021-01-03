@@ -2,7 +2,7 @@ myClient: myClient.o myRead.o
 	gcc myClient.o myRead.o -o myClient
 
 myClient.o: src/myClient.c	
-	gcc -c myClient.c 
+	gcc -c src/myClient.c 
 
 myEvent.o: src/myRead.c include/myRead.h 
 	gcc -c src/myRead.c  
