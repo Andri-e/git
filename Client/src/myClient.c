@@ -3,7 +3,7 @@
 #include <signal.h>
 #include <stdlib.h>
 
-#include "../Include/myRead.h"
+#include "../include/myRead.h"
 
 UA_Boolean running = true;
 

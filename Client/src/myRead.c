@@ -1,6 +1,6 @@
 
-#include "../Include/open62541.h"
-#include "../Include/myRead.h"
+#include "../include/open62541.h"
+#include "../include/myRead.h"
 
 // read out the nodes 
 void readNode(UA_Client *client, UA_StatusCode retval, UA_Variant value)
