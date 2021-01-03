@@ -1,5 +1,5 @@
-myClient: myClient.o myRead.o 
-	gcc myClient.o myRead.o -o myClient
+myClient: myClient.o myRead.o open62541.o 
+	gcc myClient.o myRead.o open62541.o  -o myClient
 
 myClient.o: src/myClient.c	
 	gcc -c src/myClient.c 
