@@ -2,7 +2,7 @@ myServer: myServer.o myEvent.o myNodes.o mySettings.o open62541.o specNodes.o my
 	gcc myServer.o myEvent.o myNodes.o mySettings.o open62541.o specNodes.o myMethod.o -o myServer
 
 myServer.o: Src/myServer.c	
-	gcc -c myServer.c 
+	gcc -c Src/myServer.c 
 
 myEvent.o: Src/myEvent.c Include/myEvent.h 
 	gcc -c Src/myEvent.c  
