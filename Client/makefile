@@ -8,7 +8,7 @@ myEvent.o: Src/myRead.c Include/myRead.h
 	gcc -c Src/myRead.c  
 	
 clean: 
-	rm *.o myServer
+	rm *.o myClient
 
 run: 
 	./myClient
