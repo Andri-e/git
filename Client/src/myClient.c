@@ -15,7 +15,7 @@ static void stopHandler(int sign)
   running = 0;
 }
 
-// myClient main 
+// myClient main  aaasd
 int main(void)
 {
 	signal(SIGINT, stopHandler); // catches ctrl-c 
