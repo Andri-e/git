@@ -13,5 +13,5 @@ open62541.o: src/open62541.c include/open62541.h
 clean: 
 	rm *.o myClient
 
-run: #adasdasdas
+run: #adasdasdasasdasd asdasd 
 	./myClient  
