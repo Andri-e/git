@@ -1,17 +1,14 @@
-myClient: myClient.o myRead.o open62541.o 
-	gcc myClient.o myRead.o open62541.o  -o myClient
+myClient2: ./Open62541/open62541.o myClient2.o
+	gcc ./Open62541/open62541.o myClient2.o -o myClient2
 
-myClient.o: src/myClient.c	
-	gcc -c src/myClient.c 
-
-myRead.o: src/myRead.c include/myRead.h 
-	gcc -c src/myRead.c  
-
-open62541.o: src/open62541.c include/open62541.h 
-	gcc -c src/open62541.c 
+./Open62541/open62541.o: ./Open62541/open62541.c
+	gcc -c ./Open62541/open62541.c -o ./Open62541/open62541.o
 	
+myClient2.o: myClient.c 
+	gcc -c myClient.c 
+
 clean: 
 	rm *.o myClient
 
-run: #adasdasdasasdasd asdasd 
-	./myClient  
+run: 
+	./myClient2
